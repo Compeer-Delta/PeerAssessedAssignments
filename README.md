@@ -2,5 +2,5 @@
 
 Contributors:
 
-jpb41
-gc436
+- jpb41
+- gc436
