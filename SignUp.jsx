@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import {useForm} from 'react-hook-form';
 import {useRef, useState, useEffect} from 'react';
+const mongoose = require("mongoose");
+const Admin = require(`./src/schemas/admin`);
 import StudentView from '../pages/StudentView';
 import DropDownSearch from '../components/DropDownSearch';
 
@@ -37,10 +39,28 @@ function SignUp() {
       console.log(inputcode, actualcode);
       if (inputcode == actualcode)
       {
-        //WRITE TO DATABASE HERE: For account creation
-        //write: user, pwd, institution, email
-        
-        setVerified(true)
+        //lookup admin
+        let storedAdmin = await Admin.findOne({ userId: user });
+        //create new entry if no admin account found
+        if (!storedUser) {
+          //create admin entry in DB
+          storedUser = await new Inventory({
+            _id: mongoose.Types.ObjectId(),
+            userId: user,
+            details: {
+              firstname: firstname, //needs firstname variable
+              surname: lastname, //needs lastname variable
+              email: email,
+            },
+            school: institution,
+            password: pwd,
+          });
+          await storedAdmin.save().catch(console.error);
+          setVerified(true)
+        } else {
+          //false as admin account already exists
+          setVerified(false)
+        }
       }
     }
 
