@@ -2,10 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import {useForm} from 'react-hook-form';
 import {useRef, useState, useEffect} from 'react';
-const mongoose = require("mongoose");
-const Admin = require(`./src/schemas/admin`);
 import StudentView from '../pages/StudentView';
 import DropDownSearch from '../components/DropDownSearch';
+const mongoose = require("mongoose");
+const Admin = require(`./src/schemas/admin`);
 
 import emailjs from '@emailjs/browser';
 
@@ -20,6 +20,8 @@ function SignUp() {
   
     const [institution, setInstitution] = useState('');
     const [email, setEmail] = useState('');
+    const [firstname, setFirstName] = useState('');
+    const [lastname, setLastName] = useState('');
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [repwd, setRePwd] = useState('');
@@ -39,28 +41,28 @@ function SignUp() {
       console.log(inputcode, actualcode);
       if (inputcode == actualcode)
       {
-        //lookup admin
-        let storedAdmin = await Admin.findOne({ userId: user });
-        //create new entry if no admin account found
-        if (!storedUser) {
-          //create admin entry in DB
-          storedUser = await new Inventory({
-            _id: mongoose.Types.ObjectId(),
-            userId: user,
-            details: {
-              firstname: firstname, //needs firstname variable
-              surname: lastname, //needs lastname variable
-              email: email,
-            },
-            school: institution,
-            password: pwd,
-          });
-          await storedAdmin.save().catch(console.error);
-          setVerified(true)
-        } else {
-          //false as admin account already exists
-          setVerified(false)
-        }
+         //lookup admin
+         let storedAdmin = await Admin.findOne({ userId: user });
+         //create new entry if no admin account found
+         if (!storedUser) {
+           //create admin entry in DB
+           storedUser = await new Inventory({
+             _id: mongoose.Types.ObjectId(),
+             userId: user,
+             details: {
+               firstname: firstname,
+               surname: lastname,
+               email: email,
+             },
+             school: institution,
+             password: pwd,
+           });
+           await storedAdmin.save().catch(console.error);
+           setVerified(true)
+         } else {
+           //false as admin account already exists
+           setVerified(false)
+         }
       }
     }
 
@@ -89,7 +91,7 @@ function SignUp() {
           console.log(error.text);
       });
 
-    console.log(user, pwd, institution);
+    console.log(user, pwd, institution, firstname, lastname);
     console.log(emailInputs);
     //Debug: displays form data in console
   
@@ -200,6 +202,48 @@ function SignUp() {
             </div>
             <div className= "mt-2 pl-40">  
           </div> 
+          </div>
+          {/*first Name*/}
+          <div className="md:flex md:items-center mb-6">
+              
+              <div className="md:w-1/3">
+                
+              </div>
+              <div className="md:w-2/3"> First Name
+              <div className = "flex flex-wrap z-50">
+             
+              </div>
+            <input
+              ref={userRef} 
+              onChange = {(e) => setFirstName(e.target.value)}
+             value={firstname}
+             name="username"
+              required 
+            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="First name">
+            </input>
+
+            </div>
+          </div>
+          {/*last Name*/}
+          <div className="md:flex md:items-center mb-6">
+              
+              <div className="md:w-1/3">
+                
+              </div>
+              <div className="md:w-2/3"> Last Name
+              <div className = "flex flex-wrap z-50">
+             
+              </div>
+            <input
+              ref={userRef} 
+              onChange = {(e) => setLastName(e.target.value)}
+             value={lastname}
+             name="username"
+              required 
+            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="Last name">
+            </input>
+
+            </div>
           </div>
         
             {/*Username input*/}
