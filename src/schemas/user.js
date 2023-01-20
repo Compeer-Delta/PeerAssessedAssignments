@@ -8,10 +8,10 @@ const userSchema = new Schema({
     required: true,
     default: null,
   },
-  userPassword: {
+  password: {
     type: String,
     required: true,
-    default: null,
+    default: null
   },
   details: {
     type: {},
