@@ -6,30 +6,30 @@ const adminSchema = new Schema({
     required: true,
     default: null,
   },
-  userNameFirst: {
+  details: {
+    type: {},
+    default: {
+      firstname: {
+        type: String,
+        required: true,
+        default: null
+      },
+      surname: {
+        type: String,
+        required: true,
+        default: null
+      },
+      email: {
+        type: String,
+        required: true,
+        default: null
+      },
+    },
+  },
+  school: {
     type: String,
     required: true,
-    default: null,
-  },
-  userNameLast: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  userSchool: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  userName: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  userTicket: {
-    type: Number,
-    required: false,
-    default: 0,
+    default: null
   }
 });
 

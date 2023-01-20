@@ -12,6 +12,31 @@ const userSchema = new Schema({
     type: String,
     required: true,
     default: null,
+  },
+  details: {
+    type: {},
+    default: {
+      firstname: {
+        type: String,
+        required: true,
+        default: null
+      },
+      surname: {
+        type: String,
+        required: true,
+        default: null
+      },
+      email: {
+        type: String,
+        required: true,
+        default: null
+      },
+    },
+  },
+  school: {
+    type: String,
+    required: true,
+    default: null
   }
 });
 
