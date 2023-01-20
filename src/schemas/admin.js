@@ -26,7 +26,7 @@ const adminSchema = new Schema({
       },
     },
   },
-  school: {
+  institution: {
     type: String,
     required: true,
     default: null
