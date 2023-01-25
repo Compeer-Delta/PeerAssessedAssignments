@@ -22,9 +22,9 @@ const moduleSchema = new Schema({
         default: null,
     },
     markerId: {
-        type: String,
+        type: [String],
         required: true,
-        default: null,
+        default: [],
     },
     marked: {
         type: Boolean,
