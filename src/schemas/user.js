@@ -37,6 +37,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
     default: null
+  },
+  enrolledModules: {
+    type: [],
+    required: true,
+    default: [],
   }
 });
 
