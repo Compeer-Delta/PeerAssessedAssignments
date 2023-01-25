@@ -24,6 +24,11 @@ const moduleSchema = new Schema({
     type: [],
     required: false,
     default: [],
+  },
+  ongoingAssignments: {
+    type: [],
+    required: false,
+    default: [],
   }
 });
 
