@@ -14,6 +14,9 @@ async function findRegistered(givenID) {
         });
         await userAccount.save().catch(console.error);
     }
+    else {
+        return null;
+    }
 };
 
 module.exports = findRegistered
