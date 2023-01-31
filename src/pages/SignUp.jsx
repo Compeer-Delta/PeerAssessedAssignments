@@ -11,12 +11,14 @@ const Admin = require(`../schemas/admin`);
 
 import emailjs from '@emailjs/browser';
 
+import findRegistered from '../functions/tools/registered';
 
 
 function SignUp() {
 
 
   
+    //const emailRef = useRef();
     const userRef = useRef();
     const errRef = useRef();
   
@@ -29,7 +31,7 @@ function SignUp() {
     const [repwd, setRePwd] = useState('');
     //data from the login form
   
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg, setErrMsg] = useState('');       
     const [success, setSuccess] = useState(false); //temporary: always sets account login as success, however needs to be altered to check DB first
 
     const [verified, setVerified] = useState(false);
@@ -100,7 +102,6 @@ function SignUp() {
     let userData = {username: user, pass: pwd}
     
     setSuccess(true);
-    
 
     setInstitution('');
     setUser('');
