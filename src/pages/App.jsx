@@ -9,6 +9,9 @@ import Welcome from './Welcome';
 import StudentView from './StudentView';
 import Login from './Login';
 import SignUp from './SignUp';
+import Modules from './Modules';
+import CreateModule from './CreateModule';
+import ManageAccounts from './ManageAccounts';
 
 function App() {
   const [theme, setTheme] = useState(null);
@@ -48,7 +51,11 @@ function App() {
             <Route path='/login/*' element={<Login/>} />
             <Route path='/submitwork' element={<SubmitWork />} />
             <Route path='/studentview' element={<StudentView />} />
+           {/*<Route path='/modules' element={<Modules/>}/> */}
             <Route path='/register' element={<SignUp />} />
+            <Route path='/modules' element={<Modules/>} />
+            <Route path='/CreateModule' element={<CreateModule/>} />
+            <Route path='/manageaccounts' element={<ManageAccounts/>} />
             <Route path='/' element={<Welcome />} />
           </Routes> 
           {/*Contains all the routes to different pages by default we stick to / which directs us to the welcome page*/}
@@ -58,3 +65,4 @@ function App() {
 }
 
 export default App
+

@@ -4,6 +4,10 @@ import {useForm} from 'react-hook-form';
 import {useRef, useState, useEffect} from 'react';
 import StudentView from '../pages/StudentView';
 import DropDownSearch from '../components/DropDownSearch';
+const mongoose = require("mongoose");
+//import mongoose from 'mongoose';
+const Admin = require(`../schemas/admin`);
+//import Admin from '../schemas/admin';
 
 import emailjs from '@emailjs/browser';
 
@@ -13,12 +17,13 @@ function SignUp() {
 
 
   
-    //const emailRef = useRef();
     const userRef = useRef();
     const errRef = useRef();
   
     const [institution, setInstitution] = useState('');
     const [email, setEmail] = useState('');
+    const [firstname, setFirstName] = useState('');
+    const [lastname, setLastName] = useState('');
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [repwd, setRePwd] = useState('');
@@ -27,36 +32,87 @@ function SignUp() {
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false); //temporary: always sets account login as success, however needs to be altered to check DB first
 
-    
+    const [verified, setVerified] = useState(false);
+    const [inputcode, setInputCode] = useState();
+    const [actualcode, setActualCode] = useState(()=> generateVerificationCode());
+
+    const [emailInputs, setEmailInputs] = useState({email: email, username: user, actualcode: actualcode });
+
+    async function checkVerification()
+    {
+      console.log(inputcode, actualcode);
+      if (inputcode == actualcode)
+      {
+         //lookup admin
+         let storedAdmin = await Admin.findOne({ userId: user });
+         //create new entry if no admin account found
+         if (!storedUser) {
+           //create admin entry in DB
+           storedUser = await new Inventory({
+             _id: mongoose.Types.ObjectId(),
+             userId: user,
+             details: {
+               firstname: firstname,
+               surname: lastname,
+               email: email,
+             },
+             school: institution,
+             password: pwd,
+           });
+           await storedAdmin.save().catch(console.error);
+           setVerified(true)
+         } else {
+           //false as admin account already exists
+           setVerified(false)
+         }
+      }
+    }
+
+    function generateVerificationCode()
+    {
+      return Math.floor(100000 + Math.random() * 900000);
+     
+    }
+
+    function updateForEmail()
+    {
+      setEmailInputs({email: email, username: user, actualcode: actualcode})
+    }
   
     useEffect(() => {userRef.current.focus();}, [])
     useEffect(() => {setErrMsg('');}, [user,pwd])
     
-    const handleSubmit = async (e) => { e.preventDefault();
-
+    const handleSubmit = async (e) => {
+       e.preventDefault();
+      
       {/* gmail service */}
-      emailjs.sendForm('service_awsfb8e', 'template_n35f2mi', e.target, 'jBQKDXy824tIJnH8b') //form.current
+      emailjs.send('service_awsfb8e', 'template_n35f2mi', emailInputs, 'jBQKDXy824tIJnH8b') //form.current
       .then((result) => {
           console.log(result.text);
       }, (error) => {
           console.log(error.text);
       });
 
-    console.log(user, pwd, institution);
+    console.log(user, pwd, institution, firstname, lastname);
+    console.log(emailInputs);
     //Debug: displays form data in console
   
     let userData = {username: user, pass: pwd}
     
     setSuccess(true);
+    
 
     setInstitution('');
     setUser('');
     setPwd('');
     //clears form data
+
   }
+
 
     return (
         <>
+         
         <div className = "sidebar text-slate-200 dark:text-slate-700 border-slate-200 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-zinc-200"> {/* bars icon */}
           Welcome to Peer App. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
           <br></br><br></br>
@@ -65,23 +121,55 @@ function SignUp() {
          {/*Code for displaying left box, containing link to sign up page */}
         {/*success variable will determine whether the next page (admin/teacher/student view) will be displayed or if false, display the login page */}
 
-        {success ? (
-             
-             <div className= 'dark:bg-zinc-900'>
+        {success && !verified ? (
+           
+              <div className= 'dark:bg-zinc-900'>
+                
               <div className='max-w-xl mx-auto w-3/12 h-[900px]'>
                 <h1 className= 'py-20 text-6xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'>Verify your PeerApp account</h1> 
                 {/*Title for account confirm*/}
+                
                 <div className= 'bg-indigo-100 ml-20 px-5 mt-32 rounded text-center py-10 border-2 border-indigo-900'>
-                  We've sent a verification email to: {email}
+                  {actualcode} We've sent a verification email to: {email }
                   <br></br><br></br>
+
+                  
+                  <input 
+                  onChange = {(e) => setInputCode(e.target.value)}
+                  value={inputcode}
+                  name="inputcode"
+                  required 
+                  className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="inputcode" type="text" placeholder="inputcode">
+                  </input>
+                  
+                  {checkVerification()}
                   <button className ="px-5 border-2 rounded border-indigo-900 bg-indigo-200 hover:bg-indigo-300 ">Resend</button>
                 
                 </div>
               </div>   
-           </div>           
-             
-        ):( 
+           </div>         
+         
+        ): verified ? (
+          <>
+          <div className= 'dark:bg-zinc-900'>
+                
+          <div className='max-w-xl mx-auto w-3/12 h-[900px]'>
+            <h1 className= 'py-20 text-6xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'>Success!</h1> 
+            {/*Title for account confirm*/}
+            <div className= 'bg-indigo-100 ml-20 px-5 mt-32 rounded text-center py-10 border-2 border-indigo-900'>
+              Your account has now been verified with the email {email}
+              <br></br><br></br>
+
+        
+              </div>
+              </div>   
+           </div>
+        
+            </>
+        
+          ) :
         <>
+
                 
       <div className= 'dark:bg-zinc-900'>
         <div className='max-w-xl mx-auto w-3/12 h-[900px]'>
@@ -116,6 +204,48 @@ function SignUp() {
             </div>
             <div className= "mt-2 pl-40">  
           </div> 
+          </div>
+          {/*first Name*/}
+          <div className="md:flex md:items-center mb-6">
+              
+              <div className="md:w-1/3">
+                
+              </div>
+              <div className="md:w-2/3"> First Name
+              <div className = "flex flex-wrap z-50">
+             
+              </div>
+            <input
+              ref={userRef} 
+              onChange = {(e) => setFirstName(e.target.value)}
+             value={firstname}
+             name="username"
+              required 
+            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="First name">
+            </input>
+
+            </div>
+          </div>
+          {/*last Name*/}
+          <div className="md:flex md:items-center mb-6">
+              
+              <div className="md:w-1/3">
+                
+              </div>
+              <div className="md:w-2/3"> Last Name
+              <div className = "flex flex-wrap z-50">
+             
+              </div>
+            <input
+              ref={userRef} 
+              onChange = {(e) => setLastName(e.target.value)}
+             value={lastname}
+             name="username"
+              required 
+            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="Last name">
+            </input>
+
+            </div>
           </div>
         
             {/*Username input*/}
@@ -173,7 +303,7 @@ function SignUp() {
           <div className="md:flex md:items-center">
             <div className="md:w-1/3"></div>
               <div className="md:w-2/3">
-                <button type="submit" className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                <button onClick= {updateForEmail} type="submit" className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
                 Create Account
                 </button>
               </div>   
@@ -189,7 +319,8 @@ function SignUp() {
 </div>
 
 </>
-)}
+}
+
 {/*bottom section menu*/}
   <div className= 'py-5 h-[69px] bg-slate-800 dark:bg-zinc-800 text-gray-300'>
         
