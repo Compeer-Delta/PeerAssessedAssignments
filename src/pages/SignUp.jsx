@@ -4,12 +4,16 @@ import {useForm} from 'react-hook-form';
 import {useRef, useState, useEffect} from 'react';
 import StudentView from '../pages/StudentView';
 import DropDownSearch from '../components/DropDownSearch';
+const mongoose = require('mongoose');
+//import mongoose from 'mongoose';
+const Admin = require("../schemas/admin");
+//import Admin from '../schemas/admin';
 
 import emailjs from '@emailjs/browser';
 
 function SignUp() {
-
   
+    //const emailRef = useRef();
     const userRef = useRef();
     const errRef = useRef();
   
@@ -22,7 +26,7 @@ function SignUp() {
     const [repwd, setRePwd] = useState('');
     //data from the login form
   
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg, setErrMsg] = useState('');       
     const [success, setSuccess] = useState(false); //temporary: always sets account login as success, however needs to be altered to check DB first
 
     const [verified, setVerified] = useState(false);
@@ -31,15 +35,33 @@ function SignUp() {
 
     const [emailInputs, setEmailInputs] = useState({email: email, username: user, actualcode: actualcode });
 
-    function checkVerification()
+    async function checkVerification()
     {
       console.log(inputcode, actualcode);
       if (inputcode == actualcode)
       {
-        //WRITE TO DATABASE HERE: For account creation
-        //write: user, pwd, institution, email
-        
-        setVerified(true)
+         //lookup admin
+         let storedAdmin = await Admin.findOne({ userId: user });
+         //create new entry if no admin account found
+         if (!storedUser) {
+           //create admin entry in DB
+           storedUser = await new Inventory({
+             _id: mongoose.Types.ObjectId(),
+             userId: user,
+             details: {
+               firstname: firstname,
+               surname: lastname,
+               email: email,
+             },
+             school: institution,
+             password: pwd,
+           });
+           await storedAdmin.save().catch(console.error);
+           setVerified(true)
+         } else {
+           //false as admin account already exists
+           setVerified(false)
+         }
       }
     }
 
@@ -75,7 +97,6 @@ function SignUp() {
     let userData = {username: user, pass: pwd}
     
     setSuccess(true);
-    
 
     setInstitution('');
     setUser('');
