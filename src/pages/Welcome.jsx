@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import SubmitWork from './SubmitWork'
 import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+//import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import App from './App'
 
 function Welcome() {
@@ -45,7 +45,7 @@ function Welcome() {
          <div className = "sidebar text-slate-200 dark:text-slate-700 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-gray-100"> {/* bars icon */}
           Welcome to Peer App. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
           <br></br><br></br>
-          To use our services <Link className="text-indigo-600">Register here</Link> to create an Admin account!
+          To use our services <Link to="/register" className="text-indigo-600">Register here</Link> to create an Admin account!
          </div>
          
       {/* buttons sign in*/}

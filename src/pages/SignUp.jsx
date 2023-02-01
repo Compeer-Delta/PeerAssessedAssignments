@@ -4,10 +4,10 @@ import {useForm} from 'react-hook-form';
 import {useRef, useState, useEffect} from 'react';
 import StudentView from '../pages/StudentView';
 import DropDownSearch from '../components/DropDownSearch';
-const mongoose = require("mongoose");
-//import mongoose from 'mongoose';
-const Admin = require(`../schemas/admin`);
-//import Admin from '../schemas/admin';
+//const mongoose = require("mongoose");
+import mongoose from 'mongoose';
+//const Admin = require(`../schemas/admin`);
+import Admin from '../schemas/admin';
 
 import emailjs from '@emailjs/browser';
 

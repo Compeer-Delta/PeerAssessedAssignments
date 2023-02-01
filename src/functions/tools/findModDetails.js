@@ -10,4 +10,5 @@ function findModule(nameKey) {
   }
 }
 
-module.exports = findModule
+//module.exports = findModule
+export default findModule
