@@ -12,6 +12,7 @@ import SignUp from './SignUp';
 import Modules from './Modules';
 import CreateModule from './CreateModule';
 import ManageAccounts from './ManageAccounts';
+import FileUpload from './FileUpload';
 
 function App() {
   const [theme, setTheme] = useState(null);
@@ -57,7 +58,7 @@ function App() {
             <Route path='/CreateModule' element={<CreateModule/>} />
             <Route path='/manageaccounts' element={<ManageAccounts/>} />
             <Route path='/' element={<Welcome />} />
-            <Route path='/upload' element={<FileUpload />} />
+            <Route path='/upload' element={<FileUpload/>} />
           </Routes> 
           {/*Contains all the routes to different pages by default we stick to / which directs us to the welcome page*/}
         </> 
