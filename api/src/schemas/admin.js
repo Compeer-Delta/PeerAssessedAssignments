@@ -1,5 +1,5 @@
-//const { Schema, model } = require("mongoose");
-import {Schema, model} from "mongoose";
+//created by & Last update: 01/02, gc436
+import { Schema, model } from "mongoose";
 
 const adminSchema = new Schema({
   _id: Schema.Types.ObjectId,
@@ -14,31 +14,31 @@ const adminSchema = new Schema({
       firstname: {
         type: String,
         required: true,
-        default: null
+        default: null,
       },
       surname: {
         type: String,
         required: true,
-        default: null
+        default: null,
       },
       email: {
         type: String,
         required: true,
-        default: null
+        default: null,
       },
     },
   },
   institution: {
     type: String,
     required: true,
-    default: null
+    default: null,
   },
   password: {
     type: String,
     required: true,
-    default: null
-  }
+    default: null,
+  },
 });
 
-//module.exports =model("Admin", adminSchema, "admin")
-export default adminSchema
+export default model("Admin", adminSchema, "admin");
+//export default adminSchema

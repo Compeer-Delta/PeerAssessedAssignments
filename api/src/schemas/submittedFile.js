@@ -2,8 +2,8 @@
 
 //File handling needs to be looked into further, GridFS only used for >16MB
 //Work is not allocated to someone and not marked by default, hence the null and false default values
-
-const { Schema, model } = require("mongoose");
+//updated: 01/02 gc436
+import { Schema, model } from "mongoose";
 const moduleSchema = new Schema({
     _id: Schema.Types.ObjectId,
     userId: {
@@ -33,4 +33,4 @@ const moduleSchema = new Schema({
     }
 });
 
-module.exports = model("Submission", submittedSchema, "submission");
+export default model("Submission", submittedSchema, "submission");

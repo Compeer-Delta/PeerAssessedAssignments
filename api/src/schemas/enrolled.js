@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose");
+//created by & Last update: 01/02, gc436
+import { Schema, model } from "mongoose";
 const enrolledSchema = new Schema({
   _id: Schema.Types.ObjectId,
   userId: {
@@ -13,4 +14,4 @@ const enrolledSchema = new Schema({
   }
 });
 
-module.exports = model("Enrolled", enrolledSchema, "enrolled");
+export default model("Enrolled", enrolledSchema, "enrolled");

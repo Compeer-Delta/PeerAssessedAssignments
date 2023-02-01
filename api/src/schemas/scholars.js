@@ -1,5 +1,6 @@
 //scholar specific details e.g. name, school, usertype (student or lecturer)
-const { Schema, model } = require("mongoose");
+//created & updated by gc436
+import { Schema, model } from "mongoose";
 const scholarsSchema = new Schema({
   _id: Schema.Types.ObjectId,
   userId: {
@@ -32,4 +33,4 @@ const scholarsSchema = new Schema({
   }
 });
 
-module.exports = model("Scholars", scholarsSchema, "scholars");
+export default model("Scholars", scholarsSchema, "scholars");

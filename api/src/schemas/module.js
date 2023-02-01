@@ -1,8 +1,6 @@
-//user at later data or remove entirely
 //ref: https://discord.com/channels/1023971333706629200/1025103915508838480/1049676345514393650
-
-//Last update: 25/01, jd750
-const { Schema, model } = require("mongoose");
+//created by & Last update: 01/02, gc436
+import { Schema, model } from "mongoose";
 const moduleSchema = new Schema({
   _id: Schema.Types.ObjectId,
   moduleId: {
@@ -32,4 +30,4 @@ const moduleSchema = new Schema({
   }
 });
 
-module.exports = model("Module", moduleSchema, "module");
+export default model("Module", moduleSchema, "module");

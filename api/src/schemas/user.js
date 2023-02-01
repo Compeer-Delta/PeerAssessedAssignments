@@ -1,6 +1,7 @@
 //login details
 //ref https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1
-const { Schema, model } = require("mongoose");
+//created & updated by gc436
+import { Schema, model } from "mongoose";
 const userSchema = new Schema({
   _id: Schema.Types.ObjectId,
   userId: {
@@ -45,4 +46,4 @@ const userSchema = new Schema({
   }
 });
 
-module.exports = model("User", userSchema, "user");
+export default model("User", userSchema, "user");
