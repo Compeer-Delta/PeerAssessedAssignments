@@ -11,12 +11,7 @@ import Admin from '../schemas/admin';
 
 import emailjs from '@emailjs/browser';
 
-import findRegistered from '../functions/tools/registered';
-
-
 function SignUp() {
-
-
   
     //const emailRef = useRef();
     const userRef = useRef();

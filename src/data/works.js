@@ -3,53 +3,59 @@ export default [
         title: 'A* Algorithm Assignment',
         imgUrl: 'https://assets.bwbx.io/images/users/iqjWHBFdfxIU/imqNVS26NcCM/v0/1200x-1.jpg',
         tech: ['Submit Work', 'View Submissions'],
-        workUrl: 'https://www.kent.ac.uk/student',
+        workUrl: '/upload',
         dueDate: '9:00pm 18/10/22',
         setDate: '4.32pm 10/10/22',
+        id: 1,
         //tech is like tags
     },
     {
         title: "Class work 3 submission",
         imgUrl: 'https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=2000',
         tech: ['Submit Work', 'View Submissions'],
-        workUrl: 'https://www.kent.ac.uk/student',
+        workUrl: '/upload',
         dueDate: '9:00pm 18/10/22',
         setDate: '4.32pm 10/10/22',
+        id: 2,
     },
     {
         title: "Class work 2 submission",
         imgUrl: 'https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569__480.jpg',
         tech: ['Submit Work', 'View Submissions'],
-        workUrl: 'https://www.kent.ac.uk/student',
+        workUrl: '/upload',
         dueDate: '9:00pm 18/10/22',
         setDate: '4.32pm 10/10/22',
+        id: 3,
       
     },
     {
         title: "Introduction to AI submission",
         imgUrl: 'https://coolbackgrounds.io/images/backgrounds/index/sea-edge-79ab30e2.png',
         tech: ['Submit Work', 'View Submissions'],
-        workUrl: 'https://www.kent.ac.uk/student',
+        workUrl: '/upload',
         dueDate: '9:00pm 18/10/22',
         setDate: '4.32pm 10/10/22',
+        id: 4,
       
     },
     {
         title: 'RE A* Algorithm Assignment',
         imgUrl: 'https://www.newegg.com/insider/wp-content/uploads/windows_xp_bliss-wide.jpg',
         tech: ['Submit Work', 'View Submissions'],
-        workUrl: 'https://www.kent.ac.uk/student',
+        workUrl: '/upload',
         dueDate: '9:00pm 18/10/22',
         setDate: '4.32pm 10/10/22',
+        id: 5,
         //tech is like tags
     },
     {
         title: "RE Class work 3 submission",
         imgUrl: 'https://wallpaperaccess.com/full/2095692.jpg',
         tech: ['Submit Work', 'View Submissions'],
-        workUrl: 'https://www.kent.ac.uk/student',
+        workUrl: '/FileUpload',
         dueDate: '9:00pm 18/10/22',
         setDate: '4.32pm 10/10/22',
+        id: 6,
     },
     {
         title: "RE Class work 2 submission",
@@ -58,7 +64,7 @@ export default [
         workUrl: 'https://www.kent.ac.uk/student',
         dueDate: '9:00pm 18/10/22',
         setDate: '4.32pm 10/10/22',
-      
+        id: 7,
     },
     {
         title: "RE Introduction to AI submission",
@@ -67,6 +73,6 @@ export default [
         workUrl: 'https://www.kent.ac.uk/student',
         dueDate: '9:00pm 18/10/22',
         setDate: '4.32pm 10/10/22',
-      
+        id: 8,
     },
 ];
