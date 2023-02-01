@@ -156,7 +156,7 @@ function Login() {
           <div className="md:flex md:items-center mb-6">
           <div className="md:w-1/3"></div>
 
-          <Link className="text-sm text-blue-500">
+          <Link to="/" className="text-sm text-blue-500">
            Forgot Password?
           </Link>
           </div>

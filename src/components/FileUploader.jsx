@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { render } from 'react-dom';
 
 
-function FileUploader(props) {
+function FileUploader(props, uploadType) {
 
  
     const [file, setFile] = useState({fileName:'', fileContent:'' });
@@ -15,9 +15,24 @@ function FileUploader(props) {
         const reader = new FileReader();
         reader.readAsText(file);
         reader.onload = () => {
+        
             setFile({fileName: file.name, fileContent: reader.result});
             
-          {props.UploadedData(reader.result.split(","))}
+           /// if ((((fileContent.split(/\n/))[0]).split(",")).length() == 4) //checks if its formatted in account data
+           if (uploadType === "modules")
+            {
+                props.UploadedData((reader.result).split(","))
+            }
+            else if (uploadType === "accounts")
+            {
+                if ((((((reader.result).split(/\n/))[0]).split(",")).length() == 4))
+                {
+                    {props.UploadedData((((reader.result).split(/\n/))).split(","))}
+                }
+                else
+                { console.log("error with size of row not equal to 4")}
+                
+            }
         
         }
         reader.onerror= () => {

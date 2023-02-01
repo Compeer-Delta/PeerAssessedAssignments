@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
+import mongoose from "mongoose"
 //this finds the account
 
 async function findRegistered(givenID) {
@@ -19,4 +20,5 @@ async function findRegistered(givenID) {
     }
 };
 
-module.exports = findRegistered
+//module.exports = findRegistered
+export default findRegistered

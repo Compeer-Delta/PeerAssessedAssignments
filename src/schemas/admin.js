@@ -1,5 +1,5 @@
-const { Schema, model } = require("mongoose");
-//import { Schema, model } from 'mongoose';
+//const { Schema, model } = require("mongoose");
+import {Schema, model} from "mongoose";
 
 const adminSchema = new Schema({
   _id: Schema.Types.ObjectId,
@@ -40,7 +40,5 @@ const adminSchema = new Schema({
   }
 });
 
-module.exports = model("Admin", adminSchema, "admin");
-
-// const Admin = model("Admin", adminSchema, "admin");
-// export default Admin
+//module.exports =model("Admin", adminSchema, "admin")
+export default adminSchema
