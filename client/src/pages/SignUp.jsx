@@ -7,7 +7,7 @@ import DropDownSearch from '../components/DropDownSearch';
 //const mongoose = require("mongoose");
 import mongoose from 'mongoose';
 //const Admin = require(`../schemas/admin`);
-import Admin from '../schemas/admin';
+//import Admin from '../schemas/admin';
 
 import emailjs from '@emailjs/browser';
 
