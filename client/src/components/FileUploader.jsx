@@ -33,8 +33,38 @@ function FileUploader(props) {
         // }
         }
 
-        const file = e;
+        const file = e[0];
         console.log(file); //Debugging
+
+        //HATHAN contrib:
+        const reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = () => {
+        
+        setFile({fileName: file.name, fileContent: reader.result});
+        console.log("UT: " + props.uploadType);
+        // if ((((fileContent.split(/\n/))[0]).split(",")).length() == 4) //checks if its formatted in account data
+        if (props.uploadType === "modules") {
+                props.UploadedData((reader.result).split(","))
+        }
+        else if (props.uploadType === "accounts") {
+            if ((((((reader.result).split(/\n/))[0]).split(",")).length == 5)) {
+                {props.UploadedData(((reader.result).split(/\n/)))}
+            }
+            else { 
+                console.log("error with size of row not equal to 4 : " +(((((reader.result).split(/\n/))[0]).split(",")).length) )
+            }
+        }
+        
+        }
+        reader.onerror= () => {
+            console.log("file error", reader.error);
+        }
+        //END HATHAN contrib.
+
+
+        //GREG: Please put MongoDB queries for: object insert for the submittedFile, returning if user is part of this module, returning if there is a record of them submitting already.
+        //(I will do the if statements and everything else)
 
         //If user is not part of this module, throw error
         //Else, check if user studies the module AND has not uploaded already
@@ -74,7 +104,7 @@ function FileUploader(props) {
     const onButtonClick = () => {
         inputRef.current.click();
     };
-   
+
     return (
         <form id="uploadForm" onDragEnter={handleDrag} onSubmit={(e) => e.preventDefault()}>
             <input ref={inputRef} type="file" id="uploadInput" onChange={handleChange}/>
