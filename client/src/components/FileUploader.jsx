@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useRef } from 'react';
-import { render } from 'react-dom';
+import { useParams } from 'react-router-dom';
 
 
 function FileUploader(props) {
@@ -10,7 +10,15 @@ function FileUploader(props) {
 
     const inputRef = useRef(null);
 
+    const submissionID = useParams();
+    const userData = JSON.parse(sessionStorage.getItem('loginSessionData'));
+
+    //Debugging
+    console.log(submissionID);
+    console.log(userData);
+
     const handleFile = e => {
+        {
         // const file = e[0];
         // const reader = new FileReader();
         // reader.readAsText(file);
@@ -23,8 +31,15 @@ function FileUploader(props) {
         // reader.onerror= () => {
         //     console.log("file error", reader.error)
         // }
+        }
+
+        const file = e;
+        console.log(file); //Debugging
+
+        //If user is not part of this module, throw error
+        //Else, check if user studies the module AND has not uploaded already
+        //Submit file to the db etc.
         
-        console.log(e); //for testing
     };
 
     //Handles drag/drop
