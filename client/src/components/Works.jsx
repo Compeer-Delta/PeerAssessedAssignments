@@ -14,7 +14,7 @@ function Works() {
                               imgUrl={work.imgUrl}
                               title={work.title}
                               tech={work.tech}
-                              workUrl={work.workUrl + "/" + work.id}
+                              workUrl={"/upload/" + work.id}
                               dueDate={work.dueDate}
                               setDate={work.setDate}>
                     </WorkItem>
