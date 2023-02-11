@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 #uploadForm {
     height: 16rem;
     width: 28rem;
@@ -52,4 +53,11 @@
     right: 0px;
     bottom: 0px;
     left: 0px;
+}
+
+#uploadContainer {
+    margin: auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
 }

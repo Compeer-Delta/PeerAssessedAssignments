@@ -9,12 +9,13 @@ function FileUploader(props) {
     const [dragActive, setDragActive] = useState(false);
 
     const inputRef = useRef(null);
+    const currentFileRef = useRef(null);
 
     const submissionID = useParams();
     const userData = JSON.parse(sessionStorage.getItem('loginSessionData'));
 
     //Debugging
-    console.log(submissionID);
+    console.log(submissionID.id);
     console.log(userData);
 
     const handleFile = e => {
@@ -35,6 +36,8 @@ function FileUploader(props) {
 
         const file = e[0];
         console.log(file); //Debugging
+
+        
 
         //HATHAN contrib:
         const reader = new FileReader();
@@ -57,12 +60,13 @@ function FileUploader(props) {
         }
         
         }
+
         reader.onerror= () => {
             console.log("file error", reader.error);
         }
         //END HATHAN contrib.
 
-
+        
         //GREG: Please put MongoDB queries for: object insert for the submittedFile, returning if user is part of this module, returning if there is a record of them submitting already.
         //(I will do the if statements and everything else)
 
@@ -106,16 +110,18 @@ function FileUploader(props) {
     };
 
     return (
-        <form id="uploadForm" onDragEnter={handleDrag} onSubmit={(e) => e.preventDefault()}>
-            <input ref={inputRef} type="file" id="uploadInput" onChange={handleChange}/>
-            <label id="uploadLabel" hmtlfor="uploadInput" className={dragActive ? "drag-active" : "" }>
-                <div>
-                    <p>Drag and drop your work for submission or</p>
-                    <button className="uploadButton" onClick={onButtonClick}>Upload a file</button>
-                </div>
-            </label>
-            { dragActive && <div id="dragElement" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div> }
-        </form>
+        <div id="uploadContainer">
+            <form id="uploadForm" onDragEnter={handleDrag} onSubmit={(e) => e.preventDefault()}>
+                <input ref={inputRef} type="file" id="uploadInput" onChange={handleChange}/>
+                <label id="uploadLabel" hmtlfor="uploadInput" className={dragActive ? "drag-active" : "" }>
+                    <div>
+                        <p>Drag and drop your work for submission or</p>
+                        <button className="uploadButton" onClick={onButtonClick}>Upload a file</button>
+                    </div>
+                </label>
+                { dragActive && <div id="dragElement" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div> }
+            </form>
+        </div> 
     )
 }
 
