@@ -152,7 +152,10 @@ return (
      
      <div className = 'py-2 dark:bg-zinc-900 h-screen'>
      {uploadedTeacherData}
+        
+     {(false === false) ? ( //check if edit or add module shoulld be displayed
         <h1 className= ' pl-72 py-10 text-5xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '> Add Module</h1> 
+      ):(<h1 className= ' pl-72 py-10 text-5xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '> Edit Module</h1> )}
 
         <div className=" ml-80 mr-80 px-80  bg-slate-200"> 
 

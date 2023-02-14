@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {useRef, useState, useEffect} from 'react';
 import AccountSearchBox from '../components/AccountSearchBox';
 import FileUploader from '../components/FileUploader';
+import AdminView from './AdminView';
 
 //still working on this, functionality not entirely implemented yet !
 function ManageAccounts()
@@ -125,9 +126,10 @@ function ManageAccounts()
         
           <div className="md:w-1/3"></div>
             <div className="md:w-2/3 ">
-              <button onClick={addNewAccounts} className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
+
+            <Link to="/adminview" className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
               Confirm changes
-              </button>
+              </Link>
             </div>   
           </div>
         

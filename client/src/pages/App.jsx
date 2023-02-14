@@ -13,6 +13,7 @@ import Modules from './Modules';
 import CreateModule from './CreateModule';
 import ManageAccounts from './ManageAccounts';
 import FileUpload from './FileUpload';
+import AddAssignment from './AddAssignment';
 
 function App() {
   const [theme, setTheme] = useState(null);
@@ -59,6 +60,7 @@ function App() {
             <Route path='/manageaccounts' element={<ManageAccounts/>} />
             <Route path='/' element={<Welcome />} />
             <Route path='/upload/:id' element={<FileUpload/>} />
+            <Route path='/addassignment' element={<AddAssignment/>} />
           </Routes> 
           {/*Contains all the routes to different pages by default we stick to / which directs us to the welcome page*/}
         </> 
