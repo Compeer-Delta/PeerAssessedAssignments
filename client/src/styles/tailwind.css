@@ -56,8 +56,11 @@
 }
 
 #uploadContainer {
-    margin: auto;
-    position: relative;
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
 }
