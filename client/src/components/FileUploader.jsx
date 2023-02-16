@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { format } from 'date-fns';
 import works from '../data/works';
 
 
@@ -8,7 +9,8 @@ function FileUploader(props) {
 
     const [file, setFile] = useState({});
     const [assignment, setAssignmentDetails] = useState({});
-    //useState({fileName:'', fileContent:'' });
+
+    const [timeLeft, setTimeLeft] = useState();
     const [dragActive, setDragActive] = useState(false);
 
     const inputRef = useRef(null);
@@ -101,18 +103,30 @@ function FileUploader(props) {
             let w = worksArray[i];
 
             if(w.id == id) {
+                //calcTimeLeft(w.dueDate);
                 return w;
             }
         }
     };
+    
+    //QOL to show how much time is left to upload to the user
+    const calcTimeLeft = function(date) {
+        // let dateArray = date.split(" ");
+
+        // let currDate = format(new Date(), "dd-mm-yy");
+        // let dueDate = format(new Date(dateArray[1].trim()), "dd-mm-yy");
+
+        // console.log(currDate.getTime());
+    };
 
     //Page Loading single-calls
+
     useEffect(() => {
         const onPageLoad = () => {
             //Debugging
 
             console.log(params.id);
-            setAssignmentDetails(getAssignmentsDetails(params.id));
+            setAssignmentDetails(getAssignmentDetails(params.id));
             console.log(getAssignmentDetails(params.id));
             // //console.log(userData);
         };
@@ -127,9 +141,18 @@ function FileUploader(props) {
     
     return (
         <div id="uploadContainer">
+            <br></br>
             <div id="assignmentDetails" ref={aDetails}>
-            ASSIGNMENT DETAILS HERE
+
+            <h1><b>{assignment.title}</b></h1>
+            <br></br>
+            <b>Set:</b>{assignment.setDate} 
+            <br></br>
+            <b>Due:</b>{assignment.dueDate}
+            <br></br>
             </div>
+
+            <br></br>
 
             <form id="uploadForm" onDragEnter={handleDrag} onSubmit={(e) => e.preventDefault()}>
                 <input ref={inputRef} type="file" id="uploadInput" onChange={handleChange}/>
@@ -142,9 +165,16 @@ function FileUploader(props) {
                 { dragActive && <div id="dragElement" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div> }
             </form>
 
+            <br></br>
+
             <div id="fileDetails" ref={fDetails}>
-            FILE DETAILS HERE
+            {file.name}
+            <br></br>
             </div>
+
+            <br></br>
+
+            <button id="submitButton" role="button">Submit Work</button>
         </div> 
     )
 }
