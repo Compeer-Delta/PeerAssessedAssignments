@@ -33,7 +33,9 @@ function Modules() {
 
   return (
 <>
-<HeroSection></HeroSection>
+{isAdmin ? (
+<HeroSection prevPageName = "Admin view" prevUrl = "/adminview"></HeroSection>
+):(<HeroSection prevPageName = "login" prevUrl = "/login/*"></HeroSection>)}
 
     <div className = 'py-2 dark:bg-zinc-900 h-screen'>
     <h1 className= ' pl-72 py-10 text-5xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '> Your Modules...</h1> 

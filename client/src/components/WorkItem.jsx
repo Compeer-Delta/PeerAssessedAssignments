@@ -1,5 +1,7 @@
 import React from 'react'
+
 //import { MdTableChart } from 'react-icons/md'
+import {Link} from 'react-router-dom';
 
 function WorkItem({imgUrl, title, tech, workUrl, dueDate, setDate}) {
     return (
@@ -16,16 +18,21 @@ function WorkItem({imgUrl, title, tech, workUrl, dueDate, setDate}) {
                 <p className=' text-right text-base'>Set: {setDate}</p>
             
             <p className='flex flex-initial gap-2 flex-row items-center justify-start text-xs md:text-sm'>
-                {tech.map(item=> (
-                    <span key={item} className='inline-block px-2 py-3 bg-slate-100 dark:bg-slate-900 hover:-translate-y-1 transform transition'>
-                        {item}
+                {/* {//tech.map(item=> ( */}
+                    <span key="SubmitWork" className='inline-block px-2 py-3 bg-slate-100 dark:bg-slate-900 hover:-translate-y-1 transform transition'>
+                        Submit Work
                     </span>
-                ))}
+                    <Link to="/viewsubmissions" key="View Submissions" className='inline-block px-2 py-3 bg-slate-100 dark:bg-slate-900 hover:-translate-y-1 transform transition'>
+                        View Submissions
+                </Link>
+                
+               {/* )) }*/}
                 <span className='text-right text-gray-600 dark:text-gray-300 p-2 w-full text-base '>Due: {dueDate}</span>
                 
             </p>
             
            </div>
+           
         </a>
     )
 }

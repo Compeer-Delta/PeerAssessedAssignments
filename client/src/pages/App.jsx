@@ -14,6 +14,10 @@ import CreateModule from './CreateModule';
 import ManageAccounts from './ManageAccounts';
 import FileUpload from './FileUpload';
 import AddAssignment from './AddAssignment';
+import ViewSubmissions from './ViewSubmissions';
+import PeerAssessWork from './PeerAssessWork';
+import AdminView from './AdminView';
+import ViewFeedback from './ViewFeedback';
 
 function App() {
   const [theme, setTheme] = useState(null);
@@ -61,6 +65,10 @@ function App() {
             <Route path='/' element={<Welcome />} />
             <Route path='/upload/:id' element={<FileUpload/>} />
             <Route path='/addassignment' element={<AddAssignment/>} />
+            <Route path='/viewsubmissions' element={<ViewSubmissions/>} />
+            <Route path='/peerassess' element={<PeerAssessWork/>} />
+            <Route path='/adminview' element={<AdminView/>} />
+            <Route path='/viewfeedback' element={<ViewFeedback/>} />
           </Routes> 
           {/*Contains all the routes to different pages by default we stick to / which directs us to the welcome page*/}
         </> 

@@ -7,7 +7,7 @@ function FileUpload() {
   return (
     
     <>
-    <HeroSection></HeroSection>
+    <HeroSection prevPageName = "Home Page" prevUrl= "/studentview"></HeroSection>
     <FileUploader></FileUploader>
     </>
     

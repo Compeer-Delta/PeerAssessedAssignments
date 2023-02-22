@@ -15,6 +15,12 @@ export const sidebardata = [
         cName: 'nav-text'
     },
     {
+        title: 'Your Feedback',
+        path: '/viewfeedback',
+       // icon: <VscCode className= 'w-full h-full' />,//<IoIcons.IoIosPaper/>,
+        cName: 'nav-text'
+    },
+    {
         title: 'Submit Work',
         path: '/submitwork',
        // icon: <VscCode className= 'w-full h-full' />,//<IoIcons.IoIosPaper/>,

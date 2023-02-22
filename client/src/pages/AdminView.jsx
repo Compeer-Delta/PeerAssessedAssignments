@@ -8,7 +8,7 @@ function AdminView() {
     outputData = JSON.parse(outputData);
   return (
     <>
-      <HeroSection></HeroSection>
+      <HeroSection prevPageName = "Login" prevUrl= "/login"></HeroSection>
    
      
      <div className = 'py-2 dark:bg-zinc-900 h-screen'>

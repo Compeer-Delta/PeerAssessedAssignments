@@ -76,7 +76,7 @@ function ManageAccounts()
     }
    return(
     <>
-    <HeroSection></HeroSection>
+    <HeroSection prevPageName = "Admin view" prevUrl= "/adminview"></HeroSection>
  
    
    <div className = 'py-2 dark:bg-zinc-900 h-screen'>
