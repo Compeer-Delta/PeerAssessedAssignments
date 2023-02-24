@@ -1,8 +1,14 @@
 import React from 'react'
+import NotificationSystem from '../components/NotificationSystem'
+import HeroSection from '../components/HeroSection'
+import SideBar from '../components/SideBar'
 
 function Notifications() {
   return (
-    <div className = "font-xl">Notifications</div> 
+    <>
+    <HeroSection prevPageName = "Home Page" prevUrl= "/studentview"></HeroSection>
+    <NotificationSystem></NotificationSystem>
+    </>
   )
 }
 
