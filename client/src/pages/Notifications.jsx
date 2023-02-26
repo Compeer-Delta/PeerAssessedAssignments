@@ -6,7 +6,7 @@ import SideBar from '../components/SideBar'
 function Notifications() {
   return (
     <>
-    <HeroSection prevPageName = "Home Page" prevUrl= "/studentview"></HeroSection>
+    {/* <HeroSection prevPageName = "Home Page" prevUrl= "/studentview"></HeroSection> */}
     <NotificationSystem></NotificationSystem>
     </>
   )

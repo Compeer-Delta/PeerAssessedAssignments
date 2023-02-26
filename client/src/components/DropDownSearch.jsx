@@ -21,7 +21,7 @@ const DropDownSearch = ({setInstitution}) => {
 
   return (
     
-    <div className="w-72 h-32 font-small ">
+    <div className="w-72 h-16 font-small ">
       
       {/*clicking the drop down should open the search bar and list of options */}
       <div onClick={() => setOpen(!open)} className={`bg-indigo-100 w-full p-2 flex items-center justify-between rounded ${!selected && "text-gray-700"}`}>

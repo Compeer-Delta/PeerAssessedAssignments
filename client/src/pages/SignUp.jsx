@@ -8,6 +8,7 @@ import DropDownSearch from '../components/DropDownSearch';
 import mongoose from 'mongoose';
 //const Admin = require(`../schemas/admin`);
 //import Admin from '../schemas/admin';
+import Login from './Login';
 
 import emailjs from '@emailjs/browser';
 
@@ -35,34 +36,63 @@ function SignUp() {
 
     const [emailInputs, setEmailInputs] = useState({email: email, username: user, actualcode: actualcode });
 
-    async function checkVerification()
+    const [validationMessage, setValidationMessage] = useState("");
+
+     function checkVerification() //change to async when connecting to db -> async function checkVerification
     {
       console.log(inputcode, actualcode);
       if (inputcode == actualcode)
       {
          //lookup admin
-         let storedAdmin = await Admin.findOne({ userId: user });
+        // let storedAdmin = await Admin.findOne({ userId: user });
          //create new entry if no admin account found
-         if (!storedUser) {
+         //if (!storedUser) {
            //create admin entry in DB
-           storedUser = await new Inventory({
-             _id: mongoose.Types.ObjectId(),
-             userId: user,
-             details: {
-               firstname: firstname,
-               surname: lastname,
-               email: email,
-             },
-             school: institution,
-             password: pwd,
-           });
-           await storedAdmin.save().catch(console.error);
+          // storedUser = await new Inventory({
+         //    _id: mongoose.Types.ObjectId(),
+         //    userId: user,
+         //    details: {
+         //      firstname: firstname,
+         //      surname: lastname,
+         //      email: email,
+         //    },
+        //     school: institution,
+         //   password: pwd,
+        //   });
+        //   await storedAdmin.save().catch(console.error);
            setVerified(true)
-         } else {
+        // } else {
            //false as admin account already exists
-           setVerified(false)
-         }
+         //  setVerified(false)
+        // }
       }
+    }
+
+    function checkValidation()
+    {
+      
+      //checks all fields in form to see if they are ready to be verified if not display message to user
+      if (institution== "" || institution == "Unlisted")
+      {
+        setValidationMessage("Please ensure you select an Institution");
+      }
+      else if (pwd != repwd)
+      {
+        setValidationMessage("Please ensure your password and re-password match");
+      }
+      else if (pwd.length < 10 || ! (/\d/.test(pwd) && (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/).test(pwd)))
+      {
+        setValidationMessage("Please make sure your password is atleast 10 characters and contains atleast one numerical digit");
+      }
+      else if (!(/^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/).test(email))
+      {
+        setValidationMessage("Please make sure you have entered a valid email");
+      }
+      else{
+        setValidationMessage("");
+      updateForEmail()
+      }
+
     }
 
     function generateVerificationCode()
@@ -109,8 +139,8 @@ function SignUp() {
     return (
         <>
          
-        <div className = "sidebar text-slate-200 dark:text-slate-700 border-slate-200 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-zinc-200"> {/* bars icon */}
-          Welcome to Peer App. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
+        <div className = " font-Dosis sidebar text-slate-200 dark:text-slate-700 border-slate-200 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-zinc-200"> {/* bars icon */}
+          Welcome to COMPEER. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
           <br></br><br></br>
           To use our services <Link to="/register" className="text-indigo-600">Register here</Link> to create an Admin account!
          </div>
@@ -122,11 +152,11 @@ function SignUp() {
               <div className= 'dark:bg-zinc-900'>
                 
               <div className='max-w-xl mx-auto w-3/12 h-[900px]'>
-                <h1 className= 'py-20 text-6xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'>Verify your PeerApp account</h1> 
+                <h1 className= 'py-20 text-6xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'>Verify your COMPEER account</h1> 
                 {/*Title for account confirm*/}
                 
                 <div className= 'bg-indigo-100 ml-20 px-5 mt-32 rounded text-center py-10 border-2 border-indigo-900'>
-                  {actualcode} We've sent a verification email to: {email }
+                  We've sent a verification email to: {email}
                   <br></br><br></br>
 
                   
@@ -139,7 +169,7 @@ function SignUp() {
                   </input>
                   
                   {checkVerification()}
-                  <button className ="px-5 border-2 rounded border-indigo-900 bg-indigo-200 hover:bg-indigo-300 ">Resend</button>
+               
                 
                 </div>
               </div>   
@@ -155,6 +185,7 @@ function SignUp() {
             <div className= 'bg-indigo-100 ml-20 px-5 mt-32 rounded text-center py-10 border-2 border-indigo-900'>
               Your account has now been verified with the email {email}
               <br></br><br></br>
+              <Link to="/" className=" rounded-lg font-Dosis text-slate-900 bg-slate-400 text-center w-[150px] py-3 px-2 ml-1  text-m md:text-l font-semibold hover:bg-slate-300"> Try logging in!</Link>
 
         
               </div>
@@ -167,26 +198,27 @@ function SignUp() {
         <>
 
                 
-      <div className= 'dark:bg-zinc-900'>
-        <div className='max-w-xl mx-auto w-3/12 h-[900px]'>
-          <h1 className= 'py-20 text-7xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'> Register to PeerApp</h1> 
+      <div className= 'font-Dosis dark:bg-zinc-900'>
+        <div className='max-w-xl mx-auto w-full h-[900px]'>
+          <h1 className= 'py-14 w-[1000px] text-7xl text-slate-600 font-semibold dark:text-white rounded-md'> Register to COMPEER</h1> 
            {/*Title and form display*/}
   
 
           <form onSubmit={handleSubmit} className="w-full max-w-sm">
-          <div className="md:w-0 ml-32">
-          
+
+          <div className=" w-full ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">{validationMessage}</div>
+          <div className="md:w-0 ml-32">   
           
           Institution
           {/*email*/}
           <div className=" md:flex md:items-center">
             
-              <div className="md:w-1/3">
+              <div className="md:w-1/3 mb-10">
               <DropDownSearch setInstitution ={setInstitution}></DropDownSearch>
               </div>
               
               
-              <div className=" md:w-1/3 mt-10">
+              <div className="md:w-1/3 mt-10">
             Email
                 <input
                   onChange = {(e) => setEmail(e.target.value)}
@@ -270,7 +302,7 @@ function SignUp() {
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">    
             </div>
-          <div className="md:w-2/3"> Password
+          <div className="md:w-2/3"> Password (Must contain 10 characters and numbers)
             <input 
               onChange = {(e) => setPwd(e.target.value)}
               value={pwd}
@@ -299,12 +331,15 @@ function SignUp() {
           <div className="md:flex md:items-center">
             <div className="md:w-1/3"></div>
               <div className="md:w-2/3">
-                <button onClick= {updateForEmail} type="submit" className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                <button onClick= {checkValidation} type="submit" className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
                 Create Account
                 </button>
               </div>   
             </div>
+
           </form>
+
+        
 
     <section>
       <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>

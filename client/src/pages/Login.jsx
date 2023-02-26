@@ -25,6 +25,8 @@ function Login() {
   const [success, setSuccess] = useState(false); //temporary: always sets account login as success, however needs to be altered to check DB first
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [failedVerifMessage, setFailedVerifMessage] = useState("");
+
  
 
   useEffect(() => {userRef.current.focus();}, [])
@@ -34,15 +36,19 @@ function Login() {
     e.preventDefault();
     console.log(accType, user, pwd);
     //Debug: displays form data in console
-    let userData = {accountType: accType, username: user, pass: pwd}
+    let userData = {accountType: accType, username: user, pass: pwd} //add first / last name also when collected from DB
 
     if (accType == "adminAccount")
     {
       setIsAdmin(true);
     }    
 
-    //-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
     //DB: Check with backend to see if valid account then setSuccess to true
+    if (username === username && pwd === pwd && institution === institution) //to change when implementing db
+    {
+      setFailedVerifMessage("");
+    
     setSuccess(true);
     //if not valid then setSuccess to false and add a error message on screen
     //-------------------------------------------------------------------------
@@ -51,10 +57,15 @@ function Login() {
     //creates a session with user login info as data
     sessionStorage.setItem("loginSessionData", JSON.stringify(userData));
 
-  let outputData = sessionStorage.getItem('loginSessionData');
-  outputData = JSON.parse(outputData);
-  console.log("Session: " + outputData.accountType + " "+ outputData.username + " " + outputData.pass);
-  //Dubug: displays session data in console
+    let outputData = sessionStorage.getItem('loginSessionData');
+    outputData = JSON.parse(outputData);
+    console.log("Session: " + outputData.accountType + " "+ outputData.username + " " + outputData.pass);
+    //Dubug: displays session data in console
+    }
+    else
+    {
+      setFailedVerifMessage("Your login details are incorrect, please make sure you have the correct username, password, institution or account type again");
+    }
 
   setAccType('');
   setUser('');
@@ -73,7 +84,7 @@ function Login() {
         
         :(  
         <>
-         <div className = "sidebar text-slate-200 dark:text-slate-700 border-slate-200 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-zinc-200"> {/* bars icon */}
+         <div className = "font-Dosis sidebar text-slate-200 dark:text-slate-700 border-slate-200 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-zinc-200"> {/* bars icon */}
           Welcome to Peer App. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
           <br></br><br></br>
           To use our services <Link to="/register" className="text-indigo-600">Register here</Link> to create an Admin account!
@@ -81,32 +92,33 @@ function Login() {
          {/*Code for displaying left box, containing link to sign up page */}
         
       
-      <div className= 'dark:bg-zinc-900'>
-        <div className='max-w-xl mx-auto w-3/12 h-[900px]'>
-          <h1 className= 'py-20 text-7xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'> Login to PeerApp</h1> 
+      <div className= 'font-Dosis dark:bg-zinc-900'>
+        <div className='max-w-xl mx-auto w-full h-[900px]'>
+          <h1 className= 'py-16 text-7xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'> Login to COMPEER</h1> 
            {/*Title and form display*/}
   
            
           <form onSubmit={handleSubmit} className="w-full max-w-sm">
-    
+          <div className=" w-full ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">{failedVerifMessage}</div>
+          <div className="ml-36 text-l">Login as...</div>
             <div className="inline-flex pl-32 pb-8 rounded-md" role="group">
-
+       
               {/*Account type buttons (Student or staff)*/}
-              <ul onChange = {(e) => setAccType(e.target.value)} className="grid w-full md:grid-cols-2">
+              <ul onChange = {(e) => setAccType(e.target.value)} className="grid w-full md:grid-cols-2  ">
               <li>
                 <input type="radio" id="studentAccount" name="account" value="studentAccount" className="hidden peer" required />
-                <label for="studentAccount" className="rounded-l-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">                           
+                <label for="studentAccount" className="rounded-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 peer-checked:bg-blue-100">                           
                 <div className="block">
                   <div className="w-full text-b font-semibold">Student/Staff</div>              
                 </div>
               </label>
             </li>         
-
+          
             <li>
               <input type="radio" id="adminAccount" name="account" value="adminAccount" className="hidden peer" />
-              <label for="adminAccount" className=" rounded-r-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+              <label for="adminAccount" className=" rounded-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 peer-checked:bg-blue-100">
                 <div className="block">
-                <div className="w-full text-b font-semibold">Admin</div>
+                <div className=" px-5 w-full text-b font-semibold">Admin</div>
                 </div>  
                </label>
            </li>
@@ -115,16 +127,14 @@ function Login() {
             </div>
             <div className = "ml-32">
             <DropDownSearch setInstitution ={setInstitution}></DropDownSearch>
+    
             </div>
             {/*Username input*/}
-            <div className="md:flex md:items-center mb-6">
+            <div className="md:flex md:items-center mb-2">
 
+    
               
-            <div className="md:w-1/3">
-                
-                </div>
-              
-              <div className=" md:flex md:items-center">
+              <div className="ml-32 md:flex md:items-center md:w-2/3">
             
 
             <input

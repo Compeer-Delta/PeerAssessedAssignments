@@ -42,7 +42,7 @@ function Welcome() {
     </button>
      
         {/* left side section (containing link to sign up) */}
-         <div className = "sidebar text-slate-200 dark:text-slate-700 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-gray-100"> {/* bars icon */}
+         <div className = "font-Dosis sidebar text-slate-200 dark:text-slate-700 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-gray-100"> {/* bars icon */}
           Welcome to Peer App. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
           <br></br><br></br>
           To use our services <Link to="/register" className="text-indigo-600">Register here</Link> to create an Admin account!
@@ -50,10 +50,10 @@ function Welcome() {
          
       {/* buttons sign in*/}
 
-      <div className= 'dark:bg-zinc-900'>
-        <div className='max-w-xl mx-auto w-3/12 h-[900px]'>
+      <div className= 'font-Dosis dark:bg-zinc-900'>
+        <div className='max-w-xl mx-auto w-full h-[900px]'>
            
-          <h1 className= 'py-20 text-7xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'> Welcome to PeerApp!</h1> 
+          <h1 className= 'py-20 text-7xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'> Welcome to COMPEER!</h1> 
 
            {/* login by google account (not yet implemented) */}
           <Link to="/google-login" className="btn btn-primary rounded-full px-70 py-3 mb-4 h-8 w-3/4 text-white dark:text-[#4285F4] bg-[#4285F4] dark:bg-white hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium text-sm px-5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2">

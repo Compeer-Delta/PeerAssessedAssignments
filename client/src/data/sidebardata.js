@@ -10,25 +10,25 @@ import React from 'react'
 export const sidebardata = [
     {
         title: 'Notifications',
-        path: '/notifications',
+        path: 'notifications',
        // icon: <VscCode className= 'w-full h-full' />,//<IoIcons.IoIosPaper/>,
         cName: 'nav-text'
     },
     {
         title: 'Your Feedback',
-        path: '/viewfeedback',
+        path: 'viewfeedback',
        // icon: <VscCode className= 'w-full h-full' />,//<IoIcons.IoIosPaper/>,
         cName: 'nav-text'
     },
     {
         title: 'Submit Work',
-        path: '/submitwork',
+        path: 'submitwork',
        // icon: <VscCode className= 'w-full h-full' />,//<IoIcons.IoIosPaper/>,
         cName: 'nav-text'
     },
     {
         title: 'Settings',
-        path: '/settings',
+        path: 'settings',
        // icon: <VscCode className= 'w-full h-full' />,//<IoIcons.IoSettingsOutline/>,
         cName: 'nav-text'
     },

@@ -1,13 +1,16 @@
 import React, {useState} from 'react'
 import StudentView from '../pages/StudentView'
-import { Link } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 function ModuleItem({title}) { //parameters might need changing 
    
+    
     let outputData = sessionStorage.getItem('loginSessionData');
     outputData = JSON.parse(outputData);
 
     const [isStudent, setIsStudent] = useState(()=> checkIfStudent())
+    const [modulename, setModulename] = useState(title);
 
     function checkIfStudent()
     {
@@ -21,10 +24,10 @@ function ModuleItem({title}) { //parameters might need changing
         }
     }
     return (
-     
-    <Link to= {{pathname: "/studentview", state: {stateParam: title}}} rel="noreferrer"  className='bg-slate-300 dark:bg-zinc-700 rounded-lg w-full h-20 overflow-hidden hover:-translate-y-1 transform transition '>
+     <>
+    <Link to={"/studentview/"+title.replaceAll(" ", "_")} state={{moduleTitle: modulename, nestedPage: "default"}} rel="noreferrer" className='bg-slate-300 dark:bg-zinc-700 rounded-lg w-full h-20 overflow-hidden hover:-translate-y-1 transform transition '>
            <div className='text-gray-600 dark:text-gray-300 p-3'>
-                <h3 className ='text-lg md:text-xl mb-2 md:mb-1 font-semibold'>{title}</h3>
+                <h3 className ='text-lg md:text-xl mb-2 md:mb-1 font-semibold'>{modulename}</h3>
 
                
                 { !isStudent ? (
@@ -37,6 +40,8 @@ function ModuleItem({title}) { //parameters might need changing
            </div>
     </Link>
    
+   
+    </>
     )
 }
 export default ModuleItem

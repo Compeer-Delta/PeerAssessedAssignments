@@ -4,7 +4,7 @@ import StudentView from '../pages/StudentView'
 function SubmitWork() {
   return (
     <>
-    <StudentView></StudentView>
+   {/* <StudentView moduleTitle= {"Temp module A"}></StudentView> */}
     <Works></Works> 
     </>
     
