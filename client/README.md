@@ -11,7 +11,6 @@ Then you can run `npm start` to launch the site.
 
 Contributors:
 
-- jpb41
 - gc436
 - jd750
 - hsk24

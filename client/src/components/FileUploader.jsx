@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import works from '../data/works';
+import '../styles/uploader.css';
 
 
 function FileUploader(props) {
@@ -108,6 +109,12 @@ function FileUploader(props) {
             }
         }
     };
+
+    const removeFile = () => {
+        if(file != {}) {
+            setFile({});
+        }
+    }
     
     //QOL to show how much time is left to upload to the user
     const calcTimeLeft = function(date) {
@@ -168,12 +175,14 @@ function FileUploader(props) {
             <br></br>
 
             <div id="fileDetails" ref={fDetails}>
-            {file.name}
+            <i>{file.name}</i>
             <br></br>
             </div>
 
             <br></br>
 
+            <button id="clearButton" role="button" onClick={removeFile}>Remove File</button>
+            <br></br>
             <button id="submitButton" role="button">Submit Work</button>
         </div> 
     )
