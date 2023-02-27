@@ -7,6 +7,7 @@ import StudentView from './StudentView';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import SubmitWork from './SubmitWork';
+import FileUpload from './FileUpload';
 
 
 function AddAssignment() {
@@ -35,6 +36,7 @@ function AddAssignment() {
         dueDate: dueHour.toString()+":"+ dueMins.toString()+"" + meridiem + " " + selectedDate.toString()});
 
         console.log(addedAssignments);
+        console.log(selectedDate);
         //Add to database here
         
         setConfirmedAssignment(true);
@@ -54,15 +56,16 @@ function AddAssignment() {
     }
   
     return (
-       
+      
         <>
+
         <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
         <script src="../path/to/flowbite/dist/datepicker.js"></script>
       {confirmedAssignment  === true ? (<SubmitWork></SubmitWork>):(
       
 
         <>
-        <StudentView/> 
+     
    <div className = 'py-6 dark:bg-zinc-900 h-screen'>
       
       <div className=" border-2 border-slate-700 rounded ml-80 mr-80 px-80  bg-slate-300 py-10"> 
@@ -119,6 +122,7 @@ function AddAssignment() {
             <button onClick={addNewAssignment} className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
               Add Assignment
               </button>
+              <FileUpload></FileUpload>
               {/*
               <button onClick={addNewAccounts} className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
               Confirm changes

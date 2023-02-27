@@ -56,7 +56,7 @@ function App() {
             <Route path='/notifications' element={<Notifications />} />
             <Route path='/login/*' element={<Login/>} />
             <Route path='/submitwork' element={<SubmitWork />} />
-            <Route path='/studentview/:modulename' element={<StudentView />} />
+            <Route path='/studentview/:modulename' element={<StudentView/>} />
            {/*<Route path='/modules' element={<Modules/>}/> */}
             <Route path='/register' element={<SignUp />} />
             <Route path='/modules' element={<Modules/>} />

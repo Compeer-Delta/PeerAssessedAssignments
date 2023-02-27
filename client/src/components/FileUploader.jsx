@@ -150,13 +150,14 @@ function FileUploader(props) {
         <div id="uploadContainer">
             <br></br>
             <div id="assignmentDetails" ref={aDetails}>
-
+{/*
             <h1><b>{assignment.title}</b></h1>
             <br></br>
             <b>Set:</b>{assignment.setDate} 
             <br></br>
             <b>Due:</b>{assignment.dueDate}
             <br></br>
+    */}
             </div>
 
             <br></br>
