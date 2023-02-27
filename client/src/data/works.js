@@ -7,6 +7,7 @@ export default [
         dueDate: '9:00pm 1/10/22',
         setDate: '4.32pm 10/10/22',
         id: 1,
+        open:false,
         //tech is like tags
     },
     {
@@ -17,6 +18,7 @@ export default [
         dueDate: '9:00pm 1/10/22',
         setDate: '4.32pm 10/10/22',
         id: 2,
+        open:false,
     },
     {
         title: "Class work 2 submission",
@@ -26,6 +28,7 @@ export default [
         dueDate: '9:00pm 1/10/22',
         setDate: '4.32pm 10/10/22',
         id: 3,
+        open:false,
       
     },
     {
@@ -36,6 +39,7 @@ export default [
         dueDate: '9:00pm 1/10/22',
         setDate: '4.32pm 10/10/22',
         id: 4,
+        open:false,
       
     },
     {
@@ -46,6 +50,7 @@ export default [
         dueDate: '9:00pm 1/10/22',
         setDate: '4.32pm 10/10/22',
         id: 5,
+        open:false,
         //tech is like tags
     },
     {
@@ -56,6 +61,7 @@ export default [
         dueDate: '9:00pm 1/10/22',
         setDate: '4.32pm 10/10/22',
         id: 6,
+        open:false,
     },
     {
         title: "RE Class work 2 submission",
@@ -65,6 +71,7 @@ export default [
         dueDate: '9:00pm 1/10/24',
         setDate: '4.32pm 10/10/22',
         id: 7,
+        open:false,
     },
     {
         title: "RE Introduction to AI submission",
@@ -74,5 +81,6 @@ export default [
         dueDate: '9:00pm 1/10/24',
         setDate: '4.32pm 10/10/22',
         id: 8,
+        open:true,
     },
 ];

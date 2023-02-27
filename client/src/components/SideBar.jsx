@@ -5,7 +5,7 @@ import * as FAIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { sidebardata} from '../data/sidebardata';
 
-function SideBar({moduleTitle}) {
+function SideBar({moduleTitle, id}) {
 
    const [sidebar, setSidebar] = useState(false)
    const showSidebar = () => setSidebar(!sidebar)

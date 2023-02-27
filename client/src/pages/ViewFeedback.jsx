@@ -74,7 +74,7 @@ function ViewFeedback() {
     <h1 className= 'ml-10 py-1  text-2xl w-[700px] text-slate-600 font-semibold dark:text-white rounded-md font-Dosis '> by {fb.markedBy}</h1> 
     <h1 className= 'font-Dosis ml-10  text-l w-[700px] text-blue-600 font-semibold dark:text-white rounded-md '> Given mark / grade: {fb.mark}</h1> 
      <button onClick={() => toggleFeedback(fb)} className= 'mt-2 mb-2 font-Dosis ml-10 text-l py-2 px-2 text-slate-600 font-semibold dark:text-white rounded-md bg-slate-50'>
-      {toggleButtonText(fb) == true ? (
+      {toggleButtonText(fb) === true ? (
         <p>Hide Feedback</p>
       ):(<p> Show Feedback</p>)}
         

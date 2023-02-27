@@ -19,7 +19,7 @@ function Works() {
     
 
     return (
-        <div className = 'py-12 dark:bg-slate-900'>
+        <div className = 'py-2 dark:bg-slate-900'>
           {
             }
             <div className='pr-80 pl-80 grid grid-cols-1 gap-3'>
@@ -31,7 +31,8 @@ function Works() {
                               tech={work.tech}
                               workUrl={"/upload/" + work.id}
                               dueDate={work.dueDate}
-                              setDate={work.setDate}>
+                              setDate={work.setDate}
+                              open= {work.open}>
                                
                     </WorkItem>
                 ))}

@@ -3,7 +3,7 @@ import React from 'react'
 import {Link} from 'react-router-dom';
 import { useState } from 'react';
 
-function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate}) {
+function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open}) {
 
     const [BreifUrl, setBreifUrl] = useState("/compeerSamplePDF.pdf");
     //DB: read the file where the passed id (or title) matches with the breifing (select from breifs where title/id = passed parameter in workitem [title/id])
@@ -61,7 +61,7 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate}) {
                     
                     {LockAfterDue() === true ? (
 
-                    <Link to={"/upload/" + id} key="SubmitWork" className='inline-block px-2 py-3 text-red-800 font-bold bg-red-100 dark:bg-slate-900 hover:-translate-y-1 transform transition'>
+                    <Link to={"/upload/" + id} key="SubmitWork" className='inline-block px-2 py-3 text-yellow-800 font-bold bg-yellow-100 dark:bg-slate-900 hover:-translate-y-1 transform transition'>
                         Submit Work 📂
                     </Link>
                     ):
@@ -72,9 +72,16 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate}) {
                     )
                     }
 
+                    {open === true ? (
                     <Link to="/viewsubmissions" key="View Submissions" className='inline-block px-2 py-3 text-green-800 font-bold bg-green-100 dark:bg-slate-900 hover:-translate-y-1 transform transition'>
                         Peer Assess 📝
                     </Link>
+                    ):(
+                        <div key="SubmitWork" className='inline-block px-2 py-3 text-red-100 font-bold bg-red-800 dark:bg-slate-900 hover:-translate-y-1 transform transition'>
+                        Peer Assess Locked 🔒
+                    </div>
+                    )}
+                   
 
                     
                 
