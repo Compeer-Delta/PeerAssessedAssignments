@@ -12,7 +12,7 @@ import SignUp from './SignUp';
 import Modules from './Modules';
 import CreateModule from './CreateModule';
 import ManageAccounts from './ManageAccounts';
-import FileUpload from './FileUpload';
+import FileUpload from './StudentFileUpload';
 import AddAssignment from './AddAssignment';
 import ViewSubmissions from './ViewSubmissions';
 import PeerAssessWork from './PeerAssessWork';
@@ -63,7 +63,7 @@ function App() {
             <Route path='/CreateModule' element={<CreateModule/>} />
             <Route path='/manageaccounts' element={<ManageAccounts/>} />
             <Route path='/' element={<Welcome />} />
-            <Route path='/upload/:id' element={<FileUpload/>} />
+            <Route path='/upload/:id' element={<StudentFileUpload/>} />
             <Route path='/addassignment' element={<AddAssignment/>} />
             <Route path='/viewsubmissions' element={<ViewSubmissions/>} />
             <Route path='/peerassess' element={<PeerAssessWork/>} />
