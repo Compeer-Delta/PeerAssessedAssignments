@@ -12,7 +12,7 @@ import SignUp from './SignUp';
 import Modules from './Modules';
 import CreateModule from './CreateModule';
 import ManageAccounts from './ManageAccounts';
-import FileUpload from './StudentFileUpload';
+import StudentFileUpload from './StudentFileUpload';
 import AddAssignment from './AddAssignment';
 import ViewSubmissions from './ViewSubmissions';
 import PeerAssessWork from './PeerAssessWork';

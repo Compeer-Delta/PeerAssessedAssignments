@@ -1,8 +1,5 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { format } from 'date-fns';
-import works from '../data/works';
 import '../styles/uploader.css';
 
 
@@ -17,7 +14,6 @@ function FileUploader(props) {
 
     const handleFile = function(e) {
         setFile(e[0]);
-        
     };
 
     //Handles drag/drop
