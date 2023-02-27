@@ -7,7 +7,7 @@ import StudentView from './StudentView';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import SubmitWork from './SubmitWork';
-import FileUpload from './FileUpload';
+import FileUploader from '../components/FileUploader';
 
 
 function AddAssignment() {
@@ -122,7 +122,7 @@ function AddAssignment() {
             <button onClick={addNewAssignment} className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
               Add Assignment
               </button>
-              <FileUpload></FileUpload>
+              <FileUploader></FileUploader>
               {/*
               <button onClick={addNewAccounts} className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
               Confirm changes

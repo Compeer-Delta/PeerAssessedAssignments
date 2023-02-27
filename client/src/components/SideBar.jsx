@@ -28,7 +28,7 @@ function SideBar({moduleTitle}) {
                             "p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer text-slate-900 dark:text-gray-300 bg-slate-100 dark:bg-zinc-900 hover:-translate-y-2 transform transition">
                             <li key={index} className= {item.cName}>
                             
-                                <Link to={"/StudentView/" + moduleTitle.replaceAll(" ", "_")} state={{moduleTitle: moduleTitle, nestedPage: item.path}}>
+                                <Link to={"/modules/" + moduleTitle.replaceAll(" ", "_")} state={{moduleTitle: moduleTitle, nestedPage: item.path}}>
                                     {item.icon}
                                     <span>{item.title}</span>
                                 </Link>
