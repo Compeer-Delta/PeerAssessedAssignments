@@ -12,7 +12,7 @@ import SignUp from './SignUp';
 import Modules from './Modules';
 import CreateModule from './CreateModule';
 import ManageAccounts from './ManageAccounts';
-import FileUpload from './FileUpload';
+import StudentFileUpload from './StudentFileUpload';
 import AddAssignment from './AddAssignment';
 import ViewSubmissions from './ViewSubmissions';
 import PeerAssessWork from './PeerAssessWork';
@@ -53,17 +53,17 @@ function App() {
 
         <>    
           <Routes>
-            <Route path='/notifications' element={<Notifications />} />
+            <Route path='/notifications/:modulename' element={<Notifications />} />
             <Route path='/login/*' element={<Login/>} />
             <Route path='/submitwork' element={<SubmitWork />} />
-            <Route path='/studentview/:modulename' element={<StudentView />} />
+            <Route path='/module/:id' element={<StudentView />} />
            {/*<Route path='/modules' element={<Modules/>}/> */}
             <Route path='/register' element={<SignUp />} />
             <Route path='/modules' element={<Modules/>} />
-            <Route path='/CreateModule' element={<CreateModule/>} />
+            <Route path='/createmodule' element={<CreateModule/>} />
             <Route path='/manageaccounts' element={<ManageAccounts/>} />
             <Route path='/' element={<Welcome />} />
-            <Route path='/upload/:id' element={<FileUpload/>} />
+            <Route path='/upload/:id' element={<StudentFileUpload/>} />
             <Route path='/addassignment' element={<AddAssignment/>} />
             <Route path='/viewsubmissions' element={<ViewSubmissions/>} />
             <Route path='/peerassess' element={<PeerAssessWork/>} />

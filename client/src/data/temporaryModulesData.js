@@ -1,19 +1,25 @@
-import React from 'react'
-
 export default [
     {
-        modulename: 'Temp Module A'
+        moduleId: "6575",
+        moduleName: "Temp Module A",
+        insitution: "University of Kent",
+        enrolledTeachers: [],
+        ongoingAssignments: []
     },
     {
-        modulename: 'Temp Module B'
+        moduleId: "6000",
+        moduleName: "Temp Module B",
+        insitution: "University of Kent",
+        enrolledTeachers: [],
+        ongoingAssignments: []
     },
     {
-        modulename: 'Temp Module C'
+        moduleId: "1111",
+        moduleName: "Temp Module C  ",
+        insitution: "University of Kent",
+        enrolledTeachers: [],
+        ongoingAssignments: []
     },
-    {
-        modulename: 'Temp Module D'
-    },
-    {
-        modulename: 'Temp Module E'
-    },
-]
+];
+
+//last updated 27/02 - jd750
