@@ -99,6 +99,7 @@ function FileUploader(props) {
             <button id="clearButton" role="button" onClick={removeFile}>Remove File</button>
             <br></br>
             <button id="submitButton" role="button">Submit File</button>
+            <br></br>
         </div> 
     )
 }
