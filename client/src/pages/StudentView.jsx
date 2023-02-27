@@ -10,27 +10,58 @@ import Works from '../components/Works'
 import ViewFeedback from './ViewFeedback';
 import Notifications from './Notifications';
 import PeerManager from './PeerManager';
+import temporaryModulesData from '../data/temporaryModulesData';
 
 function StudentView({title}) {
-    const [toggle, setToggle] = useState(true);
-    const [isShown, setIsShown] = useState(false);
+  // const [toggle, setToggle] = useState(true);
+  // const [isShown, setIsShown] = useState(false);
+  const [module, setModuleDetails] = useState({});
 
 
-    const toggleClass = <SubmitWork/>;
-
-   // const {type}  = useParams();
-  //  const stateParamVal = useLocation().state.stateParam
-
- // console.log(type + "test ");
+  const toggleClass = <SubmitWork/>;
+  // console.log(type + "test ");
   const location = useLocation();
-  const {moduleTitle} = location.state;
+  // const {moduleTitle} = location.state;
   const {nestedPage} = location.state;
 
+  const params = useParams();
+  
+  const getModuleDetails = function(id) {
+    const moduleArray = Object.values(temporaryModulesData);
 
-    return(
-        <>
-   
- <HeroSection prevPageName = "Modules" prevUrl= "/modules"></HeroSection>
+    for(let i = 0; i < moduleArray.length; i++) {
+        let m = moduleArray[i];
+
+        if(m.moduleId == id) {
+            //calcTimeLeft(w.dueDate);
+            return m;
+        }
+    }
+  };
+
+  useEffect(() => {
+    const onPageLoad = () => {
+
+        //Debugging
+        console.log(params.id);
+        setModuleDetails(getModuleDetails(params.id));
+        console.log(getModuleDetails(params.id));
+         
+        // //console.log(userData);
+    };
+
+    if(document.readyState === 'complete') {
+        onPageLoad();
+    } else {
+        window.addEventListener('load', onPageLoad);
+        return () => window.removeEventListener('load', onPageLoad);
+    }
+}, []);
+
+  return(
+    <>
+    
+    <HeroSection prevPageName = "Modules" prevUrl= "/modules"></HeroSection>
  
           <div className = 'font-Dosis bg:white dark:bg-gray-400'>
             <div className='w-full mx-auto h-full'>
@@ -58,13 +89,13 @@ function StudentView({title}) {
 
                 ):(<></>)}
                 
-              </>
-            </div>
+          </>
         </div>
+      </div>
 
-        <LoginCard></LoginCard>
-        <div className= "font-bold py-4 font-Dosis text-center text-4xl text-slate-400">Module: {moduleTitle} </div>
-        {nestedPage === "notifications" ? (
+      <LoginCard></LoginCard>
+      <div className= "font-bold py-4 font-Dosis text-center text-4xl text-slate-400">Module: {module.moduleName} </div>
+      {nestedPage === "notifications" ? (
         <Notifications/>
         ): nestedPage === "viewfeedback" ? (
           <ViewFeedback></ViewFeedback>
