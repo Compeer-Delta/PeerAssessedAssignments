@@ -21,7 +21,6 @@ function StudentView({title}) {
   const toggleClass = <SubmitWork/>;
   // console.log(type + "test ");
   const location = useLocation();
-   const {moduleTitle} = location.state;
   const {nestedPage} = location.state;
 
   const params = useParams();
@@ -58,7 +57,7 @@ function StudentView({title}) {
         window.addEventListener('load', onPageLoad);
         return () => window.removeEventListener('load', onPageLoad);
     }
-}, []);
+  }, []);
 
   return(
     <>
@@ -96,7 +95,7 @@ function StudentView({title}) {
       </div>
 
       <LoginCard></LoginCard>
-      <div className= "font-bold py-4 font-Dosis text-center text-4xl text-slate-400">Module: {moduleTitle} </div>
+      <div className= "font-bold py-4 font-Dosis text-center text-4xl text-slate-400">Module: {m.moduleTitle} </div>
       {nestedPage === "notifications" ? (
         <Notifications/>
         ): nestedPage === "viewfeedback" ? (
