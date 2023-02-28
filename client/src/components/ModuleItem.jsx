@@ -9,12 +9,12 @@ function ModuleItem({title, modId}) { //parameters might need changing
     let outputData = sessionStorage.getItem('loginSessionData');
     outputData = JSON.parse(outputData);
 
-    const [isStudent, setIsStudent] = useState(()=> checkIfStudent())
+    const [isStudentorTeacher, setIsStudentorTeacher] = useState(()=> checkIfStudentorTeacher())
     const [modulename, setModulename] = useState(title);
 
-    function checkIfStudent()
+    function checkIfStudentorTeacher()
     {
-        if (outputData.accountType == "studentAccount")
+        if (outputData.accountType == "studentAccount" ||outputData.accountType == "teacherAccount")
         {
             return true;
         }
@@ -30,7 +30,7 @@ function ModuleItem({title, modId}) { //parameters might need changing
                 <h3 className ='text-lg md:text-xl mb-2 md:mb-1 font-semibold'>{modulename}</h3>
 
                
-                { !isStudent ? (
+                { !isStudentorTeacher ? (
                 <div className='inline-block ml-72 px-10 text-slate-700 bg-slate-100 dark:bg-slate-900 hover:bg-indigo-300'>
                                  Edit
                                 </div>

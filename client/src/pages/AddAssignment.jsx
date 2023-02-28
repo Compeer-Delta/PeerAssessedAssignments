@@ -54,6 +54,20 @@ function AddAssignment() {
         if(dueHour === "12"){setDueHour(11)}
     }
     }
+
+    function toggleNewAssignment()
+    {
+      setAddedAssignments("");
+      setAssignTitle("");
+      setAssignDesc("");
+      setSelectedDate("");
+      setDueMins("");
+      setDueHour("");
+      setMeridiem("AM");
+      setNumPeerAssess("");
+      setConfirmedAssignment(false);
+
+    }
   
     return (
       
@@ -61,26 +75,36 @@ function AddAssignment() {
 
         <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
         <script src="../path/to/flowbite/dist/datepicker.js"></script>
-      {confirmedAssignment  === true ? (<SubmitWork></SubmitWork>):(
-      
-
-        <>
      
-   <div className = 'py-6 dark:bg-zinc-900 h-screen'>
       
-      <div className=" border-2 border-slate-700 rounded ml-80 mr-80 px-80  bg-slate-300 py-10"> 
-      <h1 className= ' text-2xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md pb-4'>  Add Assignment: </h1> 
-    
-      
+       
+     
+        
+   <div className = 'py-3 dark:bg-zinc-900 h-screen'>
+   <h1 className= ' font-Dosis ml-80 text-3xl w-full text-slate-600 font-semibold dark:text-white rounded-md pb-4'>  Add Assignment:</h1> 
+      <div className=" font-Dosis text-xl border-2 border-slate-700 rounded ml-80 mr-80 px-80  bg-slate-300 py-10"> 
+     
+      {confirmedAssignment  === true ? (<>
+            <p className = "text-center bg-green-200">You have set a new assignment {assignTitle} </p>
+        
+            <p  className = "text-center bg-green-200 "> You can view it in the Submit work tab</p>
 
-      <h1 className= '  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Title: </h1> 
+            <button onClick={toggleNewAssignment} className="mt-10 ml-48 shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
+              Add New Assignment
+            </button> </>
+
+           ):(<>
+     
+
+      <h1 className= ' text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Title: </h1> 
+      
       <input
              
             onChange = {(e) => setAssignTitle(e.target.value)}
              value={assignTitle}
              name="username"
               required 
-            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="Assignment Title">
+            className="mb-10 bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="Assignment Title">
       </input>
       <h1 className= '  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Description: </h1> 
       <textarea
@@ -97,45 +121,55 @@ function AddAssignment() {
       <h1 className= ' mt-10 text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Due Time: </h1> 
 
 </div>
-<div className="flex flex-row mr-36"> 
-        <DatePicker selected={selectedDate} onChange={date => setSelectedDate(date)} dateFormat='dd/MM/yyyy' minDate={new Date()} />
+<div className="flex flex-row mr-36 "> 
+        <DatePicker className="rounded-md " selected={selectedDate} onChange={date => setSelectedDate(date)} dateFormat='dd/MM/yyyy' minDate={new Date()} />
 
         <input required  placeholder = "0" className=" text-center rounded-md" type="number" min="1" max="12" step="1" value={dueHour} onChange={(e => {if (e.target.value > 12){setDueHour(12)} else if (e.target.value < 1){setDueHour(1)} else {setDueHour(e.target.value)} if (meridiem === "AM" && e.target.value === "12") {setDueHour(11)} })}></input>
-        :: <input placeholder = "00" required className=" text-center rounded-md" maxLength="2" type="number" min="00" max="59" step="1" value={dueMins} onChange={(e => {if (e.target.value > 59){setDueMins(59)} else if (e.target.value < 0){setDueMins(0)} else if (e.target.value <10) {setDueMins(("0"+ e.target.value).slice(-2))} else {setDueMins((e.target.value).slice(-2))}})}></input>
+        :: <input placeholder = "00" required className=" text-center rounded-md ml-2" maxLength="2" type="number" min="00" max="59" step="1" value={dueMins} onChange={(e => {if (e.target.value > 59){setDueMins(59)} else if (e.target.value < 0){setDueMins(0)} else if (e.target.value <10) {setDueMins(("0"+ e.target.value).slice(-2))} else {setDueMins((e.target.value).slice(-2))}})}></input>
      
         <button  className="ml-3 text-center rounded hover:bg-slate-400 text-slate-700 bg-slate-100" value={meridiem} onClick={switchMeridiem}> {meridiem} </button>
       
 </div>   
 
-<div className="py-10">
-  No. of Peer assessment tasks per student:
-  <input  className=" text-center rounded-md" type="number" min="0" max="34" step="1" value={numPeerAssess} onChange={(e => {if (e.target.value > 12){setNumPeerAssess(12)} else if (e.target.value < 0){setNumPeerAssess(0)} else {setNumPeerAssess(e.target.value)}})}></input>
+<div className=" text-l w-[700px] text-slate-600 font-semibold dark:text-white py-10">
+  Peers per submission:
+  <input  className=" ml-2 text-center rounded-md" type="number" min="0" max="34" step="1" value={numPeerAssess} onChange={(e => {if (e.target.value > 12){setNumPeerAssess(12)} else if (e.target.value < 0){setNumPeerAssess(0)} else {setNumPeerAssess(e.target.value)}})}></input>
       {/* CHANGE THIS LATER TO MAKE MAX EQUAL TO THE NUMBER OF STUDENTS IN THE MODULE */}
 </div>
+<h1 className= ' mb-2 ml-56 text-l w-full text-slate-600 font-semibold dark:text-white rounded-md '> Upload Breif below: </h1> 
+<FileUploader></FileUploader>
+
 
       {/*submit button */}
-      <div className="md:flex md:items-center px-32 py-5">
+      <div className="md:flex md:items-center py-5">
         
           <div className="md:w-1/3"></div>
             <div className="md:w-2/3 ">
+              
+           
 
             <button onClick={addNewAssignment} className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
               Add Assignment
               </button>
-              <FileUploader></FileUploader>
+
+              
+              
               {/*
               <button onClick={addNewAccounts} className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
               Confirm changes
               </button>
         */}
-            </div>   
+            </div> 
+              
           </div>
-        
+          
+          </>)}
           </div>
+          
 
       </div>
-    </>
-)}
+
+
         </>
         
     )

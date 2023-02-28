@@ -15,6 +15,10 @@ function Login() {
   const userRef = useRef();
   const errRef = useRef();
 
+
+  const TEST_TEACHER_ACCOUNT = {username: "test_teacher", password:"test123"}
+  //THIS IS TEMPORARY, to access as a teacher / display teacher options 
+
   const [institution, setInstitution] = useState('');
   const [accType, setAccType] = useState('');
   const [user, setUser] = useState('');
@@ -36,18 +40,26 @@ function Login() {
     e.preventDefault();
     console.log(accType, user, pwd);
     //Debug: displays form data in console
+    setFailedVerifMessage("");
+
+      
     let userData = {accountType: accType, username: user, pass: pwd} //add first / last name also when collected from DB
 
     if (accType == "adminAccount")
     {
       setIsAdmin(true);
     }    
+    
+    if (user === TEST_TEACHER_ACCOUNT.username && pwd === TEST_TEACHER_ACCOUNT.password)
+    {
+      userData.accountType = "teacherAccount";
+    }
 
 //-------------------------------------------------------------------------
     //DB: Check with backend to see if valid account then setSuccess to true
     if (username === username && pwd === pwd && institution === institution) //to change when implementing db
     {
-      setFailedVerifMessage("");
+      
     
     setSuccess(true);
     //if not valid then setSuccess to false and add a error message on screen

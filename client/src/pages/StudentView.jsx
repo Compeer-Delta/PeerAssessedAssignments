@@ -11,13 +11,16 @@ import ViewFeedback from './ViewFeedback';
 import Notifications from './Notifications';
 import PeerManager from './PeerManager';
 import temporaryModulesData from '../data/temporaryModulesData';
+import ApproveFeedback from './ApproveFeedback'
 
 function StudentView({title}) {
   // const [toggle, setToggle] = useState(true);
   // const [isShown, setIsShown] = useState(false);
+
+  let outputData = sessionStorage.getItem('loginSessionData');
+  outputData = JSON.parse(outputData);
+
   const [module, setModuleDetails] = useState({});
-
-
   const toggleClass = <SubmitWork/>;
   // console.log(type + "test ");
   const location = useLocation();
@@ -72,7 +75,7 @@ function StudentView({title}) {
               <>
                 <SideBar moduleTitle={modTitle} moduleId={module.moduleId}> </SideBar>
 
-                {false === false ? ( // CHANGE TO ONLY APPEAR IF TEACHER !!!!!!!
+                {outputData.accountType === "teacherAccount" ? ( // CHANGE TO ONLY APPEAR IF TEACHER !!!!!!!
                  <div className = 
                  "border-2 border-slate-700 rounded-r-md fixed mt-80 h-2/6 items-bottom flex px-5 bg-slate-300">
 
@@ -86,7 +89,7 @@ function StudentView({title}) {
                 </Link>
 
                 <Link to={"/modules/" + module.moduleId} state={{moduleTitle: modTitle, nestedPage: "approvefeedback"}} className=' fixed left-0 text-gray-300 dark:text-gray-300 p-3 ml-4 mt-52 py-3 bg-slate-800 dark:bg-zinc-700 w-64 overflow-hidden hover:-translate-y-1 transform transition '>
-                  <h3 className= " text-center text-lg font-semibold ">Manage Peer Feedback </h3>
+                  <h3 className= " text-center text-lg font-semibold ">Peer Feedback requests </h3>
                 </Link>
                 </div>
 
@@ -108,6 +111,8 @@ function StudentView({title}) {
           <AddAssignment></AddAssignment>
         ): nestedPage === "peermanager" ? (
           <PeerManager></PeerManager>
+        ): nestedPage === "approvefeedback"? (
+            <ApproveFeedback></ApproveFeedback>
         ): //default
         (  <div className= "ml-80 mr-80 py-32 font-Dosis font-bold text-center text-8xl text-slate-200 border-dashed border-4 rounded border-slate-200">Select a tab on the side bar to view here!  </div>)
         }

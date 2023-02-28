@@ -3,7 +3,9 @@ import SubmitWork from './SubmitWork'
 import { Link } from 'react-router-dom';
 //import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import App from './App'
-
+import COMPEER1 from '/images/COMPEER1.jpg';
+import COMPEER2 from '/images/COMPEER2.jpg';
+import COMPEER3 from '/images/COMPEER3.jpg';
 function Welcome() {
   const [theme, setTheme] = useState(null);
   useEffect(()=> {
@@ -46,6 +48,9 @@ function Welcome() {
           Welcome to Peer App. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
           <br></br><br></br>
           To use our services <Link to="/register" className="text-indigo-600">Register here</Link> to create an Admin account!
+
+          
+         {/* <img src={COMPEER3} className="" alt="image not found"  /> */}
          </div>
          
       {/* buttons sign in*/}

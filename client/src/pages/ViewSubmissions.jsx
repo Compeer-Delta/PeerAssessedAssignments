@@ -7,6 +7,9 @@ import {Link} from 'react-router-dom';
 import {useLocation} from 'react-router-dom';
 function ViewSubmissions() {
 
+    let outputData = sessionStorage.getItem('loginSessionData');
+    outputData = JSON.parse(outputData);
+
     const [submissions, setSubmission] = useState([
         {submissionTitle: "My Submission", submitBy: "Hathan Khatkar", numFeedback: 2,  },
         {submissionTitle: "Web Development assignment", submitBy: "Jordan D'Souza", numFeedback: 6 },
@@ -32,30 +35,35 @@ function ViewSubmissions() {
          //TEMPORARILY JUST DISPLAYS FIRST FEW
          function limitViewedSubmissions()
          {
-          const arr=[];
-         for (var i=0; i < numOfSubmissions; i++)
-         {
-          
-          if (peersPerSubmission > i)
+          var arr=[];
+          if (outputData.accountType === "studentAccount")
           {
-           // setLimitedSubmissions(prev => [...prev, {submissionTitle: submissions[i-1].submissionTitle, submitBy: submissions[i-1].submitBy, numFeedback: submissions[i-1].numFeedback}]);
-           arr.push({submissionTitle: submissions[i].submissionTitle, submitBy: submissions[i].submitBy, numFeedback: submissions[i].numFeedback});
-          }
+            for (var i=0; i < numOfSubmissions; i++)
+            {
+          
+            if (peersPerSubmission > i)
+            {
+            // setLimitedSubmissions(prev => [...prev, {submissionTitle: submissions[i-1].submissionTitle, submitBy: submissions[i-1].submitBy, numFeedback: submissions[i-1].numFeedback}]);
+            arr.push({submissionTitle: submissions[i].submissionTitle, submitBy: submissions[i].submitBy, numFeedback: submissions[i].numFeedback});
+            }
 
           //console.log("i " + (TEMPORARYAccountID-i))
          // if (i % TEMPORARYAccountID)
          // {
             
          // }
-         
-         }
+            }
+          }
+          else {
+            arr= arr.concat(submissions);
+          } 
          return arr
         }
 
   return (
     <>
 
-    {assignmentId} + {modId} + {assignmentTitle}
+    {/* {assignmentId} + {modId} + {assignmentTitle} */}
     <HeroSection prevPageName = "Home Page" prevUrl= "/studentview"></HeroSection>
     <h1 className= ' pl-72 py-10 text-3xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '> {assignmentTitle}'s Submissions</h1> 
     
