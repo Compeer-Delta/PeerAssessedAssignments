@@ -8,6 +8,7 @@ export default [
         setDate: '4.32pm 10/10/22',
         id: 1,
         open:false,
+        moduleId: 1,
         //tech is like tags
     },
     {
@@ -19,6 +20,7 @@ export default [
         setDate: '4.32pm 10/10/22',
         id: 2,
         open:false,
+        moduleId: 1,
     },
     {
         title: "Class work 2 submission",
@@ -29,7 +31,7 @@ export default [
         setDate: '4.32pm 10/10/22',
         id: 3,
         open:false,
-      
+        moduleId: 1,
     },
     {
         title: "Introduction to AI submission",
@@ -40,7 +42,7 @@ export default [
         setDate: '4.32pm 10/10/22',
         id: 4,
         open:false,
-      
+        moduleId: 1,
     },
     {
         title: 'RE A* Algorithm Assignment',
@@ -51,6 +53,7 @@ export default [
         setDate: '4.32pm 10/10/22',
         id: 5,
         open:false,
+        moduleId:1,
         //tech is like tags
     },
     {
@@ -62,6 +65,7 @@ export default [
         setDate: '4.32pm 10/10/22',
         id: 6,
         open:false,
+        moduleId: 1,
     },
     {
         title: "RE Class work 2 submission",
@@ -72,6 +76,7 @@ export default [
         setDate: '4.32pm 10/10/22',
         id: 7,
         open:false,
+        moduleId: 1,
     },
     {
         title: "RE Introduction to AI submission",
@@ -82,5 +87,6 @@ export default [
         setDate: '4.32pm 10/10/22',
         id: 8,
         open:true,
+        moduleId: 1,
     },
 ];

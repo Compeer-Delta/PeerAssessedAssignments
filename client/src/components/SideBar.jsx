@@ -5,7 +5,7 @@ import * as FAIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { sidebardata} from '../data/sidebardata';
 
-function SideBar({moduleTitle, id}) {
+function SideBar({moduleTitle, moduleId}) {
 
    const [sidebar, setSidebar] = useState(false)
    const showSidebar = () => setSidebar(!sidebar)
@@ -28,7 +28,7 @@ function SideBar({moduleTitle, id}) {
                             "p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer text-slate-900 dark:text-gray-300 bg-slate-100 dark:bg-zinc-900 hover:-translate-y-2 transform transition">
                             <li key={index} className= {item.cName}>
                             
-                                <Link to={"/modules/" + moduleTitle.replaceAll(" ", "_")} state={{moduleTitle: moduleTitle, nestedPage: item.path}}>
+                                <Link to={"/modules/" + moduleId} state={{moduleTitle: moduleTitle, nestedPage: item.path}}>
                                     {item.icon}
                                     <span>{item.title}</span>
                                 </Link>

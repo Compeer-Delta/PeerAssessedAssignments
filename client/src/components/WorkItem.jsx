@@ -3,7 +3,7 @@ import React from 'react'
 import {Link} from 'react-router-dom';
 import { useState } from 'react';
 
-function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open}) {
+function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, moduleId}) {
 
     const [BreifUrl, setBreifUrl] = useState("/compeerSamplePDF.pdf");
     //DB: read the file where the passed id (or title) matches with the breifing (select from breifs where title/id = passed parameter in workitem [title/id])
@@ -73,7 +73,7 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open}) {
                     }
 
                     {open === true ? (
-                    <Link to="/viewsubmissions" key="View Submissions" className='inline-block px-2 py-3 text-green-800 font-bold bg-green-100 dark:bg-slate-900 hover:-translate-y-1 transform transition'>
+                    <Link to="/viewsubmissions" state={{assignmentTitle: title, assignmentId: id, modId: moduleId}} key="View Submissions" className='inline-block px-2 py-3 text-green-800 font-bold bg-green-100 dark:bg-slate-900 hover:-translate-y-1 transform transition'>
                         Peer Assess 📝
                     </Link>
                     ):(

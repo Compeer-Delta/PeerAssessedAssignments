@@ -32,8 +32,8 @@ function Works() {
                               workUrl={"/upload/" + work.id}
                               dueDate={work.dueDate}
                               setDate={work.setDate}
-                              open= {work.open}>
-                               
+                              open= {work.open}
+                              moduleId = {work.moduleId}>
                     </WorkItem>
                 ))}
             </div>

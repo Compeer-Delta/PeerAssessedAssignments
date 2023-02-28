@@ -34,7 +34,9 @@ function StudentView({title}) {
 
         if(m.moduleId == id) {
             //calcTimeLeft(w.dueDate);
+            console.log("MODULE" + m);
             return m;
+           
         }
     }
   };
@@ -67,22 +69,22 @@ function StudentView({title}) {
             <div className='w-full mx-auto h-full'>
               
               <>
-                <SideBar moduleTitle={moduleTitle}> </SideBar>
+                <SideBar moduleTitle={moduleTitle} moduleId={module.moduleId}> </SideBar>
 
                 {false === false ? ( // CHANGE TO ONLY APPEAR IF TEACHER !!!!!!!
                  <div className = 
                  "border-2 border-slate-700 rounded-r-md fixed mt-80 h-2/6 items-bottom flex px-5 bg-slate-300">
 
                   <p className="py-6 px-16 underline underline-offset-8 text-center text-xl mb-1 font-semibold ">Teacher Options </p>
-                  <Link to={"/modules/" + moduleTitle.replaceAll(" ", "_")} state={{moduleTitle: moduleTitle, nestedPage: "addassignment"}} className=' fixed left-0 text-gray-300 dark:text-gray-300 p-3 mt-20 ml-4 py-3 bg-slate-800 dark:bg-zinc-700 w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                  <Link to={"/modules/" + module.moduleId} state={{moduleTitle: moduleTitle, nestedPage: "addassignment"}} className=' fixed left-0 text-gray-300 dark:text-gray-300 p-3 mt-20 ml-4 py-3 bg-slate-800 dark:bg-zinc-700 w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                     <h3 className= " text-center text-lg   font-semibold ">Add Assignment </h3>
                   </Link>
 
-                  <Link to={"/modules/" + moduleTitle.replaceAll(" ", "_")} state={{moduleTitle: moduleTitle, nestedPage: "peermanager"}} className=' fixed left-0 text-gray-300 dark:text-gray-300 p-3 ml-4 mt-36 py-3 bg-slate-800 dark:bg-zinc-700 w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                  <Link to={"/modules/" +module.moduleId} state={{moduleTitle: moduleTitle, nestedPage: "peermanager"}} className=' fixed left-0 text-gray-300 dark:text-gray-300 p-3 ml-4 mt-36 py-3 bg-slate-800 dark:bg-zinc-700 w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                   <h3 className= " text-center text-lg font-semibold ">Open Assignments to Peers </h3>
                 </Link>
 
-                <Link to={"/modules/" + moduleTitle.replaceAll(" ", "_")} state={{moduleTitle: moduleTitle, nestedPage: "approvefeedback"}} className=' fixed left-0 text-gray-300 dark:text-gray-300 p-3 ml-4 mt-52 py-3 bg-slate-800 dark:bg-zinc-700 w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                <Link to={"/modules/" + module.moduleId} state={{moduleTitle: moduleTitle, nestedPage: "approvefeedback"}} className=' fixed left-0 text-gray-300 dark:text-gray-300 p-3 ml-4 mt-52 py-3 bg-slate-800 dark:bg-zinc-700 w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                   <h3 className= " text-center text-lg font-semibold ">Manage Peer Feedback </h3>
                 </Link>
                 </div>
