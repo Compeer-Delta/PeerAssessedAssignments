@@ -23,7 +23,7 @@ const moduleSchema = new Schema({
     required: false,
     default: [],
   },
-  ongoingAssignments: {
+  assignments: {
     type: [],
     required: false,
     default: [],
