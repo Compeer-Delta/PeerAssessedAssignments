@@ -5,7 +5,7 @@ import auth from "../middleware/auth.js";
 import userController from "../controllers/userController.js";
 
 //routes for users
-router.post("/login/*", userController.loginUser); //login user
+router.post("/login", userController.loginUser); //login user
 router.post("/register", userController.createUser); //register user
 //router.post("/logout", auth.authUser, userController.logoutUser); //logout user
 
