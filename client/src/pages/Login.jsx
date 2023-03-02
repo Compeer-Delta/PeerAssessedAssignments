@@ -7,7 +7,7 @@ import SignUp from '../pages/SignUp';
 import Modules from './Modules';
 import DropDownSearch from '../components/DropDownSearch';
 import AdminView from './AdminView';
-
+import sideImage from '/images/LoginSplashImage_COMPEER.png'
 
 
 function Login() {
@@ -99,11 +99,9 @@ function Login() {
         
         :(  
         <>
-         <div className = "font-Dosis sidebar text-slate-200 dark:text-slate-100 border-slate-200 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-indigo-900 dark:border-indigo-500"> {/* bars icon */}
-          Welcome to Peer App. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
-          <br></br><br></br>
-          To use our services <Link to="/register" className="text-indigo-400">Register here</Link> to create an Admin account!
-         </div>
+          <img src={sideImage} className ="font-Dosis sidebar text-slate-200 dark:text-slate-100 fixed lg:left-0 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-indigo-900"/>{/* bars icon */}
+   
+  
          {/*Code for displaying left box, containing link to sign up page */}
         
       
