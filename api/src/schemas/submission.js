@@ -9,41 +9,48 @@ import { generateUUID } from "../functions/generateUUID.js";
 const submissionSchema = new Schema(
   {
     _id: Schema.Types.ObjectId,
-    userId: {
-      type: String,
-      required: true,
-      default: null,
-    },
-    assignmentId: {
-      type: String,
-      required: true,
-      default: null,
-    },
-    moduleId: {
-      type: String,
-      required: true,
-      default: null,
-    },
     submissionId: {
       type: String,
       required: true,
       default: generateUUID,
     },
+    userId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    assignmentId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Assignment",
+      },
+    ],
+    moduleId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Module",
+      },
+    ],
     binData: {
       type: Buffer,
       required: true,
       default: null,
     },
-    reviewers: {
-      type: [],
-      required: true,
-    },
+    reviewers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     feedback: [
       {
-        markerId: {
-          type: String,
-          required: true,
-        },
+        marker: [
+          {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+          },
+        ],
         comment: {
           type: String,
           required: true,

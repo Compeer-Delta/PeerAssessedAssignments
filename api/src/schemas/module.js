@@ -10,26 +10,34 @@ const moduleSchema = new Schema(
       type: String,
       required: true,
       default: generateUUID,
+      unique: true,
     },
-    moduleName: {
+    title: {
       type: String,
       required: true,
-      default: null,
     },
+    description: {
+      type: String,
+    },
+    teachers: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      index: true,
+    }],
+    students: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      index: true,
+    }],
+    assignments: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Assignment',
+      index: true,
+    }],
     institutionName: {
       type: String,
       required: true,
       default: null,
-    },
-    enrolledTeachers: {
-      type: [],
-      required: false,
-      default: [],
-    },
-    assignments: {
-      type: [],
-      required: false,
-      default: [],
     },
   },
   {

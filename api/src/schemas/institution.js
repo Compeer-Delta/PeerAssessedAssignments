@@ -31,21 +31,18 @@ const institutionSchema = new Schema(
       required: true,
       default: null,
     },
-    institutionModules: {
-      type: [],
-      required: true,
-      default: [],
-    },
-    institutionAdmins: {
-      type: [],
-      required: true,
-      default: [],
-    },
-    institutionUsers: {
-      type: [],
-      required: true,
-      default: [],
-    },
+    modules: [{
+        type: Schema.Types.ObjectId,
+        ref: "Module",
+    }],
+    admins: [{
+        type: Schema.Types.ObjectId,
+        ref: "Admin",
+    }],
+    users: [{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    }],
   },
   {
     timestamps: {

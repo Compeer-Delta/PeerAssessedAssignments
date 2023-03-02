@@ -10,20 +10,21 @@ const notifSchema = new Schema(
       required: true,
       default: generateUUID,
     },
-    userId: {
-      type: String,
-      required: true,
-      default: null,
-    },
+    userId: [{
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    }],
     notifTitle: {
       type: String,
       required: true,
-      default: null,
     },
     notifContent: {
       type: String,
       required: true,
-      default: null,
+    },
+    isRead: {
+      type: Boolean,
+      default: false,
     },
     urgency: {
       //True = urgent, False = not

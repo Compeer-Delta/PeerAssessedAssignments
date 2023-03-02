@@ -43,11 +43,6 @@ const userSchema = new Schema(
         },
       },
     },
-    enrolledModules: {
-      type: [],
-      required: true,
-      default: [],
-    },
     role: {
       type: String,
       required: true,
