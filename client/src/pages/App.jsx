@@ -59,7 +59,7 @@ function App() {
             <Route path='/modules/:id' element={<StudentView />} />
            {/*<Route path='/modules' element={<Modules/>}/> */}
             <Route path='/register' element={<SignUp />} />
-            <Route path='/modules' element={<Modules/>} />
+            <Route path='/modules/*' element={<Modules/>} />
             <Route path='/createmodule' element={<CreateModule/>} />
             <Route path='/manageaccounts' element={<ManageAccounts/>} />
             <Route path='/' element={<Welcome />} />
