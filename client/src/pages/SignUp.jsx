@@ -32,13 +32,35 @@ function SignUp() {
 
     const [verified, setVerified] = useState(false);
     const [inputcode, setInputCode] = useState();
+    
     const [actualcode, setActualCode] = useState(()=> generateVerificationCode());
 
     const [emailInputs, setEmailInputs] = useState({email: email, username: user, actualcode: actualcode });
 
     const [validationMessage, setValidationMessage] = useState("");
 
-     function checkVerification() //change to async when connecting to db -> async function checkVerification
+    const createUser = async () => {
+
+      //const { password, firstname, surname, email, institution, role } = req.body;
+
+      const response = await fetch("http://localhost:8081/admin", {
+        method: "POST",
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          "password": pwd,
+          "firstname": firstname,
+          "surname": lastname,
+          "email": email,
+          "institution": institution,
+          "role": "admin" 
+        })
+      });
+
+      const newUser = await response.json();
+
+    }
+
+    function checkVerification() //change to async when connecting to db -> async function checkVerification
     {
       console.log(inputcode, actualcode);
       if (inputcode == actualcode)
@@ -60,7 +82,8 @@ function SignUp() {
          //   password: pwd,
         //   });
         //   await storedAdmin.save().catch(console.error);
-           setVerified(true)
+        setVerified(true);
+        createUser();
         // } else {
            //false as admin account already exists
          //  setVerified(false)
@@ -116,7 +139,7 @@ function SignUp() {
     useEffect(() => {setErrMsg('');}, [user,pwd])
     
     const handleSubmit = async (e) => {
-        //checks all fields in form to see if they are ready to be verified if not display message to user
+      //checks all fields in form to see if they are ready to be verified if not display message to user
       if (institution== "" || institution == "Unlisted")
       {
         setValidationMessage("Please ensure you select an Institution");
@@ -127,7 +150,7 @@ function SignUp() {
       }
       else if (pwd.length < 10 || ! (/\d/.test(pwd) && (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/).test(pwd)))
       {
-        setValidationMessage("Please make sure your password is atleast 10 characters and contains atleast one numerical digit");
+        setValidationMessage("Please make sure your password is at least 10 characters and contains atleast one numerical digit");
       }
       else if (!(/^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/).test(email))
       {
@@ -138,9 +161,8 @@ function SignUp() {
         setValidationMessage("Please make sure you filled all the details");
       }
       else{
-      
-    
         e.preventDefault();
+
       {/* gmail service */}
       emailjs.send('service_awsfb8e', 'template_n35f2mi', {email, user, actualcode}, 'jBQKDXy824tIJnH8b') //form.current
       .then((result) => {
@@ -161,7 +183,7 @@ function SignUp() {
     setUser('');
     setPwd('');
     //clears form data
-      }
+    }
   }
 
 
