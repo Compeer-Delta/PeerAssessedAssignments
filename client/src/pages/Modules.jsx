@@ -43,12 +43,11 @@ function Modules() {
   }
 
   const getModules = async () => {
-    const response = await fetch("http://localhost:8081/modules", {
+    const fr = "http://localhost:8081/modules?email=" + session.email;
+
+    const response = await fetch(fr, {
       method: "GET",
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        "email": session.email,
-      })
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
     });
 
     modules = await response.json();
