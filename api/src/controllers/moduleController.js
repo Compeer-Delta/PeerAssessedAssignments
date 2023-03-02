@@ -84,13 +84,13 @@ const getModules = async (req, res) => {
 };
 
 const giveFeedback = async (req, res) => {
-  const { moduleId, submissionId, markerId, comment, rating, marked } = req.body;
+  const { moduleId, submissionId, markerId, comment, rating, marked } =
+    req.body;
   try {
-    const feedback = {markerId: markerId, comment: comment, rating: rating}
+    const feedback = { markerId: markerId, comment: comment, rating: rating };
     const updatedSubmission = await submission.updateOne(
       { moduleId: moduleId, submissionId: submissionId },
-      { $push: { feedback: feedback }, 
-      $set: { marked: marked } }
+      { $push: { feedback: feedback }, $set: { marked: marked } }
     );
     res.status(201).json(updatedSubmission);
   } catch (err) {
@@ -101,17 +101,37 @@ const giveFeedback = async (req, res) => {
 const viewFeedback = async (req, res) => {
   const { moduleId, submissionId, markerId } = req.body;
   try {
-    const foundSubmission = await submission.findOne({
-      moduleId: moduleId,
-      submissionId: submissionId,
-      feedback: { $elemMatch: { userId: { $eq: `${markerId}` } }}
-    }, { "feedback.$": 1});
+    const foundSubmission = await submission.findOne(
+      {
+        moduleId: moduleId,
+        submissionId: submissionId,
+        feedback: { $elemMatch: { userId: { $eq: `${markerId}` } } },
+      },
+      { "feedback.$": 1 }
+    );
 
     if (foundSubmission === null) {
       return res.status(404).json({ message: "Cannot find submission" });
     } else {
       res.status(201).json(foundSubmission.feedback);
     }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const deleteFeedback = async (req, res) => {
+  const { moduleId, submissionId, markerId } = req.body;
+  try {
+    const deletedFeedback = await submission.findOneAndUpdate(
+      { submissionId: submissionId, moduleId: moduleId },
+      { $pull: { feedback: { markerId: markerId } } },
+      { new: true }
+    );
+    if (deletedFeedback === null) {
+      return res.status(404).json({ message: "Cannot find submission" });
+    }
+    res.status(201).json(deletedFeedback);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -154,4 +174,5 @@ export default {
   getSubmissions,
   giveFeedback,
   viewFeedback,
+  deleteFeedback,
 };
