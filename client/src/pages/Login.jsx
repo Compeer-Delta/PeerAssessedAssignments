@@ -15,7 +15,6 @@ function Login() {
   const userRef = useRef();
   const errRef = useRef();
 
-
   // const TEST_TEACHER_ACCOUNT = {username: "test_teacher", password:"test123"}
   // const TEST_STUDENT_ACCOUNT = {username: "test_student", password:"test123"}
   // const TEST_ADMIN_ACCOUNT = {username: "test_admin", password:"test123"}
@@ -36,7 +35,7 @@ function Login() {
 
   useEffect(() => {userRef.current.focus();}, [])
   useEffect(() => {setErrMsg('');}, [accType,user,pwd])
-  
+
   const handleSubmit = async (e) => { 
     e.preventDefault();
     console.log(accType, user, pwd);
@@ -45,46 +44,40 @@ function Login() {
     setFailedVerifMessage("");
 
     // !-- JD750 - Fetching from MongoDB --!
-    let fetchRoute = "";
+    const fr = accType === 'adminAccount' ? 'http://localhost:8081/admin/login' : 'http://localhost:8081/login';
 
-    if (accType == "adminAccount") {
-      fetchRoute = "http://localhost:8081/admin/login";
-    } else if(accType == "studentAccount") {
-      fetchRoute = "http://localhost:8081/login";
-    }
-
-    const response = await fetch(fetchRoute, {
-        method: "POST",
-        body: JSON.stringify({
-          user,
-          pwd
-        })
-      });
+    const response = await fetch(fr, {
+      method: "POST",
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        "email": user,
+        "password": pwd,
+      })
+    });
 
     const userData = await response.json();
 
-    console.log(JSON.stringify(userData));
+    //console.log(JSON.stringify(userData.token));
+    const token = JSON.stringify(userData.token);
 
-    // if(response.ok && accType == "adminAccount") {
-    //   setIsAdmin(true);
-    // }
+    if(response.ok && accType == "adminAccount") {
+      setIsAdmin(true);
+    }
 
-    // if(!userData) {
+    if(!userData) {
 
-    //   setFailedVerifMessage("Your login details are incorrect, please make sure you have the correct username, password, institution or account type again");
+      setFailedVerifMessage("Your login details are incorrect, please make sure you have the correct username, password, institution or account type again");
     
-    // } else {
-    //   setSuccess(true);
-    //   sessionStorage.setItem("loginSessionData", JSON.stringify(userData));
+    } else {
+      setSuccess(true);
+      sessionStorage.setItem("loginSessionData", token);
 
-    //   //Debug: displays session data in console
+      //Debug: displays session data in console
 
-    //   console.log(JSON.stringify(userData));
-
-    //   // let outputData = sessionStorage.getItem('loginSessionData');
-    //   // outputData = JSON.parse(outputData);
-    //   // console.log("Session: " + outputData.accountType + " "+ outputData.username + " " + outputData.pass);
-    // }
+      let outputData = sessionStorage.getItem("loginSessionData");
+      outputData = JSON.stringify(outputData);
+      console.log("Session: " + outputData);
+    }
 
     //clear form data
     setUser('');
@@ -227,7 +220,7 @@ function Login() {
 </>
 )}
 </>
-    ) 
+  ) 
 }
 
 export default Login
