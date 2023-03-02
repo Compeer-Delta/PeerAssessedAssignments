@@ -74,6 +74,8 @@ const deleteModule = async (req, res) => {
   }
 };
 
+
+// get modules of specific user
 const getModules = async (req, res) => {
   try {
     const foundModules = await Module.find();

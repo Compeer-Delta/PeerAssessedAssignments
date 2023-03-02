@@ -10,7 +10,7 @@ router.get("/module/:id", auth, moduleController.getModule); //get module
 router.patch("/module/:id", auth, moduleController.updateModule); //update module
 router.delete("/module/:id", auth, moduleController.deleteModule); //delete module
 
-router.get("/modules", auth, moduleController.getModule); //get all modules
+router.get("/modules", auth, moduleController.getModules); //get all modules
 
 //routes for module submissions
 /*router.post("/modules/:id/submit", auth, moduleController.getModules); //submit assignment
