@@ -6,11 +6,11 @@ import jwt from "jsonwebtoken";
 
 // create user
 const createUser = async (req, res) => {
-  const { password, details: { firstname, surname, email }, institution, role } = req.body;
+  const { password, firstname, surname, email, institution, role } = req.body;
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
     password: bcrypt.hashSync(password, saltRounds),
-    details: { firstname, surname, email },
+    firstname, surname, email,
     institution,
     role,
   });
@@ -24,9 +24,9 @@ const createUser = async (req, res) => {
 
 //login user
 const loginUser = async (req, res) => {
-  const { userId, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const user = await User.findOne({ userId: userId });
+    const user = await User.findOne({ email: email });
     if (!user) {
       return res.status(401).json({ message: "Incorrect email or password" });
     }
@@ -36,7 +36,7 @@ const loginUser = async (req, res) => {
       return res.status(402).json({ message: "Incorrect email or password" });
     }
 
-    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
     res.status(200).json({ token });
@@ -48,9 +48,9 @@ const loginUser = async (req, res) => {
 //update user details
 const updateUser = async (req, res) => {
   const { password, details, institution } = req.body;
-  const userId = req.user.userId;
+  const email = req.user.email;
   try {
-    const user = await User.findOne({ userId: userId });
+    const user = await User.findOne({ email: email });
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
@@ -84,7 +84,7 @@ const deleteUser = async (req, res) => {
 //get user
 const getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId);
+    const user = await User.findById(req.user.email);
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }

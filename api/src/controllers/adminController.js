@@ -8,15 +8,13 @@ import jwt from "jsonwebtoken";
 
 // create admin
 const createAdmin = async (req, res) => {
-  const {
-    password,
-    institution,
-    details: { firstname, surname, email },
-  } = req.body;
+  const { password, institution, firstname, surname, email } = req.body;
   const admin = new Admin({
     _id: new mongoose.Types.ObjectId(),
     password: bcrypt.hashSync(password, saltRounds),
-    details: { firstname, surname, email },
+    firstname,
+    surname,
+    email,
     institution,
   });
   try {
@@ -30,9 +28,9 @@ const createAdmin = async (req, res) => {
 // login admin
 const loginAdmin = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    const admin = await Admin.findOne({ username: username });
+    const admin = await Admin.findOne({ email: email });
     if (!admin) {
       return res
         .status(401)
@@ -127,7 +125,9 @@ const addInstitution = async (req, res) => {
 const getInstitution = async (req, res) => {
   const { institutionId } = req.params;
   try {
-    const institution = await Institution.findOne({institutionId: institutionId});
+    const institution = await Institution.findOne({
+      institutionId: institutionId,
+    });
     res.status(200).json(institution);
   } catch (err) {
     res.status(500).json({ message: err.message });
