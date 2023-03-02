@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 const saltRounds = 10;
 import jwt from "jsonwebtoken";
-const JWTsecret = "secret";
 
 // create user
 const createUser = async (req, res) => {
@@ -38,7 +37,7 @@ const loginUser = async (req, res) => {
       return res.status(402).json({ message: "Incorrect email or password" });
     }
 
-    const token = jwt.sign({ userId: user.userId }, JWTsecret, {
+    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
     res.status(200).json({ token });

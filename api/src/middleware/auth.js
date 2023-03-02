@@ -10,7 +10,7 @@ const auth = async (req, res, next) => {
     // token is in the header of the request
     const token = req.header("Authorization").replace("Bearer ", "");
     // verifies the token
-    const decoded = jwt.verify(token, "thisismynewcourse");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     let user;
     if (decoded.adminId) {
       user = await Admin.findOne({ _id: decoded._id, "tokens.token": token });
@@ -19,6 +19,10 @@ const auth = async (req, res, next) => {
     }
     if (!user) {
       throw new Error();
+    }
+
+    if (!token) {
+      return res.status(401).send({ error: "Access denied." });
     }
     req.token = token;
     req.user = user;
