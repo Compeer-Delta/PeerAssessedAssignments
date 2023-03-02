@@ -16,10 +16,9 @@ function Login() {
   const errRef = useRef();
 
 
-  const TEST_TEACHER_ACCOUNT = {username: "test_teacher", password:"test123"}
-  const TEST_STUDENT_ACCOUNT = {username: "test_student", password:"test123"}
-  const TEST_ADMIN_ACCOUNT = {username: "test_admin", password:"test123"}
-  //THIS IS TEMPORARY, to access as a teacher / display teacher options 
+  // const TEST_TEACHER_ACCOUNT = {username: "test_teacher", password:"test123"}
+  // const TEST_STUDENT_ACCOUNT = {username: "test_student", password:"test123"}
+  // const TEST_ADMIN_ACCOUNT = {username: "test_admin", password:"test123"}
 
   const [institution, setInstitution] = useState('');
   const [accType, setAccType] = useState('');
@@ -41,51 +40,55 @@ function Login() {
   const handleSubmit = async (e) => { 
     e.preventDefault();
     console.log(accType, user, pwd);
+
     //Debug: displays form data in console
     setFailedVerifMessage("");
 
-      
-    let userData = {accountType: accType, username: user, pass: pwd} //add first / last name also when collected from DB
+    // !-- JD750 - Fetching from MongoDB --!
+    let fetchRoute = "";
 
-    if (accType == "adminAccount")
-    {
-      setIsAdmin(true);
-    }    
+    if (accType == "adminAccount") {
+      fetchRoute = "http://localhost:8081/admin/login";
+    } else if(accType == "studentAccount") {
+      fetchRoute = "http://localhost:8081/login";
+    }
+
+    const response = await fetch(fetchRoute, {
+        method: "POST",
+        body: JSON.stringify({
+          user,
+          pwd
+        })
+      });
+
+    const userData = await response.json();
+
+    console.log(JSON.stringify(userData));
+
+    // if(response.ok && accType == "adminAccount") {
+    //   setIsAdmin(true);
+    // }
+
+    // if(!userData) {
+
+    //   setFailedVerifMessage("Your login details are incorrect, please make sure you have the correct username, password, institution or account type again");
     
-    if (user === TEST_TEACHER_ACCOUNT.username && pwd === TEST_TEACHER_ACCOUNT.password)
-    {
-      userData.accountType = "teacherAccount";
-    }
+    // } else {
+    //   setSuccess(true);
+    //   sessionStorage.setItem("loginSessionData", JSON.stringify(userData));
 
-//-------------------------------------------------------------------------
-    //DB: Check with backend to see if valid account then setSuccess to true
-    if ((user === TEST_STUDENT_ACCOUNT.username && pwd === TEST_STUDENT_ACCOUNT.password && institution === "University of Kent" && !(accType === "adminAccount") )
-        || (user === TEST_TEACHER_ACCOUNT.username && pwd === TEST_TEACHER_ACCOUNT.password && institution === "University of Kent"&& !(accType === "adminAccount")) 
-        || (user === TEST_ADMIN_ACCOUNT.username && pwd === TEST_ADMIN_ACCOUNT.password && institution === "University of Kent") && (accType === "adminAccount")) //to change when implementing db
-    {
-      
-    
-    setSuccess(true);
-    //if not valid then setSuccess to false and add a error message on screen
-    //-------------------------------------------------------------------------
+    //   //Debug: displays session data in console
 
-    //TEMPORARY always allows submit to be valid but this needs to be replaced by a DB check before setting valid
-    //creates a session with user login info as data
-    sessionStorage.setItem("loginSessionData", JSON.stringify(userData));
+    //   console.log(JSON.stringify(userData));
 
-    let outputData = sessionStorage.getItem('loginSessionData');
-    outputData = JSON.parse(outputData);
-    console.log("Session: " + outputData.accountType + " "+ outputData.username + " " + outputData.pass);
-    //Dubug: displays session data in console
-    }
-    else
-    {
-      setFailedVerifMessage("Your login details are incorrect, please make sure you have the correct username, password, institution or account type again");
-    }
+    //   // let outputData = sessionStorage.getItem('loginSessionData');
+    //   // outputData = JSON.parse(outputData);
+    //   // console.log("Session: " + outputData.accountType + " "+ outputData.username + " " + outputData.pass);
+    // }
 
-  setUser('');
-  setPwd('');
-  //clears form data
+    //clear form data
+    setUser('');
+    setPwd('');
   }
 
   return (
@@ -126,24 +129,24 @@ function Login() {
        
               {/*Account type buttons (Student or staff)*/}
               <ul onChange = {(e) => setAccType(e.target.value)} className="grid w-full md:grid-cols-2  ">
-              <li>
-                <input type="radio" id="studentAccount" name="account" value="studentAccount" className="hidden peer" required />
-                <label for="studentAccount" className="rounded-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 peer-checked:bg-blue-100">                           
-                <div className="block">
-                  <div className="w-full text-b font-semibold">Student/Staff</div>              
-                </div>
-              </label>
-            </li>         
-          
-            <li>
-              <input type="radio" id="adminAccount" name="account" value="adminAccount" className="hidden peer" />
-              <label for="adminAccount" className=" rounded-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 peer-checked:bg-blue-100">
-                <div className="block">
-                <div className=" px-5 w-full text-b font-semibold">Admin</div>
-                </div>  
-               </label>
-           </li>
-            </ul>
+                <li>
+                  <input type="radio" id="studentAccount" name="account" value="studentAccount" className="hidden peer" required />
+                  <label for="studentAccount" className="rounded-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 peer-checked:bg-blue-100">                           
+                  <div className="block">
+                    <div className="w-full text-b font-semibold">Student/Staff</div>              
+                  </div>
+                </label>
+                </li>         
+            
+                <li>
+                <input type="radio" id="adminAccount" name="account" value="adminAccount" className="hidden peer" />
+                <label for="adminAccount" className=" rounded-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 peer-checked:bg-blue-100">
+                  <div className="block">
+                  <div className=" px-5 w-full text-b font-semibold">Admin</div>
+                  </div>  
+                </label>
+                </li>
+              </ul>
         
             </div>
             <div className = "ml-32">
