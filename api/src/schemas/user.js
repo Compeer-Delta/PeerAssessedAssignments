@@ -13,11 +13,6 @@ const userSchema = new Schema(
       required: true,
       default: generateUUID,
     },
-    username: {
-      type: String,
-      required: true,
-      default: null,
-    },
     password: {
       type: String,
       required: true,

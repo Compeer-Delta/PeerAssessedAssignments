@@ -34,13 +34,13 @@ const loginAdmin = async (req, res) => {
     if (!admin) {
       return res
         .status(401)
-        .json({ message: "Incorrect username or password" });
+        .json({ message: "Incorrect email or password" });
     }
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
       return res
         .status(402)
-        .json({ message: "Incorrect username or password" });
+        .json({ message: "Incorrect email or password" });
     }
 
     const payload = { adminId: admin.adminId };
