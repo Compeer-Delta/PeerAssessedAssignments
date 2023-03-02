@@ -11,10 +11,12 @@ const createModule = async (req, res) => {
     students,
     assignments,
     institutionName,
+    moduleCode,
   } = req.body;
   const module = new Module({
     _id: new mongoose.Types.ObjectId(),
     title: title,
+    moduleCode: moduleCode,
     description: description,
     teachers: teachers,
     students: students,
