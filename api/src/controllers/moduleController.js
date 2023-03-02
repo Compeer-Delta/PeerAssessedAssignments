@@ -79,12 +79,23 @@ const deleteModule = async (req, res) => {
 
 // get modules of specific user
 const getModules = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.query.email;
   try {
     //const user = await User.findOne({ email: email });
     //const foundModules = await Module.find({ students: user._id });
     const modules = await Module.find({ students: { $regex: email, $options: 'i' } });
     res.status(201).json(modules);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getModuleTeachers = async (req, res) => {
+  const { moduleId } = req.body;
+  try{
+    const module = await Module.findOne({ moduleId: moduleId });
+    const teachers = await User.find({ _id: { $in: module.teachers } });
+    res.status(201).json(teachers);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -177,6 +188,7 @@ export default {
   updateModule,
   deleteModule,
   getModules,
+  getModuleTeachers,
   addSubmission,
   getSubmissions,
   giveFeedback,
