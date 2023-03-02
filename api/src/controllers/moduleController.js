@@ -84,10 +84,10 @@ const getModules = async (req, res) => {
 };
 
 const giveFeedback = async (req, res) => {
-  const { moduleId, submissionId, markerId, comment, rating, marked } =
+  const { moduleId, submissionId, marker, comment, rating, marked } =
     req.body;
   try {
-    const feedback = { markerId: markerId, comment: comment, rating: rating };
+    const feedback = { marker: marker, comment: comment, rating: rating };
     const updatedSubmission = await submission.updateOne(
       { moduleId: moduleId, submissionId: submissionId },
       { $push: { feedback: feedback }, $set: { marked: marked } }
@@ -99,13 +99,13 @@ const giveFeedback = async (req, res) => {
 };
 
 const viewFeedback = async (req, res) => {
-  const { moduleId, submissionId, markerId } = req.body;
+  const { moduleId, submissionId, marker } = req.body;
   try {
     const foundSubmission = await submission.findOne(
       {
         moduleId: moduleId,
         submissionId: submissionId,
-        feedback: { $elemMatch: { userId: { $eq: `${markerId}` } } },
+        feedback: { $elemMatch: { userId: { $eq: `${marker}` } } },
       },
       { "feedback.$": 1 }
     );
@@ -121,11 +121,11 @@ const viewFeedback = async (req, res) => {
 };
 
 const deleteFeedback = async (req, res) => {
-  const { moduleId, submissionId, markerId } = req.body;
+  const { moduleId, submissionId, marker } = req.body;
   try {
     const deletedFeedback = await submission.findOneAndUpdate(
       { submissionId: submissionId, moduleId: moduleId },
-      { $pull: { feedback: { markerId: markerId } } },
+      { $pull: { feedback: { marker: marker } } },
       { new: true }
     );
     if (deletedFeedback === null) {
