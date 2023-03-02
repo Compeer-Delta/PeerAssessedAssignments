@@ -81,7 +81,7 @@ function AddAssignment() {
      
         
    <div className = 'py-3 dark:bg-zinc-900 h-screen'>
-   <h1 className= ' font-Dosis ml-80 text-3xl w-full text-slate-600 font-semibold dark:text-white rounded-md pb-4'>  Add Assignment:</h1> 
+   <h1 className= ' font-Dosis ml-80 text-3xl text-slate-600 font-semibold dark:text-white rounded-md pb-4'>  Add Assignment:</h1> 
       <div className=" font-Dosis text-xl border-2 border-slate-700 rounded ml-80 mr-80 px-80  bg-slate-300 py-10"> 
      
       {confirmedAssignment  === true ? (<>
@@ -136,7 +136,7 @@ function AddAssignment() {
   <input  className=" ml-2 text-center rounded-md" type="number" min="0" max="34" step="1" value={numPeerAssess} onChange={(e => {if (e.target.value > 12){setNumPeerAssess(12)} else if (e.target.value < 0){setNumPeerAssess(0)} else {setNumPeerAssess(e.target.value)}})}></input>
       {/* CHANGE THIS LATER TO MAKE MAX EQUAL TO THE NUMBER OF STUDENTS IN THE MODULE */}
 </div>
-<h1 className= ' mb-2 ml-56 text-l w-full text-slate-600 font-semibold dark:text-white rounded-md '> Upload Breif below: </h1> 
+<h1 className= ' mb-2 text-l w-full text-slate-600 font-semibold dark:text-white rounded-md '> Upload Breif below: </h1> 
 <FileUploader></FileUploader>
 
 

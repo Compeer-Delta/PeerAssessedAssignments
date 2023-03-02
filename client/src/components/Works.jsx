@@ -3,8 +3,9 @@ import React, { useState } from 'react'
 import WorkItem from './WorkItem'
 import works from '../data/works'
 
-function Works() {
+function Works({modulename}) {
     
+    //DB read in to display only assignmnets that match module id
     var assignments = works;
 
     function sortByLastId(assignments)
@@ -19,7 +20,7 @@ function Works() {
     
 
     return (
-        <div className = 'py-2 dark:bg-slate-900'>
+        <div className = 'py-2 dark:bg-zinc-900'>
           {
             }
             <div className='pr-80 pl-80 grid grid-cols-1 gap-3'>
@@ -33,7 +34,8 @@ function Works() {
                               dueDate={work.dueDate}
                               setDate={work.setDate}
                               open= {work.open}
-                              moduleId = {work.moduleId}>
+                              moduleId = {work.moduleId}
+                              moduleTitle = {modulename}>
                     </WorkItem>
                 ))}
             </div>

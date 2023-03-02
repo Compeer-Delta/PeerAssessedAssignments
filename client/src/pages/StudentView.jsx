@@ -65,30 +65,30 @@ function StudentView({title}) {
   }, []);
 
   return(
-    <>
+    <div className="dark:bg-zinc-900 h-[1200px]">
     
     <HeroSection prevPageName = "Modules" prevUrl= "/modules"></HeroSection>
  
-          <div className = 'font-Dosis bg:white dark:bg-gray-400'>
+          <div className = 'font-Dosis bg:white dark:bg-zinc-900'>
             <div className='w-full mx-auto h-full'>
               
               <>
-                <SideBar moduleTitle={modTitle} moduleId={module.moduleId}> </SideBar>
+                <SideBar moduleTitle={moduleTitle} moduleId={module.moduleId}> </SideBar>
 
                 {outputData.accountType === "teacherAccount" ? ( // CHANGE TO ONLY APPEAR IF TEACHER !!!!!!!
                  <div className = 
-                 "border-2 border-slate-700 rounded-r-md fixed mt-80 h-2/6 items-bottom flex px-5 bg-slate-300">
+                 "dark:border-indigo-900 border-2 border-slate-700 rounded-r-md fixed mt-80 h-2/6 items-bottom flex px-5 bg-slate-300 dark:bg-zinc-800 border-l-0">
 
-                  <p className="py-6 px-16 underline underline-offset-8 text-center text-xl mb-1 font-semibold ">Teacher Options </p>
-                  <Link to={"/modules/" + module.moduleId} state={{moduleTitle: modTitle, nestedPage: "addassignment"}} className=' fixed left-0 text-gray-300 dark:text-gray-300 p-3 mt-20 ml-4 py-3 bg-slate-800 dark:bg-zinc-700 w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                  <p className="dark:bg-zinc-800 py-6 px-16 underline underline-offset-8 text-center text-xl mb-1 font-semibold dark:text-zinc-300">Teacher Options </p>
+                  <Link to={"/modules/" + module.moduleId} state={{moduleTitle: modTitle, nestedPage: "addassignment"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 mt-20 ml-4 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                     <h3 className= " text-center text-lg   font-semibold ">Add Assignment </h3>
                   </Link>
 
-                  <Link to={"/modules/" +module.moduleId} state={{moduleTitle: modTitle, nestedPage: "peermanager"}} className=' fixed left-0 text-gray-300 dark:text-gray-300 p-3 ml-4 mt-36 py-3 bg-slate-800 dark:bg-zinc-700 w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                  <Link to={"/modules/" +module.moduleId} state={{moduleTitle: modTitle, nestedPage: "peermanager"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300  p-3 ml-4 mt-36 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                   <h3 className= " text-center text-lg font-semibold ">Open Assignments to Peers </h3>
                 </Link>
 
-                <Link to={"/modules/" + module.moduleId} state={{moduleTitle: modTitle, nestedPage: "approvefeedback"}} className=' fixed left-0 text-gray-300 dark:text-gray-300 p-3 ml-4 mt-52 py-3 bg-slate-800 dark:bg-zinc-700 w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                <Link to={"/modules/" + module.moduleId} state={{moduleTitle: modTitle, nestedPage: "approvefeedback"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 ml-4 mt-52 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                   <h3 className= " text-center text-lg font-semibold ">Peer Feedback requests </h3>
                 </Link>
                 </div>
@@ -100,13 +100,13 @@ function StudentView({title}) {
       </div>
 
       <LoginCard></LoginCard>
-      <div className= "font-bold py-4 font-Dosis text-center text-4xl text-slate-400">Module: {modTitle} </div>
+      <div className= "dark:bg-zinc-900 font-bold py-4 font-Dosis text-center text-4xl text-slate-400 dark:text-indigo-700">Module: {moduleTitle} </div>
       {nestedPage === "notifications" ? (
         <Notifications/>
         ): nestedPage === "viewfeedback" ? (
           <ViewFeedback></ViewFeedback>
         ): nestedPage === "submitwork" ? (
-          <Works></Works>
+          <Works modulename={moduleTitle}></Works>
         ): nestedPage === "addassignment" ? (
           <AddAssignment></AddAssignment>
         ): nestedPage === "peermanager" ? (
@@ -114,7 +114,7 @@ function StudentView({title}) {
         ): nestedPage === "approvefeedback"? (
             <ApproveFeedback></ApproveFeedback>
         ): //default
-        (  <div className= "ml-80 mr-80 py-32 font-Dosis font-bold text-center text-8xl text-slate-200 border-dashed border-4 rounded border-slate-200">Select a tab on the side bar to view here!  </div>)
+        (  <div className= "dark:bg-zinc-900 ml-80 mr-80 py-32 font-Dosis font-bold text-center text-8xl text-slate-200 dark:text-indigo-900  border-dashed border-4 rounded dark:border-indigo-900 border-slate-200">Select a tab on the side bar to view here!  </div>)
         }
 
         
@@ -122,7 +122,7 @@ function StudentView({title}) {
         <Routes> <Route path='/submitwork' element={<SubmitWork />} /></Routes>
         <Routes> <Route path='/addassignment' element={<AddAssignment />} /></Routes>
         {/* adds a route to redirect to submitwork page */}
-      </>
+      </div>
     )
 
     

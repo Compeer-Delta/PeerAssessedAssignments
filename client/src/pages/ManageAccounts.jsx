@@ -118,7 +118,9 @@ function ManageAccounts()
       <h1 className= '  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Upload .csv file of format: firstname, secondname, username,password to add accounts: </h1> 
       <div className="flex flex-row"> 
       <FileUploader UploadedData ={uploadedAccountData => setUploadedAccountData(uploadedAccountData)} uploadType="accounts" ></FileUploader> {/*DOESNT WORK FOR ACCOUNTS YET.*/}
-      
+      <button onClick={addUploadedAccounts} className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold w-100 h-10 px-3 ml-3 rounded ">
+                Add All
+        </button>
       </div>
 
       {/*submit button */}

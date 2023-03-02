@@ -32,8 +32,8 @@ function LoginCard() { //parameters might need changing
     {/* Login tab */}
 
     {
-    <h1 className = 'mt-2 rounded-bl-lg rounded-tl-lg border-solid border-2 border-zinc-600 font-semibold sidebar fixed lg:right-0 p-5 w-[300px] overflow-y-auto text-center text-gray-900 dark:text-gray-300 bg-slate-300 dark:bg-zinc-800'> Logged in as {sessionUsername}
-    <button onClick={logout} className = "ml-14 p-0.5 mt-3 flex items-center  text-center px-12 cursor-pointer text-slate-100 dark:text-gray-300 bg-red-600 dark:bg-zinc-900 hover:bg-red-300 transform transition">
+    <h1 className = 'dark:border-indigo-900 mt-2 rounded-bl-lg rounded-tl-lg border-solid border-2 border-zinc-600 font-semibold sidebar fixed lg:right-0 p-5 w-[300px] overflow-y-auto text-center text-gray-900 dark:text-gray-300 bg-slate-300 dark:bg-zinc-800'> Logged in as {sessionUsername}
+    <button onClick={logout} className = "ml-14 p-0.5 mt-3 flex items-center  text-center px-12 cursor-pointer text-slate-100 dark:text-gray-300 bg-red-600  hover:bg-red-300 transform transition">
              <p> Logout</p>
 
     </button> 

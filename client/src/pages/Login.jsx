@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link , Navigate, Route, Routes} from 'react-router-dom';
 import {useForm} from 'react-hook-form';
 import {useRef, useState, useEffect} from 'react';
 import StudentView from '../pages/StudentView';
@@ -17,6 +17,8 @@ function Login() {
 
 
   const TEST_TEACHER_ACCOUNT = {username: "test_teacher", password:"test123"}
+  const TEST_STUDENT_ACCOUNT = {username: "test_student", password:"test123"}
+  const TEST_ADMIN_ACCOUNT = {username: "test_admin", password:"test123"}
   //THIS IS TEMPORARY, to access as a teacher / display teacher options 
 
   const [institution, setInstitution] = useState('');
@@ -57,7 +59,9 @@ function Login() {
 
 //-------------------------------------------------------------------------
     //DB: Check with backend to see if valid account then setSuccess to true
-    if (username === username && pwd === pwd && institution === institution) //to change when implementing db
+    if ((user === TEST_STUDENT_ACCOUNT.username && pwd === TEST_STUDENT_ACCOUNT.password && institution === "University of Kent" && !(accType === "adminAccount") )
+        || (user === TEST_TEACHER_ACCOUNT.username && pwd === TEST_TEACHER_ACCOUNT.password && institution === "University of Kent"&& !(accType === "adminAccount")) 
+        || (user === TEST_ADMIN_ACCOUNT.username && pwd === TEST_ADMIN_ACCOUNT.password && institution === "University of Kent") && (accType === "adminAccount")) //to change when implementing db
     {
       
     
@@ -79,7 +83,6 @@ function Login() {
       setFailedVerifMessage("Your login details are incorrect, please make sure you have the correct username, password, institution or account type again");
     }
 
-  setAccType('');
   setUser('');
   setPwd('');
   //clears form data
@@ -87,19 +90,25 @@ function Login() {
 
   return (
     <>
+   
         {/*success variable will determine whether the next page (admin/teacher/student view) will be displayed or if false, display the login page */}
         {success && !isAdmin ? (
-          <Modules></Modules>
+          <Routes>
+          <Route path="/" element={<Navigate to="/modules" />}/>
+          </Routes>
            //  <StudentView/>
              
-        ): success && isAdmin ? (<AdminView></AdminView>)
+        ): success && isAdmin ? (
+          <Routes>
+          <Route path="/" element={<Navigate to="/adminview" />}/>
+          </Routes>)
         
         :(  
         <>
-         <div className = "font-Dosis sidebar text-slate-200 dark:text-slate-700 border-slate-200 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-zinc-200"> {/* bars icon */}
+         <div className = "font-Dosis sidebar text-slate-200 dark:text-slate-100 border-slate-200 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-indigo-900 dark:border-indigo-500"> {/* bars icon */}
           Welcome to Peer App. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
           <br></br><br></br>
-          To use our services <Link to="/register" className="text-indigo-600">Register here</Link> to create an Admin account!
+          To use our services <Link to="/register" className="text-indigo-400">Register here</Link> to create an Admin account!
          </div>
          {/*Code for displaying left box, containing link to sign up page */}
         

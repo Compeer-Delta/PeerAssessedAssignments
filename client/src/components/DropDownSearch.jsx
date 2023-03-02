@@ -58,7 +58,7 @@ const DropDownSearch = ({setInstitution}) => {
               "bg-indigo-600 text-white"
             }
             ${
-              inst?.name?.toLowerCase().startsWith(inputValue)
+              inst?.name?.toLowerCase().includes(inputValue)
                 ? "block"
                 : "hidden"
             }`}

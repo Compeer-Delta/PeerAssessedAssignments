@@ -133,8 +133,8 @@ function StudentFileUploader(props) {
 
             //Debugging
             console.log(params.id);
-            setAssignmentDetails(getAssignmentDetails(params.id));
-            console.log(getAssignmentDetails(params.id));
+            setAssignmentDetails(getAssignmentDetails(params.aid));
+            console.log(getAssignmentDetails(params.aid));
              
             // //console.log(userData);
         };
