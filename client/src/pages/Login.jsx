@@ -117,7 +117,7 @@ function Login() {
            
           <form onSubmit={handleSubmit} className="w-full max-w-sm">
           <div className=" w-full ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">{failedVerifMessage}</div>
-          <div className="ml-36 text-l">Login as...</div>
+          <div className="ml-36 text-l dark:text-white">Login as...</div>
             <div className="inline-flex pl-32 pb-8 rounded-md" role="group">
        
               {/*Account type buttons (Student or staff)*/}

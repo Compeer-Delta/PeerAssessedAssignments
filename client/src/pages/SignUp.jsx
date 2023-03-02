@@ -11,6 +11,7 @@ import mongoose from 'mongoose';
 import Login from './Login';
 
 import emailjs from '@emailjs/browser';
+import sideImage from '/images/LoginSplashImage_COMPEER.png'
 
 function SignUp() {
   
@@ -190,11 +191,8 @@ function SignUp() {
     return (
         <>
          
-        <div className = " font-Dosis sidebar text-slate-200 dark:text-slate-700 border-slate-200 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-zinc-200"> {/* bars icon */}
-          Welcome to COMPEER. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
-          <br></br><br></br>
-          To use our services <Link to="/register" className="text-indigo-600">Register here</Link> to create an Admin account!
-         </div>
+         <img src={sideImage} className ="font-Dosis sidebar text-slate-200 dark:text-slate-100 fixed lg:left-0 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-indigo-900"/>{/* bars icon */}
+   
          {/*Code for displaying left box, containing link to sign up page */}
         {/*success variable will determine whether the next page (admin/teacher/student view) will be displayed or if false, display the login page */}
 
@@ -258,7 +256,7 @@ function SignUp() {
           <form className="w-full max-w-sm">
 
           <div className=" w-full ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">{validationMessage}</div>
-          <div className="md:w-0 ml-32">   
+          <div className="md:w-0 ml-32 dark:text-white">   
           
           Institution
           {/*email*/}
@@ -269,7 +267,7 @@ function SignUp() {
               </div>
               
               
-              <div className="md:w-1/3 mt-10">
+              <div className="md:w-1/3 mt-10 dark:text-white">
             Email
                 <input
                   onChange = {(e) => setEmail(e.target.value)}
@@ -290,7 +288,7 @@ function SignUp() {
               <div className="md:w-1/3">
                 
               </div>
-              <div className="md:w-2/3"> First Name
+              <div className="md:w-2/3 dark:text-white"> First Name
               <div className = "flex flex-wrap z-50">
              
               </div>
@@ -311,7 +309,7 @@ function SignUp() {
               <div className="md:w-1/3">
                 
               </div>
-              <div className="md:w-2/3"> Last Name
+              <div className="md:w-2/3 dark:text-white "> Last Name
               <div className = "flex flex-wrap z-50">
              
               </div>
@@ -333,7 +331,7 @@ function SignUp() {
               <div className="md:w-1/3">
                 
               </div>
-              <div className="md:w-2/3"> Username
+              <div className="md:w-2/3 dark:text-white"> Username
               <div className = "flex flex-wrap z-50">
              
               </div>
@@ -353,7 +351,7 @@ function SignUp() {
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">    
             </div>
-          <div className="md:w-2/3"> Password (Must contain 10 characters and numbers)
+          <div className="md:w-2/3 dark:text-white"> Password (Must contain 10 characters and numbers)
             <input 
               onChange = {(e) => setPwd(e.target.value)}
               value={pwd}
