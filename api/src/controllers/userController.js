@@ -47,8 +47,7 @@ const loginUser = async (req, res) => {
 
 //update user details
 const updateUser = async (req, res) => {
-  const { password, details, institution } = req.body;
-  const email = req.user.email;
+  const { email, password, details, institution } = req.body;
   try {
     const user = await User.findOne({ email: email });
     if (!user) {
@@ -72,7 +71,7 @@ const updateUser = async (req, res) => {
 
 //delete user
 const deleteUser = async (req, res) => {
-  const { userId } = req.user;
+  const { userId } = req.body;
   try {
     const deletedUser = await User.findByIdAndDelete(userId);
     res.status(200).json(deletedUser);
@@ -83,8 +82,9 @@ const deleteUser = async (req, res) => {
 
 //get user
 const getUser = async (req, res) => {
+  const { email } = req.body;
   try {
-    const user = await User.findById(req.user.email);
+    const user = await User.findById(email);
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
