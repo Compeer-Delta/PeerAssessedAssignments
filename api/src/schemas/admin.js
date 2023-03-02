@@ -1,12 +1,13 @@
 //created by & Last update: 01/02, gc436
 import { Schema, model } from "mongoose";
+import { generateUUID } from "../functions/generateUUID.js";
 
 const adminSchema = new Schema({
   _id: Schema.Types.ObjectId,
-  userId: {
+  adminId: {
     type: String,
     required: true,
-    default: null,
+    default: generateUUID,
   },
   details: {
     type: {},
@@ -23,8 +24,8 @@ const adminSchema = new Schema({
       },
       email: {
         type: String,
+        unique: true,
         required: true,
-        default: null,
       },
     },
   },

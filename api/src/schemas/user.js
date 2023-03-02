@@ -2,6 +2,7 @@
 //ref https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1
 //created by gc436 last updated 02/03 by gc436
 import { Schema, model } from "mongoose";
+import { generateUUID } from "../functions/generateUUID.js";
 
 const userSchema = new Schema({
   _id: Schema.Types.ObjectId,
@@ -9,6 +10,7 @@ const userSchema = new Schema({
     type: String,
     unqiue: true,
     required: true,
+    default: generateUUID,
   },
   username: {
     type: String,
