@@ -1,27 +1,38 @@
+//created by gc436
+//run with npm run dev
 import { config } from "dotenv";
 config();
-//MongoDB Token
-const { DBtoken } = process.env;
-import { connect } from "mongoose";
-//express handling
+const { DB_SECRET, PORT } = process.env;
+import mongoose from "mongoose";
 import express from "express";
-const app = express();
 import cors from "cors";
-//default port
-const PORT = 8080;
+// import routes
+import userRoutes from "./routes/user.js";
+import moduleRoutes from "./routes/module.js";
+import notificationRoutes from "./routes/notifications.js";
+import assignmentRoutes from "./routes/assignment.js";
+import adminRoutes from "./routes/admin.js";
 
-//base
-app.use(cors());
+const app = express();
+
+app.use(express.json(), cors());
+
+//routes
+app.use(
+  userRoutes,
+  moduleRoutes,
+  notificationRoutes,
+  assignmentRoutes,
+  adminRoutes
+);
+
 app.get("/", (req, res) => {
-  res.send("Hi");
-});
-
-app.get("/student", (req, res) => {
-  res.send("Something Whatever");
+  res.send("COMPEER API is live");
 });
 
 //connect to database
-connect(DBtoken).then(() => {
+mongoose.set("strictQuery", false);
+mongoose.connect(DB_SECRET, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
   console.log(`listening on ${PORT}`);
   app.listen(PORT);
 });
