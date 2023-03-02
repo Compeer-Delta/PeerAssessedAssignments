@@ -5,19 +5,21 @@ import StudentView from '../pages/StudentView'
 import { useState } from 'react'
 import {Link} from 'react-router-dom';
 import {useLocation} from 'react-router-dom';
+import LoginCard from '../components/LoginCard'
+
 function ViewSubmissions() {
 
     let outputData = sessionStorage.getItem('loginSessionData');
     outputData = JSON.parse(outputData);
 
     const [submissions, setSubmission] = useState([
-        {submissionTitle: "My Submission", submitBy: "Hathan Khatkar", numFeedback: 2,  },
-        {submissionTitle: "Web Development assignment", submitBy: "Jordan D'Souza", numFeedback: 6 },
-        {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 },
-        {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 },
-        {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 },
-        {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 },
-        {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 }]);
+        {submissionTitle: "My Submission", submitBy: "Hathan Khatkar", numFeedback: 2,  submissionId:1},
+        {submissionTitle: "Web Development assignment", submitBy: "Jordan D'Souza", numFeedback: 6, submissionId:2},
+        {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 ,submissionId:3},
+        {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 ,submissionId:4},
+        {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 ,submissionId:5},
+        {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 ,submissionId:6},
+        {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 ,submissionId:7}]);
       //select all these fields ^ from submissions schema where submissions assignment id matches (FK)
 
 
@@ -25,6 +27,7 @@ function ViewSubmissions() {
         const {assignmentTitle} = location.state;
         const {assignmentId} = location.state;  
         const {modId} = location.state; //module id
+        const {modTitle} = location.state;
          //use id / title to get peersPerSubmission to display this number of submissions
          //select peersPerSubmission from assignmentsschema where assignmentId = id in schema
          const peersPerSubmission = 3;
@@ -64,11 +67,13 @@ function ViewSubmissions() {
     <>
 
     {/* {assignmentId} + {modId} + {assignmentTitle} */}
-    <HeroSection prevPageName = "Home Page" prevUrl= "/studentview"></HeroSection>
+    <HeroSection prevPageName = "Home Page" prevUrl= {"/modules/" + modId} moduleTitle= {modTitle}></HeroSection>
+    <LoginCard/>
+    
     <h1 className= ' pl-72 py-10 text-3xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '> {assignmentTitle}'s Submissions</h1> 
     
     <table className="table-fixed w-2/3 text-sm text-left text-gray-500 dark:text-gray-400 ml-72">
-    <thead className="text-s text-gray-700 font-Dosis  bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
+    <thead className="text-s text-gray-700 font-Dosis  bg-slate-50 dark:bg-gray-700 dark:text-gray-400 border-2 border-slate-900  ">
     <tr>
       <th className="px-6 py-3 border border-width-10">Submission Title</th>
       <th className="px-6 py-3 border border-width-10">Submitted by</th>
@@ -78,7 +83,7 @@ function ViewSubmissions() {
   </thead>
   <tbody>
         {limitViewedSubmissions().map(submission => (
-            <tr class="bg-white border-b border-l dark:bg-gray-800 dark:border-gray-700 hover:bg-sky-100">
+            <tr className=" dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {submission.submissionTitle}
                 </th>
@@ -89,7 +94,7 @@ function ViewSubmissions() {
                 {submission.numFeedback}
                 </td>
                 <td class="px-6 py-4 text-center">
-                 <Link to="/peerassess" className=" font-Dosis text-blue-100 text-l bg-blue-500 border-black px-6 py-1 rounded-3xl hover:bg-blue-200 hover:text-blue-800">
+                 <Link to={"/modules/"+ modId + "/viewsubmissions/"+ assignmentId + "/peerassess/"+ submission.submissionId} state={{assignmentTitle: assignmentTitle, assignmentId: assignmentId, modId: modId, modTitle: modTitle}} className=" font-Dosis text-blue-100 text-l bg-blue-500 border-black px-6 py-1 rounded-3xl hover:bg-blue-200 hover:text-blue-800">
                  Peer Assess
                  </Link>
                 </td>

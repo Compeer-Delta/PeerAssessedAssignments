@@ -36,7 +36,7 @@ function Modules() {
 
 {isAdmin ? (
 <HeroSection prevPageName = "Admin view" prevUrl = "/adminview"></HeroSection>
-):(<HeroSection prevPageName = "login" prevUrl = "/login/*"></HeroSection>)}
+):(<HeroSection prevPageName = "login" prevUrl = "/login"></HeroSection>)}
 
     <LoginCard></LoginCard>
     <div className = 'py-2 dark:bg-zinc-900 h-screen'>

@@ -173,7 +173,7 @@ function PeerManager() {
             afterDue(assignment) == true && assignment.open==false ? ( //displays row if the assignment due date has passed and teacher has not opened the assignment
 
             
-            <tr class=" dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
+            <tr className=" dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {assignment.title}
                 </th>

@@ -63,10 +63,10 @@ function App() {
             <Route path='/createmodule' element={<CreateModule/>} />
             <Route path='/manageaccounts' element={<ManageAccounts/>} />
             <Route path='/' element={<Welcome />} />
-            <Route path='/upload/:id' element={<StudentFileUpload/>} />
+            <Route path='/modules/:id/upload/:aid' element={<StudentFileUpload/>} />
             <Route path='/addassignment' element={<AddAssignment/>} />
-            <Route path='/viewsubmissions' element={<ViewSubmissions/>} />
-            <Route path='/peerassess' element={<PeerAssessWork/>} />
+            <Route path='/modules/:id/viewsubmissions/:aid' element={<ViewSubmissions/>} />
+            <Route path='/modules/:id/viewsubmissions/:aid/peerassess/:sid' element={<PeerAssessWork/>} />
             <Route path='/adminview' element={<AdminView/>} />
             <Route path='/viewfeedback' element={<ViewFeedback/>} />
           </Routes> 

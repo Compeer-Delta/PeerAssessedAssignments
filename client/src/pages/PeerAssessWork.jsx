@@ -7,18 +7,20 @@ import {Document, Page} from 'react-pdf/dist/esm/entry.webpack5';
 
 import {Viewer,  Worker} from '@react-pdf-viewer/core'
 import {defaultLayoutPlugin} from '@react-pdf-viewer/default-layout'
+import { useLocation } from 'react-router-dom'
 
 import '@react-pdf-viewer/core/lib/styles/index.css' //pdf styling
 function PeerAssessWork() {
 
+  const location = useLocation();
+  const {assignmentTitle} = location.state;
+  const {assignmentId} = location.state;  
+  const {modId} = location.state; //module id
+  const {modTitle} = location.state;
 
     const [pdfFile, setPdfFile] = useState(null);
     const [viewPdf, setViewPdf] = useState(null);
 
-    const [comments, setComments] = useState([
-        {comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit", submitBy: "Hathan Khatkar", givenMark: 5 },
-        {comment: "Pellentesque a elit velipsum hendrerit convallis nec sit amet lorem", submitBy: "Jordan D'Souza", numComments: 6 },
-        {comment: "Vivamus sollicitudin eros quis ipsum consequat, viverra laoree", submitBy: "Gregory Clews", numComments: 4 }]);
 
     const [givenMark, setGivenMark] = useState(null);
     const [givenFeedback, setGivenFeedback] = useState(null);
@@ -54,7 +56,8 @@ function PeerAssessWork() {
 
   return (
     <>
- <HeroSection prevPageName = "Submissions" prevUrl= "/viewsubmissions"></HeroSection>
+    
+ <HeroSection prevPageName = "Submissions" prevUrl= {"/modules/"+ modId + "/viewsubmissions/" + assignmentId} moduleTitle= {modTitle} moduleId = {modId} assignmentTitle={assignmentTitle} assignmentId={assignmentId} ></HeroSection>
  <h1 className= ' pl-72 py-6 text-3xl  text-slate-600 font-semibold dark:text-white bg-slate-100 border-b-2 border-slate-400 font-Dosis'> Peer Assessing: Hathan Khatkar</h1> 
  <div className="flex row-2">
  <div className=" pdf-container w-1/2 h-full ">

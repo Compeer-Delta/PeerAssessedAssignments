@@ -88,10 +88,14 @@ function SignUp() {
       {
         setValidationMessage("Please make sure you have entered a valid email");
       }
-      else{
-        setValidationMessage("");
-      updateForEmail()
+      else if (firstname == "" || lastname == "" || email=="" || user == "")
+      {
+        setValidationMessage("Please make sure you filled all the details");
       }
+      else{
+       return true;
+      }
+      return false;
 
     }
 
@@ -104,16 +108,41 @@ function SignUp() {
     function updateForEmail()
     {
       setEmailInputs({email: email, username: user, actualcode: actualcode})
+     
+      
     }
   
     useEffect(() => {userRef.current.focus();}, [])
     useEffect(() => {setErrMsg('');}, [user,pwd])
     
     const handleSubmit = async (e) => {
-       e.preventDefault();
+        //checks all fields in form to see if they are ready to be verified if not display message to user
+      if (institution== "" || institution == "Unlisted")
+      {
+        setValidationMessage("Please ensure you select an Institution");
+      }
+      else if (pwd != repwd)
+      {
+        setValidationMessage("Please ensure your password and re-password match");
+      }
+      else if (pwd.length < 10 || ! (/\d/.test(pwd) && (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/).test(pwd)))
+      {
+        setValidationMessage("Please make sure your password is atleast 10 characters and contains atleast one numerical digit");
+      }
+      else if (!(/^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/).test(email))
+      {
+        setValidationMessage("Please make sure you have entered a valid email");
+      }
+      else if (firstname == "" || lastname == "" || email=="" || user == "")
+      {
+        setValidationMessage("Please make sure you filled all the details");
+      }
+      else{
       
+    
+        e.preventDefault();
       {/* gmail service */}
-      emailjs.send('service_awsfb8e', 'template_n35f2mi', emailInputs, 'jBQKDXy824tIJnH8b') //form.current
+      emailjs.send('service_awsfb8e', 'template_n35f2mi', {email, user, actualcode}, 'jBQKDXy824tIJnH8b') //form.current
       .then((result) => {
           console.log(result.text);
       }, (error) => {
@@ -127,12 +156,12 @@ function SignUp() {
     let userData = {username: user, pass: pwd}
     
     setSuccess(true);
-
+    
     setInstitution('');
     setUser('');
     setPwd('');
     //clears form data
-
+      }
   }
 
 
@@ -149,7 +178,7 @@ function SignUp() {
 
         {success && !verified ? (
            
-              <div className= 'dark:bg-zinc-900'>
+              <div className= 'font-Dosis dark:bg-zinc-900'>
                 
               <div className='max-w-xl mx-auto w-3/12 h-[900px]'>
                 <h1 className= 'py-20 text-6xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'>Verify your COMPEER account</h1> 
@@ -204,7 +233,7 @@ function SignUp() {
            {/*Title and form display*/}
   
 
-          <form onSubmit={handleSubmit} className="w-full max-w-sm">
+          <form className="w-full max-w-sm">
 
           <div className=" w-full ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">{validationMessage}</div>
           <div className="md:w-0 ml-32">   
@@ -325,13 +354,12 @@ function SignUp() {
           </div>
           </div>
           
-          
-
+        
         {/*submit button */}
           <div className="md:flex md:items-center">
             <div className="md:w-1/3"></div>
               <div className="md:w-2/3">
-                <button onClick= {checkValidation} type="submit" className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                <button onClick= {handleSubmit} type="submit" className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
                 Create Account
                 </button>
               </div>   
