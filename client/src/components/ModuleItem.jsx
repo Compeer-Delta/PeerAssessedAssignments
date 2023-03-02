@@ -2,19 +2,16 @@ import React, {useState} from 'react'
 import StudentView from '../pages/StudentView'
 import { Link, Route, Routes } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import {ReactSession} from 'react-client-session';
 
 function ModuleItem({title, modId}) { //parameters might need changing 
-   
-    
-    let outputData = sessionStorage.getItem('loginSessionData');
-    outputData = JSON.parse(outputData);
 
     const [isStudentorTeacher, setIsStudentorTeacher] = useState(()=> checkIfStudentorTeacher())
     const [modulename, setModulename] = useState(title);
 
     function checkIfStudentorTeacher()
     {
-        if (outputData.accountType == "studentAccount" ||outputData.accountType == "teacherAccount")
+        if (ReactSession.get("accType") == "studentAccount" || ReactSession.get("accType") == "teacherAccount")
         {
             return true;
         }

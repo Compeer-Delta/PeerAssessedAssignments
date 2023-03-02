@@ -2,6 +2,7 @@ import React from 'react'
 import { Link , Navigate, Route, Routes} from 'react-router-dom';
 import {useForm} from 'react-hook-form';
 import {useRef, useState, useEffect} from 'react';
+import {ReactSession} from 'react-client-session'
 import StudentView from '../pages/StudentView';
 import SignUp from '../pages/SignUp';
 import Modules from './Modules';
@@ -33,6 +34,8 @@ function Login() {
 
   useEffect(() => {userRef.current.focus();}, [])
   useEffect(() => {setErrMsg('');}, [accType,user,pwd])
+
+  ReactSession.setStoreType("sessionStorage");
 
   const handleSubmit = async (e) => { 
     e.preventDefault();
@@ -68,13 +71,14 @@ function Login() {
     
     } else {
       setSuccess(true);
-      sessionStorage.setItem("loginSessionData", token);
+      //sessionStorage.setItem("loginSessionData", {token, accType, email});
+      ReactSession.set("token", token);
+      ReactSession.set("accType", accType);
+      ReactSession.set("email", user);
 
       //Debug: displays session data in console
+      console.log(ReactSession.get("token"));
 
-      let outputData = sessionStorage.getItem("loginSessionData");
-      outputData = JSON.stringify(outputData);
-      console.log("Session: " + outputData);
     }
 
     //clear form data
