@@ -10,14 +10,15 @@ import {ReactSession} from 'react-client-session';
 
 function Modules() {
 
-  const modules =  [
-    { modulename: 'Temp Module A',moduleId:"6575", institution: "University of Kent"},
-    { modulename: 'Temp Module B',moduleId:"6000",  institution: "University of Kent"},
-    { modulename: 'Temp Module C' ,moduleId:"1111",  institution: "University of Kent"},
-    { modulename: 'Temp Module D',moduleId:"1234",  institution: "University of Kent"},
-    { modulename: 'Temp Module E', moduleId:"1235",  institution: "University of Kent"},
-  ];
-  //replace later with DB read values, (all for particular institution for admin and specifically assigned modules for students/teachers)
+  // const modules =  [
+  //   { modulename: 'Temp Module A',moduleId:"6575", institution: "University of Kent"},
+  //   { modulename: 'Temp Module B',moduleId:"6000",  institution: "University of Kent"},
+  //   { modulename: 'Temp Module C' ,moduleId:"1111",  institution: "University of Kent"},
+  //   { modulename: 'Temp Module D',moduleId:"1234",  institution: "University of Kent"},
+  //   { modulename: 'Temp Module E', moduleId:"1235",  institution: "University of Kent"},
+  // ];
+
+  let modules = getModules();
 
   let session = {
     token: "",
@@ -39,6 +40,18 @@ function Modules() {
   {
     if (session.accountType == "adminAccount") { return true;}
     else {return false;}
+  }
+
+  const getModules = async () => {
+    const response = await fetch("http://localhost:8081/modules", {
+      method: "GET",
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        "email": session.email,
+      })
+    });
+
+    modules = await response.json();
   }
 
   return (
@@ -64,9 +77,9 @@ function Modules() {
                 ):(<></>)}
 
                 {modules.map(module => (
-                    <ModuleItem key={module.modulename} //key is temporarily title
-                              title={module.modulename}
-                              modId={module.moduleId}>
+                    <ModuleItem key={module.moduleId} //key is temporarily title
+                              title={module.title}
+                              modId={module.moduleCode}>
   
                     </ModuleItem>
                 ))}
