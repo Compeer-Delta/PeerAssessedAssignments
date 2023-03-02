@@ -3,7 +3,7 @@ import Assignment from "../schemas/assignment";
 
 // numOfReviewers is the number of reviewers for each submission
 // assignmentId is the id of the assignment
-export function distrubuteReviewersr(numOfReviewers, assignmentId){
+export function distrubuteReviewers(numOfReviewers, assignmentId){
     const submissions = Assignment.findOne({assignmentId: assignmentId}).submissions;
     console.log(submissions);
     const distributedReviewers = [];
