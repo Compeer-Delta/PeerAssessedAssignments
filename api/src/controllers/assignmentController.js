@@ -1,4 +1,5 @@
 import Submission from "../schemas/submission.js";
+import Assignment from "../schemas/assignment.js";
 import Module from "../schemas/module.js";
 import mongoose from "mongoose";
 
@@ -23,7 +24,9 @@ const getSubmission = async (req, res) => {
   const { userId, moduleId, submissionId } = req.params;
   try {
     const foundSubmission = await Submission.findOne({
-      submissionId: submissionId, userId: userId, moduleId: moduleId
+      submissionId: submissionId,
+      userId: userId,
+      moduleId: moduleId,
     });
     if (foundSubmission === null) {
       return res.status(404).json({ message: "Cannot find submission" });
@@ -36,7 +39,7 @@ const getSubmission = async (req, res) => {
 };
 
 const updateSubmission = async (req, res) => {
-  const { userId, submissionId, binData, markerId, marked } = req.params;
+  const { userId, submissionId, binData, marker, marked } = req.params;
   if (marked) {
     try {
       const updatedSubmission = await Submission.updateOne(
@@ -48,11 +51,11 @@ const updateSubmission = async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   }
-  if (markerId) {
+  if (marker) {
     try {
       const updatedSubmission = await Submission.updateOne(
         { userId: userId, submissionId: submissionId },
-        { $push: { markerId: markerId } }
+        { $push: { marker: marker } }
       );
       res.status(201).json(updatedSubmission);
     } catch (err) {
@@ -74,37 +77,30 @@ const updateSubmission = async (req, res) => {
 
 const addAssignment = async (req, res) => {
   const {
-    moduleId,
-    assignmentId,
-    supervistorId,
-    assignmentTitle,
-    assignmentDescription,
-    assignmentBreif,
-    assignmentReviewers,
-    assignmentStart,
-    assignmentDeadline,
+    title,
+    description,
+    brief,
+    startDate,
+    endDate,
+    numOfReviewers,
     imageURL,
+    teachers,
+    students,
   } = req.body;
-  const assignmentData = {
-    assignmentId: assignmentId,
-    supervistorId: supervistorId,
-    assignmentTitle: assignmentTitle,
-    assignmentDescription: assignmentDescription,
-    assignmentBreif: assignmentBreif,
-    assignmentReviewers: assignmentReviewers,
-    assignmentStart: assignmentStart,
-    assignmentDeadline: assignmentDeadline,
-    imageURL: imageURL,
-    submissions: [],
-  };
 
-  const setAssignment = await Module.updateOne(
-    { moduleId: moduleId },
-    {
-      $push: { assignments: assignmentData },
-    },
-    { upsert: true }
-  );
+  const setAssignment = new Assignment({
+    _id: new mongoose.Types.ObjectId(),
+    supervistorId: supervistorId,
+    title: title,
+    description: description,
+    brief: brief,
+    startDate: startDate,
+    endDate: endDate,
+    imageURL: imageURL,
+    numOfReviewers: numOfReviewers,
+    teachers: teachers,
+    students: students,
+  });
 
   try {
     const savedAssignment = await setAssignment.save();
