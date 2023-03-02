@@ -23,7 +23,7 @@ const getSubmission = async (req, res) => {
   const { userId, moduleId, submissionId } = req.params;
   try {
     const foundSubmission = await Submission.findOne({
-      submissionId: submissionId,
+      submissionId: submissionId, userId: userId, moduleId: moduleId
     });
     if (foundSubmission === null) {
       return res.status(404).json({ message: "Cannot find submission" });
@@ -95,7 +95,7 @@ const addAssignment = async (req, res) => {
     assignmentStart: assignmentStart,
     assignmentDeadline: assignmentDeadline,
     imageURL: imageURL,
-    submissions:[],
+    submissions: [],
   };
 
   const setAssignment = await Module.updateOne(
@@ -114,4 +114,82 @@ const addAssignment = async (req, res) => {
   }
 };
 
-export default { createSubmission, getSubmission, updateSubmission, addAssignment };
+const updateAssignment = async (req, res) => {
+  const {
+    moduleId,
+    assignmentId,
+    supervistorId,
+    assignmentTitle,
+    assignmentDescription,
+    assignmentBreif,
+    assignmentReviewers,
+    assignmentStart,
+    assignmentDeadline,
+    imageURL,
+  } = req.body;
+
+  try {
+    const setAssignment = await Module.updateOne(
+      { moduleId: moduleId, "assignments.assignmentId": assignmentId },
+      {
+        $set: {
+          "assignments.$.assignmentTitle": assignmentTitle,
+          "assignments.$.assignmentDescription": assignmentDescription,
+          "assignments.$.assignmentBreif": assignmentBreif,
+          "assignments.$.assignmentReviewers": assignmentReviewers,
+          "assignments.$.assignmentStart": assignmentStart,
+          "assignments.$.assignmentDeadline": assignmentDeadline,
+          "assignments.$.imageURL": imageURL,
+        },
+      }
+    );
+    res.status(201).json(setAssignment);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getAssignment = async (req, res) => {
+  try {
+    const moduleId = req.params.moduleId;
+    const assignmentId = req.params.assignmentId;
+
+    const module = await Module.findOne({ moduleId: moduleId });
+
+    const assignment = module.assignments.find((assignment) => {
+      return assignment.assignmentId === assignmentId;
+    });
+
+    if (assignment === null) {
+      return res.status(404).json({ message: "Cannot find assignment" });
+    } else {
+      res.status(201).json(assignment);
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const deleteAssignment = async (req, res) => {
+  const { moduleId, assignmentId } = req.body;
+  try {
+    const deletedAssignment = await Module.updateOne(
+      { moduleId: moduleId },
+      { $pull: { assignments: { assignmentId: assignmentId } } }
+    );
+
+    res.status(201).json(deletedAssignment);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export default {
+  createSubmission,
+  getSubmission,
+  updateSubmission,
+  addAssignment,
+  updateAssignment,
+  deleteAssignment,
+  getAssignment,
+};
