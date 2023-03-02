@@ -1,4 +1,6 @@
 import Admin from "../schemas/admin.js";
+import User from "../schemas/user.js";
+import Institution from "../schemas/institution.js";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 const saltRounds = 10;
@@ -6,12 +8,16 @@ import jwt from "jsonwebtoken";
 
 // create admin
 const createAdmin = async (req, res) => {
-  const { password, institution, details: { firstname, surname, email } } = req.body;
+  const {
+    password,
+    institution,
+    details: { firstname, surname, email },
+  } = req.body;
   const admin = new Admin({
     _id: new mongoose.Types.ObjectId(),
     password: bcrypt.hashSync(password, saltRounds),
-    details: {firstname, surname, email},
-    institution
+    details: { firstname, surname, email },
+    institution,
   });
   try {
     const savedAdmin = await admin.save();
@@ -21,17 +27,22 @@ const createAdmin = async (req, res) => {
   }
 };
 
+// login admin
 const loginAdmin = async (req, res) => {
   try {
     const { username, password } = req.body;
 
     const admin = await Admin.findOne({ username: username });
     if (!admin) {
-      return res.status(401).json({ message: "Incorrect username or password" });
+      return res
+        .status(401)
+        .json({ message: "Incorrect username or password" });
     }
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
-      return res.status(402).json({ message: "Incorrect username or password" });
+      return res
+        .status(402)
+        .json({ message: "Incorrect username or password" });
     }
 
     const payload = { adminId: admin.adminId };
@@ -44,6 +55,7 @@ const loginAdmin = async (req, res) => {
   }
 };
 
+// get a specific admin's details
 const getAdmin = async (req, res) => {
   try {
     const admin = await Admin.findOne({ adminId: req.admin.adminId });
@@ -53,6 +65,7 @@ const getAdmin = async (req, res) => {
   }
 };
 
+// delete existing admin
 const deleteAdmin = async (req, res) => {
   try {
     const { adminId } = req.params;
@@ -63,4 +76,81 @@ const deleteAdmin = async (req, res) => {
   }
 };
 
-export default { createAdmin, loginAdmin, getAdmin, deleteAdmin};
+// change user role
+const setUserRole = async (req, res) => {
+  const { userId, role } = req.body;
+  try {
+    const targetUser = await User.findOne({ userId: userId });
+    if (role !== "admin" || role !== "student" || role !== "teacher") {
+      return res.status(401).json({ message: "Invalid role" });
+    }
+    if (!targetUser) {
+      return res.status(401).json({ message: "User not found" });
+    }
+    targetUser.role = role;
+    const savedUser = await targetUser.save();
+    res.status(200).json(savedUser);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// add new institution (school)
+const addInstitution = async (req, res) => {
+  const {
+    institutionName,
+    institutionEmail,
+    institutionAddress,
+    institutionPhone,
+    institutionModules,
+    institutionAdmins,
+    institutionUsers,
+  } = req.body;
+  const institution = new Institution({
+    _id: new mongoose.Types.ObjectId(),
+    institutionName,
+    institutionEmail,
+    institutionAddress,
+    institutionPhone,
+    institutionModules,
+    institutionAdmins,
+    institutionUsers,
+  });
+  try {
+    const savedInstitution = await institution.save();
+    res.status(201).json(savedInstitution);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getInstitution = async (req, res) => {
+  const { institutionId } = req.params;
+  try {
+    const institution = await Institution.findOne({institutionId: institutionId});
+    res.status(200).json(institution);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// get all students
+const getStudents = async (req, res) => {
+  try {
+    const students = await User.find({ role: "student" });
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export default {
+  createAdmin,
+  loginAdmin,
+  getAdmin,
+  deleteAdmin,
+  addInstitution,
+  getStudents,
+  setUserRole,
+  getInstitution,
+};
