@@ -18,7 +18,7 @@ function Modules() {
   //   { modulename: 'Temp Module E', moduleId:"1235",  institution: "University of Kent"},
   // ];
 
-  let modules = getModules();
+  let modules = [];
 
   let session = {
     token: "",
@@ -53,6 +53,19 @@ function Modules() {
 
     modules = await response.json();
   }
+
+  useEffect(() => {
+    const onPageLoad = () => {
+      getModules();
+    };
+
+    if(document.readyState === 'complete') {
+        onPageLoad();
+    } else {
+        window.addEventListener('load', onPageLoad);
+        return () => window.removeEventListener('load', onPageLoad);
+    }
+}, []);
 
   return (
 <>
