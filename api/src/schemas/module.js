@@ -3,33 +3,41 @@
 import { Schema, model } from "mongoose";
 import { generateUUID } from "../functions/generateUUID.js";
 
-const moduleSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  moduleId: {
-    type: String,
-    required: true,
-    default: generateUUID,
+const moduleSchema = new Schema(
+  {
+    _id: Schema.Types.ObjectId,
+    moduleId: {
+      type: String,
+      required: true,
+      default: generateUUID,
+    },
+    moduleName: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    institutionName: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    enrolledTeachers: {
+      type: [],
+      required: false,
+      default: [],
+    },
+    assignments: {
+      type: [],
+      required: false,
+      default: [],
+    },
   },
-  moduleName: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  institution: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  enrolledTeachers: {
-    type: [],
-    required: false,
-    default: [],
-  },
-  assignments: {
-    type: [],
-    required: false,
-    default: [],
-  },
-});
+  {
+    timestamps: {
+      createdAt: true,
+      updatedAt: true,
+    },
+  }
+);
 
 export default model("Module", moduleSchema, "module");

@@ -4,54 +4,62 @@
 import { Schema, model } from "mongoose";
 import { generateUUID } from "../functions/generateUUID.js";
 
-const userSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  userId: {
-    type: String,
-    unqiue: true,
-    required: true,
-    default: generateUUID,
-  },
-  username: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  password: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  details: {
-    type: {},
-    default: {
-      firstname: {
-        type: String,
-        required: true,
-        default: null,
-      },
-      surname: {
-        type: String,
-        required: true,
-        default: null,
-      },
-      email: {
-        type: String,
-        required: true,
-        default: null,
+const userSchema = new Schema(
+  {
+    _id: Schema.Types.ObjectId,
+    userId: {
+      type: String,
+      unqiue: true,
+      required: true,
+      default: generateUUID,
+    },
+    username: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    password: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    details: {
+      type: {},
+      default: {
+        firstname: {
+          type: String,
+          required: true,
+          default: null,
+        },
+        surname: {
+          type: String,
+          required: true,
+          default: null,
+        },
+        email: {
+          type: String,
+          required: true,
+          default: null,
+        },
       },
     },
+    enrolledModules: {
+      type: [],
+      required: true,
+      default: [],
+    },
+    role: {
+      type: String,
+      required: true,
+      default: "student",
+    },
   },
-  institution: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  enrolledModules: {
-    type: [],
-    required: true,
-    default: [],
-  },
-});
+  {
+    timestamps: {
+      createdAt: true,
+      updatedAt: true,
+    },
+  }
+);
 
 export default model("User", userSchema, "user");

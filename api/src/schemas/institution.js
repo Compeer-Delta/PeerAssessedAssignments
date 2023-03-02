@@ -3,48 +3,56 @@
 import { Schema, model } from "mongoose";
 import { generateUUID } from "../functions/generateUUID.js";
 
-const institutionSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  institutionId: {
-    type: String,
-    required: true,
-    default: generateUUID,
+const institutionSchema = new Schema(
+  {
+    _id: Schema.Types.ObjectId,
+    institutionId: {
+      type: String,
+      required: true,
+      default: generateUUID,
+    },
+    institutionName: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    institutionEmail: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    institutionAddress: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    institutionPhone: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    institutionModules: {
+      type: [],
+      required: true,
+      default: [],
+    },
+    institutionAdmins: {
+      type: [],
+      required: true,
+      default: [],
+    },
+    institutionUsers: {
+      type: [],
+      required: true,
+      default: [],
+    },
   },
-  institutionName: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  institutionEmail: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  institutionAddress: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  institutionPhone: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  institutionModules: {
-    type: [],
-    required: true,
-    default: [],
-  },
-  institutionAdmins: {
-    type: [],
-    required: true,
-    default: [],
-  },
-  institutionUsers: {
-    type: [],
-    required: true,
-    default: [],
-  },
-});
+  {
+    timestamps: {
+      createdAt: true,
+      updatedAt: true,
+    },
+  }
+);
 
 export default model("Institution", institutionSchema, "institution");

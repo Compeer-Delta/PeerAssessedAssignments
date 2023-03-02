@@ -6,57 +6,70 @@
 import { Schema, model } from "mongoose";
 import { generateUUID } from "../functions/generateUUID.js";
 
-const submissionSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  userId: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  moduleId: {
-    type: String,
-    required: true,
-    default: null,
-  },
-  submissionId: {
-    type: String,
-    required: true,
-    default: generateUUID,
-  },
-  binData: {
-    type: Buffer,
-    required: true,
-    default: null,
-  },
-  reviewers: {
-    type: [],
-    required: true,
-  },
-  feedback: [
-    {
-      markerId: {
-        type: String,
-        required: true,
-      },
-      comment: {
-        type: String,
-        required: true,
-      },
-      rating: {
-        type: Number,
-        required: true,
-      },
-      approved: {
-        type: Boolean,
-        required: true,
-        default: false,
-      },
+const submissionSchema = new Schema(
+  {
+    _id: Schema.Types.ObjectId,
+    userId: {
+      type: String,
+      required: true,
+      default: null,
     },
-  ],
-  marked: {
-    type: Boolean,
-    default: false,
+    assignmentId: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    moduleId: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    submissionId: {
+      type: String,
+      required: true,
+      default: generateUUID,
+    },
+    binData: {
+      type: Buffer,
+      required: true,
+      default: null,
+    },
+    reviewers: {
+      type: [],
+      required: true,
+    },
+    feedback: [
+      {
+        markerId: {
+          type: String,
+          required: true,
+        },
+        comment: {
+          type: String,
+          required: true,
+        },
+        rating: {
+          type: Number,
+          required: true,
+        },
+        approved: {
+          type: Boolean,
+          required: true,
+          default: false,
+        },
+      },
+    ],
+    marked: {
+      type: Boolean,
+      default: false,
+    },
   },
-});
+  {
+    timestamps: {
+      createdAt: true,
+      updatedAt: true,
+    },
+  }
+);
 
 export default model("Submission", submissionSchema, "submission");
