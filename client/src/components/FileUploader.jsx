@@ -7,26 +7,31 @@ function FileUploader(props, uploadType) {
 
     const [file, setFile] = useState({fileName:'', fileContent:'' });
     const [formattedData, setFormattedData] = useState([]);
+
     const handleFileChange = e => {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.readAsText(file);
         reader.onload = () => {
             setFile({fileName: file.name, fileContent: reader.result});
-            console.log(file);
+           
  /// if ((((fileContent.split(/\n/))[0]).split(",")).length() == 4) //checks if its formatted in account data
-           if (uploadType === "modules")
+           if (props.uploadType === "modules")
             {
                 props.UploadedData((reader.result).split(","))
+                console.log("in");
             }
-            else if (uploadType === "accounts")
+            else if (props.uploadType === "accounts")
             {
-                if ((((((reader.result).split(/\n/))[0]).split(",")).length() == 4))
+                if ((((((reader.result).split(/\n/))[0]).split(",")).length == 5))
                 {
-                    {props.UploadedData((((reader.result).split(/\n/))).split(","))}
+                    console.log((((reader.result).split(/\n/))[0]).split(","))
+                  
+                    props.UploadedData(((reader.result).split(/\n/)[0]).split(","))
+                    
                 }
                 else
-                { console.log("error with size of row not equal to 4")}
+                { console.log("error with size of row not equal to 4" + ((((reader.result).split(/\n/))[0]).split(",")))}
 
             }
 

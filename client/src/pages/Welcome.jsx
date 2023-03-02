@@ -7,6 +7,7 @@ import COMPEER1 from '/images/COMPEER1.jpg';
 import COMPEER2 from '/images/COMPEER2.jpg';
 import COMPEER3 from '/images/COMPEER3.jpg';
 import COMPEER4 from '/images/COMPEER4.jpg';
+import sideImage from '/images/LoginSplashImage_COMPEER.png'
 function Welcome() {
   const [theme, setTheme] = useState(null);
   useEffect(()=> {
@@ -45,15 +46,9 @@ function Welcome() {
     </button>
      
         {/* left side section (containing link to sign up) */}
-         <div className = "font-Dosis sidebar text-slate-200 dark:text-slate-100 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-indigo-900"> {/* bars icon */}
-          Welcome to Peer App. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
-          <br></br><br></br>
-          To use our services <Link to="/register" className="text-indigo-400">Register here</Link> to create an Admin account!
-
-          
-         
-         </div>
-         
+         <img src={sideImage} className ="font-Dosis sidebar text-slate-200 dark:text-slate-100 fixed lg:left-0 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-indigo-900"/>{/* bars icon */}
+   
+  
       {/* buttons sign in*/}
 
       <div className= 'font-Dosis dark:bg-zinc-900'>
@@ -76,10 +71,14 @@ function Welcome() {
 
         {/* login by university account */}
           <div className="border-t w-80 mx-4 mb-4 border-t-slate-400 "></div> 
-          <Link to="/login" className='btn btn-primary rounded-full inline-block border border-slate-300 dark:bg-indigo-500 dark:border-indigo-500 px-70 py-1 mb-4 h-8 w-3/4 text-center bg-slate-100 hover:-translate-y-1 transform transition'>
+          <div className = "flex flex-row w-3/4">
+          <Link to="/login" className='mr-3 btn btn-primary rounded-full inline-block border border-slate-300 dark:bg-indigo-500 dark:border-indigo-500 px-70 py-1 mb-4 h-8 w-3/4 text-center bg-slate-100 hover:-translate-y-1 transform transition'>
                    Sign in with University account
           </Link>
-         
+          <Link to="/register" className='ml-3 btn btn-primary rounded-full inline-block border border-slate-300 dark:bg-indigo-500 dark:border-indigo-500 px-70 py-1 mb-4 h-8 w-3/4 text-center bg-slate-100 hover:-translate-y-1 transform transition'>
+                   Register an Admin Account
+          </Link>
+          </div>
           
 
          </div>

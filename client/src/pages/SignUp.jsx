@@ -9,6 +9,7 @@ import mongoose from 'mongoose';
 //const Admin = require(`../schemas/admin`);
 //import Admin from '../schemas/admin';
 import Login from './Login';
+import sideImage from '/images/LoginSplashImage_COMPEER.png';
 
 import emailjs from '@emailjs/browser';
 
@@ -38,11 +39,43 @@ function SignUp() {
 
     const [validationMessage, setValidationMessage] = useState("");
 
-     function checkVerification() //change to async when connecting to db -> async function checkVerification
-    {
+  //  async function checkVerification() //change to async when connecting to db -> async function checkVerification
+
+  async function postDetails()  {
+    try{
       console.log(inputcode, actualcode);
+      console.log(pwd + " " + institution + " " + firstname + " " + lastname + " " + email);
+    const response = await fetch("http://localhost:8081/admin", {
+          method:"POST",
+          headers: {  
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+           },
+          body: JSON.stringify({password:pwd, institution:institution, firstname:firstname, surname:lastname, email:email})
+        });
+        const data = await response.json()
+    
+        if (!response.ok)
+        {
+          console.log(data.description);
+          return;
+        }
+        console.log(data)
+      }catch (error) {
+          console.log("error");
+        }
+  }
+
+     function checkVerification ()
+    {
+     
       if (inputcode == actualcode)
       {
+         postDetails();
+
+        setVerified(true)
+      } 
+    
+     
          //lookup admin
         // let storedAdmin = await Admin.findOne({ userId: user });
          //create new entry if no admin account found
@@ -60,12 +93,12 @@ function SignUp() {
          //   password: pwd,
         //   });
         //   await storedAdmin.save().catch(console.error);
-           setVerified(true)
+           
         // } else {
            //false as admin account already exists
          //  setVerified(false)
         // }
-      }
+      
     }
 
     function checkValidation()
@@ -142,7 +175,7 @@ function SignUp() {
     
         e.preventDefault();
       {/* gmail service */}
-      emailjs.send('service_awsfb8e', 'template_n35f2mi', {email, user, actualcode}, 'jBQKDXy824tIJnH8b') //form.current
+      emailjs.send('service_awsfb8e', 'template_n35f2mi', {email:email, username:user, actualcode:actualcode}, 'jBQKDXy824tIJnH8b') //form.current
       .then((result) => {
           console.log(result.text);
       }, (error) => {
@@ -157,9 +190,9 @@ function SignUp() {
     
     setSuccess(true);
     
-    setInstitution('');
-    setUser('');
-    setPwd('');
+    //setInstitution('');
+   // setUser('');
+    //setPwd('');
     //clears form data
       }
   }
@@ -168,11 +201,9 @@ function SignUp() {
     return (
         <>
          
-        <div className = " font-Dosis sidebar text-slate-200 dark:text-slate-700 border-slate-200 fixed lg:left-0 p-2 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-zinc-200"> {/* bars icon */}
-          Welcome to COMPEER. You can sign in on the right, if your institution's admin team has added your account details to PeerApp's system.
-          <br></br><br></br>
-          To use our services <Link to="/register" className="text-indigo-600">Register here</Link> to create an Admin account!
-         </div>
+         <img src={sideImage} className ="font-Dosis sidebar text-slate-200 dark:text-slate-100 fixed lg:left-0 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-indigo-900"/>{/* bars icon */}
+   
+  
          {/*Code for displaying left box, containing link to sign up page */}
         {/*success variable will determine whether the next page (admin/teacher/student view) will be displayed or if false, display the login page */}
 
