@@ -1,28 +1,29 @@
 //login details
 //ref https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1
-//created & updated by gc436
+//created by gc436 last updated 02/03 by gc436
 import { Schema, model } from "mongoose";
+
 const userSchema = new Schema({
   _id: Schema.Types.ObjectId,
   userId: {
     type: String,
+    unqiue: true,
     required: true,
-    default: null,
   },
   username: {
     type: String,
     required: true,
-    default: null
+    default: null,
   },
   email: {
     type: String,
     required: true,
-    default: null
+    default: null,
   },
   password: {
     type: String,
     required: true,
-    default: null
+    default: null,
   },
   details: {
     type: {},
@@ -30,30 +31,30 @@ const userSchema = new Schema({
       firstname: {
         type: String,
         required: true,
-        default: null
+        default: null,
       },
       surname: {
         type: String,
         required: true,
-        default: null
+        default: null,
       },
       email: {
         type: String,
         required: true,
-        default: null
+        default: null,
       },
     },
   },
   institution: {
     type: String,
     required: true,
-    default: null
+    default: null,
   },
   enrolledModules: {
     type: [],
     required: true,
     default: [],
-  }
+  },
 });
 
 export default model("User", userSchema, "user");

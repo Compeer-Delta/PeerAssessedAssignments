@@ -2,6 +2,8 @@ import User from "../schemas/user.js";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 const saltRounds = 10;
+import jwt from "jsonwebtoken";
+const JWTsecret = "secret";
 
 // create user
 const createUser = async (req, res) => {
@@ -26,7 +28,7 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { userId, password } = req.body;
   try {
-    const user = await User.fineOne({ userId: userId });
+    const user = await User.findOne({ userId: userId });
     if (!user) {
       return res.status(401).json({ message: "Incorrect email or password" });
     }
@@ -47,16 +49,22 @@ const loginUser = async (req, res) => {
 
 //update user details
 const updateUser = async (req, res) => {
-  const { userId, password, details, institution } = req.body;
-  const user = new User({
-    _id: new mongoose.Types.ObjectId(),
-    userId,
-    password: bcrypt.hashSync(password, saltRounds),
-    details,
-    institution,
-    enrolledModules: [],
-  });
+  const { password, details, institution } = req.body;
+  const userId = req.user.userId;
   try {
+    const user = await User.findOne({ userId: userId });
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+    if (password) {
+      user.password = bcrypt.hashSync(password, saltRounds);
+    }
+    if (details) {
+      user.details = details;
+    }
+    if (institution) {
+      user.institution = institution;
+    }
     const savedUser = await user.save();
     res.status(201).json(savedUser);
   } catch (err) {
@@ -66,9 +74,9 @@ const updateUser = async (req, res) => {
 
 //delete user
 const deleteUser = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.user;
   try {
-    const deletedUser = await User.deleteOne({ userId: userId });
+    const deletedUser = await User.findByIdAndDelete(userId);
     res.status(200).json(deletedUser);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -78,7 +86,7 @@ const deleteUser = async (req, res) => {
 //get user
 const getUser = async (req, res) => {
   try {
-    const user = await User.findOne({ userId: req.user.userId });
+    const user = await User.findById(req.user.userId);
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
