@@ -11,7 +11,7 @@ const notifSchema = new Schema(
       default: generateUUID,
     },
     userId: [{
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: "User",
     }],
     notifTitle: {

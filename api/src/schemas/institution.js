@@ -32,15 +32,15 @@ const institutionSchema = new Schema(
       default: null,
     },
     modules: [{
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "Module",
     }],
     admins: [{
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "Admin",
     }],
     users: [{
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "User",
     }],
   },

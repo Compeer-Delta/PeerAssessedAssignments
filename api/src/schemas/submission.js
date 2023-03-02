@@ -16,19 +16,19 @@ const submissionSchema = new Schema(
     },
     userId: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "User",
       },
     ],
     assignmentId: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "Assignment",
       },
     ],
     moduleId: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "Module",
       },
     ],
@@ -39,7 +39,7 @@ const submissionSchema = new Schema(
     },
     reviewers: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "User",
       },
     ],
@@ -47,7 +47,7 @@ const submissionSchema = new Schema(
       {
         marker: [
           {
-            type: Schema.Types.ObjectId,
+            type: String,
             ref: "User",
           },
         ],

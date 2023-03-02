@@ -31,8 +31,6 @@ function Login() {
 
   const [failedVerifMessage, setFailedVerifMessage] = useState("");
 
- 
-
   useEffect(() => {userRef.current.focus();}, [])
   useEffect(() => {setErrMsg('');}, [accType,user,pwd])
 
@@ -60,7 +58,7 @@ function Login() {
     //console.log(JSON.stringify(userData.token));
     const token = JSON.stringify(userData.token);
 
-    if(response.ok && accType == "adminAccount") {
+    if(accType == "adminAccount") {
       setIsAdmin(true);
     }
 

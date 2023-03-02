@@ -63,6 +63,15 @@ const getAdmin = async (req, res) => {
   }
 };
 
+const getAllAdmins = async (req, res) => {
+  try {
+    const admins = await Admin.find();
+    res.status(200).json(admins);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // delete existing admin
 const deleteAdmin = async (req, res) => {
   try {
@@ -144,6 +153,7 @@ const getStudents = async (req, res) => {
   }
 };
 
+
 export default {
   createAdmin,
   loginAdmin,
@@ -153,4 +163,5 @@ export default {
   getStudents,
   setUserRole,
   getInstitution,
+  getAllAdmins,
 };

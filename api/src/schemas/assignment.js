@@ -42,21 +42,21 @@ const asssignmentSchema = new Schema(
     },
     teachers: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "User",
         index: true,
       },
     ],
     students: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "User",
         index: true,
       },
     ],
     submissions: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "Submission",
         index: true,
       },
