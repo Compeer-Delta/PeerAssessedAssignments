@@ -32,4 +32,17 @@ const getNotif = async (req, res) => {
   }
 };
 
-export default { createNotif, getNotif};
+const deleteNotif = async (req, res) => {
+  const { userId, messageId } = req.params;
+  try {
+    const notification = await Notification.findOneAndDelete({
+      userId: userId,
+      messageId: messageId,
+    });
+    res.status(201).json(notification);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export default { createNotif, getNotif, deleteNotif };
