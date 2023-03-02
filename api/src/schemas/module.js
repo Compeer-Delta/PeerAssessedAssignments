@@ -20,17 +20,17 @@ const moduleSchema = new Schema(
       type: String,
     },
     teachers: [{
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'User',
       index: true,
     }],
     students: [{
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'User',
       index: true,
     }],
     assignments: [{
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'Assignment',
       index: true,
     }],
