@@ -263,14 +263,16 @@ return (
         </div>
 
         
-        <h1 className= '  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Or upload .csv file of usernames to automatically add students: </h1> 
+        <h1 className= 'text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Or upload .csv file of usernames to automatically add students: </h1> 
     
         <div className="flex flex-row"> 
         <FileUploader UploadedData ={uploadedStudentData => setUploadedStudentData(uploadedStudentData)} uploadType="modules"></FileUploader> {/*onSubmit={getUploadedTeacherData} */}
-       {/* <button onClick={addUploadedStudents} className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold w-100 h-8 px-3 ml-1 rounded ">
+        {uploadedStudentData}
+        {/*}
+       <button onClick={addUploadedStudents} className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold w-100 h-8 px-3 ml-1 rounded ">
                 Add All
         </button>
-          */}
+       */}
         </div>
   
 

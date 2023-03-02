@@ -1,24 +1,25 @@
 import Module from "../schemas/module.js";
+import User from "../schemas/user.js";
 import submission from "../schemas/submission.js";
 import mongoose from "mongoose";
 
 const createModule = async (req, res) => {
   const {
-    moduleId,
-    moduleTitle,
-    moduleDescription,
-    moduleInstructor,
-    moduleInstitution,
-    moduleContent,
+    title,
+    description,
+    teachers,
+    students,
+    assignments,
+    institutionName,
   } = req.body;
   const module = new Module({
     _id: new mongoose.Types.ObjectId(),
-    moduleId: moduleId,
-    moduleTitle: moduleTitle,
-    moduleDescription: moduleDescription,
-    moduleInstructor: moduleInstructor,
-    moduleInstitution: moduleInstitution,
-    moduleContent: moduleContent,
+    title: title,
+    description: description,
+    teachers: teachers,
+    students: students,
+    assignments: assignments,
+    institutionName: institutionName,
   });
   try {
     const savedModule = await module.save();
@@ -74,18 +75,21 @@ const deleteModule = async (req, res) => {
   }
 };
 
+// get modules of specific user
 const getModules = async (req, res) => {
+  const { email } = req.body;
   try {
-    const foundModules = await Module.find();
-    res.status(201).json(foundModules);
+    //const user = await User.findOne({ email: email });
+    //const foundModules = await Module.find({ students: user._id });
+    const modules = await Module.find({ students: { $regex: email, $options: 'i' } });
+    res.status(201).json(modules);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
 const giveFeedback = async (req, res) => {
-  const { moduleId, submissionId, marker, comment, rating, marked } =
-    req.body;
+  const { moduleId, submissionId, marker, comment, rating, marked } = req.body;
   try {
     const feedback = { marker: marker, comment: comment, rating: rating };
     const updatedSubmission = await submission.updateOne(
@@ -171,6 +175,7 @@ export default {
   updateModule,
   deleteModule,
   getModules,
+  addSubmission,
   getSubmissions,
   giveFeedback,
   viewFeedback,

@@ -105,8 +105,8 @@ function ManageAccounts()
         <li
           key={t}
           className="p-0 text-sm hover:bg-sky-600 hover:text-white ">
-          {"User: "+ t?.username + " Temp Password: " + t?.password + " Name: " +  t?.firstname + " " + t?.secondname}
-        </li>
+          {"User: "+ t+ " Temp Password: " + t + " Name: " +  t + " " + t + " Account" +  t }
+        </li>// Accounts are listing properly yet check back in FileUploader and make sure uploadedAccountData is formatted right 
      
       ))}
 
@@ -118,9 +118,7 @@ function ManageAccounts()
       <h1 className= '  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Upload .csv file of format: firstname, secondname, username,password to add accounts: </h1> 
       <div className="flex flex-row"> 
       <FileUploader UploadedData ={uploadedAccountData => setUploadedAccountData(uploadedAccountData)} uploadType="accounts" ></FileUploader> {/*DOESNT WORK FOR ACCOUNTS YET.*/}
-      <button onClick={addUploadedAccounts} className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold w-100 h-10 px-3 ml-3 rounded ">
-                Add All
-        </button>
+      {uploadedAccountData}
       </div>
 
       {/*submit button */}
