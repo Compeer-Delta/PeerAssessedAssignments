@@ -5,7 +5,7 @@ const saltRounds = 10;
 import jwt from "jsonwebtoken";
 
 // create admin
-exports.createAdmin = async (req, res) => {
+const createAdmin = async (req, res) => {
   const { adminId, password } = req.body;
   const admin = new Admin({
     _id: new mongoose.Types.ObjectId(),
@@ -20,7 +20,7 @@ exports.createAdmin = async (req, res) => {
   }
 };
 
-exports.loginAdmin = async (req, res) => {
+const loginAdmin = async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -43,7 +43,16 @@ exports.loginAdmin = async (req, res) => {
   }
 };
 
-exports.deleteAdmin = async (req, res) => {
+const getAdmin = async (req, res) => {
+  try {
+    const admin = await Admin.findOne({ adminId: req.admin.adminId });
+    res.status(200).json(admin);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const deleteAdmin = async (req, res) => {
   try {
     const { adminId } = req.params;
     const deletedAdmin = await Admin.deleteOne({ adminId: adminId });
@@ -53,4 +62,4 @@ exports.deleteAdmin = async (req, res) => {
   }
 };
 
-export default exports;
+export default { createAdmin, loginAdmin, getAdmin, deleteAdmin};
