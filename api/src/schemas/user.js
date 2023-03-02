@@ -23,25 +23,21 @@ const userSchema = new Schema(
       required: true,
       default: null,
     },
-    details: {
-      type: {},
-      default: {
-        firstname: {
-          type: String,
-          required: true,
-          default: null,
-        },
-        surname: {
-          type: String,
-          required: true,
-          default: null,
-        },
-        email: {
-          type: String,
-          required: true,
-          default: null,
-        },
-      },
+    firstname: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    surname: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    email: {
+      type: String,
+      required: true,
+      default: null,
+      unique: true,
     },
     role: {
       type: String,

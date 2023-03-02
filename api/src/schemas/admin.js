@@ -10,25 +10,20 @@ const adminSchema = new Schema(
       required: true,
       default: generateUUID,
     },
-    details: {
-      type: {},
-      default: {
-        firstname: {
-          type: String,
-          required: true,
-          default: null,
-        },
-        surname: {
-          type: String,
-          required: true,
-          default: null,
-        },
-        email: {
-          type: String,
-          unique: true,
-          required: true,
-        },
-      },
+    firstname: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    surname: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
     },
     institution: {
       type: String,
