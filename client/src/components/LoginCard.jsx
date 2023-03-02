@@ -8,12 +8,6 @@ function LoginCard() { //parameters might need changing
 
     const [loggedOut, setLoggedOut] = useState(false);
     const [sessionUsername, setSessionUsername] = useState("");
-
-    //if not null
-    if (sessionUsername == "" && ReactSession.get("email") != null)
-    {
-        setSessionUsername(getFirstName());
-    }
     
     const getFirstName = async () => {
         const email = ReactSession.get("email");
@@ -42,7 +36,23 @@ function LoginCard() { //parameters might need changing
 
         console.log("LOGOUT SUCCESS")
     }
+
+    useEffect(() => {
+        const onPageLoad = () => {
+            if (sessionUsername == "" && ReactSession.get("email") != null)
+            {
+                setSessionUsername(getFirstName());
+            }
+        };
     
+        if(document.readyState === 'complete') {
+            onPageLoad();
+        } else {
+            window.addEventListener('load', onPageLoad);
+            return () => window.removeEventListener('load', onPageLoad);
+        }
+      }, []);
+
     return (
         <>
     {/* Login tab */}
