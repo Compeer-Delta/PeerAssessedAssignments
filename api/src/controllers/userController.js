@@ -6,13 +6,13 @@ import jwt from "jsonwebtoken";
 
 // create user
 const createUser = async (req, res) => {
-  const { password, details: { firstname, surname, email }, institution, enrolledModules } = req.body;
+  const { password, details: { firstname, surname, email }, institution, role } = req.body;
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
     password: bcrypt.hashSync(password, saltRounds),
     details: { firstname, surname, email },
     institution,
-    enrolledModules
+    role,
   });
   try {
     const savedUser = await user.save();
