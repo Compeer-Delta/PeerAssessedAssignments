@@ -16,6 +16,10 @@ const moduleSchema = new Schema(
       type: String,
       required: true,
     },
+    moduleCode: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
     },

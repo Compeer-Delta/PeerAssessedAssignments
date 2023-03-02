@@ -1,12 +1,22 @@
 import Module from "../schemas/module.js";
+import User from "../schemas/user.js";
 import submission from "../schemas/submission.js";
 import mongoose from "mongoose";
 
 const createModule = async (req, res) => {
-  const { title, description, teachers, students, assignments, institutionName } = req.body;
+  const {
+    title,
+    description,
+    teachers,
+    students,
+    assignments,
+    institutionName,
+    moduleCode,
+  } = req.body;
   const module = new Module({
     _id: new mongoose.Types.ObjectId(),
     title: title,
+    moduleCode: moduleCode,
     description: description,
     teachers: teachers,
     students: students,
@@ -69,9 +79,12 @@ const deleteModule = async (req, res) => {
 
 // get modules of specific user
 const getModules = async (req, res) => {
+  const { email } = req.body;
   try {
-    const foundModules = await Module.find();
-    res.status(201).json(foundModules);
+    //const user = await User.findOne({ email: email });
+    //const foundModules = await Module.find({ students: user._id });
+    const modules = await Module.find({ students: { $regex: email, $options: 'i' } });
+    res.status(201).json(modules);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -164,6 +177,7 @@ export default {
   updateModule,
   deleteModule,
   getModules,
+  addSubmission,
   getSubmissions,
   giveFeedback,
   viewFeedback,

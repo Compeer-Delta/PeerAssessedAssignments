@@ -2,31 +2,47 @@ import React, {useState} from 'react'
 import StudentView from '../pages/StudentView'
 import { Link, Navigate, Routes, Route} from 'react-router-dom';
 import Welcome from '../pages/Welcome';
+import {ReactSession} from 'react-client-session';
 
 function LoginCard() { //parameters might need changing 
-
-    let outputData = sessionStorage.getItem('loginSessionData');
-    outputData = JSON.parse(outputData);
 
     const [loggedOut, setLoggedOut] = useState(false);
     const [sessionUsername, setSessionUsername] = useState("");
 
     //if not null
-    if (sessionUsername == "" && outputData != null)
+    if (sessionUsername == "" && ReactSession.get("email") != null)
     {
-        setSessionUsername(outputData.username);
+        setSessionUsername(getFirstName());
     }
     
+    const getFirstName = async () => {
+        const email = ReactSession.get("email");
+
+        const response = await fetch("http://localhost:8081/user/me", {
+            method: "GET",
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                "email": email
+            })
+        });
+
+        const userData = await response.json()
+
+        return userData.firstname;
+    }
 
     function logout(){
         
         setLoggedOut(true);
         setSessionUsername("");
         
-        sessionStorage.clear();
-        
-       
+        ReactSession.remove("email");
+        ReactSession.remove("accType");
+        ReactSession.remove("token");
+
+        console.log("LOGOUT SUCCESS")
     }
+    
     return (
         <>
     {/* Login tab */}
