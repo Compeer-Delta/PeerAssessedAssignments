@@ -6,11 +6,12 @@ import jwt from "jsonwebtoken";
 
 // create admin
 const createAdmin = async (req, res) => {
-  const { adminId, password } = req.body;
+  const { password, institution, details: { firstname, surname, email } } = req.body;
   const admin = new Admin({
     _id: new mongoose.Types.ObjectId(),
-    adminId: adminId,
     password: bcrypt.hashSync(password, saltRounds),
+    details: {firstname, surname, email},
+    institution
   });
   try {
     const savedAdmin = await admin.save();
