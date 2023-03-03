@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import StudentView from '../pages/StudentView'
 import { Link, Navigate, Routes, Route} from 'react-router-dom';
 import Welcome from '../pages/Welcome';
@@ -12,12 +12,11 @@ function LoginCard() { //parameters might need changing
     const getFirstName = async () => {
         const email = ReactSession.get("email");
 
-        const response = await fetch("http://localhost:8081/user/me", {
+        const fr = "http://localhost:8081/modules?email=" + email;
+
+        const response = await fetch(fr, {
             method: "GET",
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                "email": email
-            })
         });
 
         const userData = await response.json()
