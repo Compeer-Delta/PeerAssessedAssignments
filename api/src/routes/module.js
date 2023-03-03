@@ -5,12 +5,13 @@ import auth from "../middleware/auth.js";
 import moduleController from "../controllers/moduleController.js";
 
 //routes for modules
-router.post("/module/create", auth, moduleController.createModule); //create module
+router.post("/module/create", moduleController.createModule); //create module
 router.get("/module", auth, moduleController.getModule); //get module
 router.patch("/module", auth, moduleController.updateModule); //update module
 router.delete("/module", auth, moduleController.deleteModule); //delete module
 
 router.get("/modules", auth, moduleController.getModules); //get all modules
+router.get("/moduleteachers", moduleController.getModuleTeachers); //get all module teachers
 
 //routes for module submissions
 /*router.post("/modules/submit", auth, moduleController.getModules); //submit assignment

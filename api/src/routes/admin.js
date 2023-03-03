@@ -10,6 +10,8 @@ router.post("/admin/login", adminController.loginAdmin); // login admin
 router.get("/admin/me", auth, adminController.getAdmin); // get admin
 router.delete("/admin/me", auth, adminController.deleteAdmin); // delete admin
 
-router.get("/admin/getallusers", userController.getAllUsers); // get all users
-router.get("/admin/getalladmins", adminController.getAllAdmins); // get all admins
+router.post("/admin/register/institution", adminController.addInstitution); // add institution
+
+router.get("/admin/getallusers", auth, userController.getAllUsers); // get all users
+router.get("/admin/getalladmins", auth, adminController.getAllAdmins); // get all admins
 export default router;
