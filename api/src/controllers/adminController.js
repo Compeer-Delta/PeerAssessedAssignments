@@ -119,9 +119,9 @@ const addInstitution = async (req, res) => {
     institutionEmail,
     institutionAddress,
     institutionPhone,
-    institutionModules,
-    institutionAdmins,
-    institutionUsers,
+    modules: institutionModules,
+    admins: institutionAdmins,
+    users: institutionUsers,
   });
   try {
     const savedInstitution = await institution.save();
