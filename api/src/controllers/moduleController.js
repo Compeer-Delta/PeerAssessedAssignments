@@ -3,6 +3,7 @@ import User from "../schemas/user.js";
 import submission from "../schemas/submission.js";
 import mongoose from "mongoose";
 
+// create module
 const createModule = async (req, res) => {
   const {
     title,
@@ -31,6 +32,7 @@ const createModule = async (req, res) => {
   }
 };
 
+// get module by id
 const getModule = async (req, res) => {
   const { moduleId } = req.params;
   try {
@@ -41,6 +43,7 @@ const getModule = async (req, res) => {
   }
 };
 
+// update module
 const updateModule = async (req, res) => {
   const { moduleId, moduleTitle, moduleDescription, moduleContent } = req.body;
   try {
@@ -61,6 +64,7 @@ const updateModule = async (req, res) => {
   }
 };
 
+// delete module
 const deleteModule = async (req, res) => {
   const { moduleId } = req.params;
   try {
@@ -79,17 +83,34 @@ const deleteModule = async (req, res) => {
 
 // get modules of specific user
 const getModules = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.query;
   try {
     //const user = await User.findOne({ email: email });
     //const foundModules = await Module.find({ students: user._id });
-    const modules = await Module.find({ students: { $regex: email, $options: 'i' } });
+    const modules = await Module.find({
+      students: { $regex: email, $options: "i" },
+    });
     res.status(201).json(modules);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
+// get teachers firstname, lastname & email of specific module
+const getModuleTeachers = async (req, res) => {
+  const { moduleId } = req.query;
+  try {
+    const module = await Module.findOne({ moduleId: moduleId });
+    const teachers = await User.find({
+      email: { $in: module.teachers },
+    }).select("firstname surname email");
+    res.status(201).json(teachers);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// give feedback to submitted assignment
 const giveFeedback = async (req, res) => {
   const { moduleId, submissionId, marker, comment, rating, marked } = req.body;
   try {
@@ -104,6 +125,7 @@ const giveFeedback = async (req, res) => {
   }
 };
 
+// view feedback given to submitted assignment
 const viewFeedback = async (req, res) => {
   const { moduleId, submissionId, marker } = req.body;
   try {
@@ -126,6 +148,7 @@ const viewFeedback = async (req, res) => {
   }
 };
 
+// delete feedback given to submitted assignment
 const deleteFeedback = async (req, res) => {
   const { moduleId, submissionId, marker } = req.body;
   try {
@@ -143,8 +166,9 @@ const deleteFeedback = async (req, res) => {
   }
 };
 
+// add submission
 const addSubmission = async (req, res) => {
-  const { moduleId, submissionId, userId, submissionContent } = req.body;
+  const { moduleId, submissionId, userId, binData } = req.body;
   const newSubmission = new submission({
     _id: new mongoose.Types.ObjectId(),
     moduleId: moduleId,
@@ -152,13 +176,21 @@ const addSubmission = async (req, res) => {
     userId: userId,
     binData: binData,
   });
+  try {
+    const savedSubmission = await newSubmission.save();
+    res.status(201).json(savedSubmission);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
+// get all submissions of specific module & assignment
 const getSubmissions = async (req, res) => {
-  const { moduleId, submissionId } = req.body;
+  const { moduleId, assignmentId, submissionId } = req.body;
   try {
     const foundSubmission = await submission.findOne({
       moduleId: moduleId,
+      assignmentId: assignmentId,
       submissionId: submissionId,
     });
     if (foundSubmission === null) {
@@ -177,6 +209,7 @@ export default {
   updateModule,
   deleteModule,
   getModules,
+  getModuleTeachers,
   addSubmission,
   getSubmissions,
   giveFeedback,
