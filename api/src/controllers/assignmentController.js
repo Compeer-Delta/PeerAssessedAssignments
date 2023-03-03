@@ -77,6 +77,7 @@ const updateSubmission = async (req, res) => {
 
 const addAssignment = async (req, res) => {
   const {
+    supervistorId,
     title,
     description,
     brief,
