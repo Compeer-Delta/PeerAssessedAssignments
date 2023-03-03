@@ -83,7 +83,7 @@ const deleteModule = async (req, res) => {
 
 // get modules of specific user
 const getModules = async (req, res) => {
-  const { email } = req.query.email;
+  const { email } = req.query;
   try {
     //const user = await User.findOne({ email: email });
     //const foundModules = await Module.find({ students: user._id });
@@ -98,7 +98,7 @@ const getModules = async (req, res) => {
 
 // get teachers firstname, lastname & email of specific module
 const getModuleTeachers = async (req, res) => {
-  const { moduleId } = req.query.module;
+  const { moduleId } = req.query;
   try {
     const module = await Module.findOne({ moduleId: moduleId });
     const teachers = await User.find({
