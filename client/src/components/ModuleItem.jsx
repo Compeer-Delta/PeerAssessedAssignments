@@ -22,13 +22,17 @@ function ModuleItem({title, modId}) { //parameters might need changing
     }
     return (
      <>
-    <Link to={"/modules/"+modId.replaceAll(" ", "_")} state={{moduleTitle: modulename, nestedPage: "default"}} rel="noreferrer" className='bg-slate-300 dark:bg-zinc-700 rounded-lg w-full h-20 overflow-hidden hover:-translate-y-1 transform transition '>
-           <div className='text-gray-600 dark:text-gray-300 p-3'>
-                <h3 className ='text-lg md:text-xl mb-2 md:mb-1 font-semibold'>{modulename}</h3>
+     
+    <Link to={"/modules/"+modId.replaceAll(" ", "_")} state={{moduleTitle: modulename, nestedPage: "default"}} rel="noreferrer" className='font-Dosis bg-slate-300 dark:bg-zinc-700 rounded-lg w-full h-32 overflow-hidden hover:-translate-y-1 transform transition '>
+
+      
+    <div className="w-full md:h-5 object-cover bg-slate-600 dark:bg-indigo-900 rounded-lg rounded-b-none"/>
+           <div className='text-gray-600 dark:text-gray-300 p-3 rounded-lg'>
+                <h3 className ='font-semibold text-center text-lg md:text-2xl mb-2 md:mb-1 rounded-lg'>{modulename}</h3>
 
                
-                { !isStudentorTeacher ? (
-                <div className='inline-block ml-72 px-10 text-slate-700 bg-slate-100 dark:bg-slate-900 hover:bg-indigo-300'>
+                { isStudentorTeacher ? (
+                <div className='inline-block ml-72 mt-6 px-10 text-slate-700 bg-slate-100 dark:bg-indigo-800 dark:text-white hover:bg-indigo-300 dark:hover:bg-indigo-300'>
                                  Edit
                                 </div>
 

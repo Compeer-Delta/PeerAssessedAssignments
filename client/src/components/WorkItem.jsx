@@ -48,8 +48,7 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
         <div href={workUrl} target="_blank" rel="noreferrer" className='bg-slate-300 dark:bg-zinc-700 rounded-lg overflow-hidden w-full'>
           
                 
-                <img src={imgUrl} className="w-full h-3 md:h-5 object-cover" onError={({ currentTarget }) => {currentTarget.onerror = null; currentTarget.src=defaultbg; }}
-/>
+                <img src={imgUrl} className="w-full h-3 md:h-5 object-cover" onError={({ currentTarget }) => {currentTarget.onerror = null; currentTarget.src=defaultbg; }}/>
               
            <div className='text-gray-600 dark:text-gray-300 p-2 w-full'>
                 <h3 className ='text-lg md:text-xl mb-2 md:mb-1 font-semibold'>{title}</h3>
