@@ -35,7 +35,7 @@ const asssignmentSchema = new Schema(
         required: true,
         default: 1,
     },
-    imageULR:{
+    imageURL:{
         type: String,
         required: true,
         default: null,
