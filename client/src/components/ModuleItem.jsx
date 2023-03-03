@@ -22,8 +22,7 @@ function ModuleItem({title, modId}) { //parameters might need changing
     }
     return (
      <>
-     
-    <Link to={"/modules/"+modId.replaceAll(" ", "_")} state={{moduleTitle: modulename, nestedPage: "default"}} rel="noreferrer" className='font-Dosis bg-slate-300 dark:bg-zinc-700 rounded-lg w-full h-32 overflow-hidden hover:-translate-y-1 transform transition '>
+    <Link to={"/modules/"+modId} state={{moduleTitle: modulename, nestedPage: "default"}} rel="noreferrer" className='font-Dosis bg-slate-300 dark:bg-zinc-700 rounded-lg w-full h-32 overflow-hidden hover:-translate-y-1 transform transition '>
 
       
     <div className="w-full md:h-5 object-cover bg-slate-600 dark:bg-indigo-900 rounded-lg rounded-b-none"/>
