@@ -94,7 +94,7 @@ const getModuleTeachers = async (req, res) => {
   const { moduleId } = req.body;
   try{
     const module = await Module.findOne({ moduleId: moduleId });
-    const teachers = await User.find({ _id: { $in: module.teachers } });
+    const teachers = await User.find({ email: { $in: module.teachers } }).select('firstname surname email');
     res.status(201).json(teachers);
   } catch (err) {
     res.status(500).json({ message: err.message });
