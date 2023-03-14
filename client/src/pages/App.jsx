@@ -47,7 +47,7 @@ function App() {
 
   return (
     <>
-    <button type='button' onClick = {handleThemeSwitch} className = "fixed z-10 right-2 top-2 bg-indigo-500 text-lg p-1 rounded-md">
+    <button type='button' onClick = {handleThemeSwitch} className = "fixed z-10 right-5 top-2 bg-indigo-500 text-lg p-1 rounded-md">
       {theme === 'dark' ? '🌙':'☀️'}
     </button>
 

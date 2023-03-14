@@ -20,7 +20,7 @@ function Login() {
   // const TEST_STUDENT_ACCOUNT = {username: "test_student", password:"test123"}
   // const TEST_ADMIN_ACCOUNT = {username: "test_admin", password:"test123"}
 
-  const [institution, setInstitution] = useState('');
+  //const [institution, setInstitution] = useState('');
   const [accType, setAccType] = useState('');
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
@@ -67,7 +67,7 @@ function Login() {
 
     if(!userData) {
 
-      setFailedVerifMessage("Your login details are incorrect, please make sure you have the correct username, password, institution or account type again");
+      setFailedVerifMessage("Your login details are incorrect, please make sure you have the correct username, password or account type again");
     
     } else {
       setSuccess(true);
@@ -103,25 +103,48 @@ function Login() {
         
         :(  
         <>
-          <img src={sideImage} className ="font-Dosis sidebar text-slate-200 dark:text-slate-100 fixed lg:left-0 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-indigo-900"/>{/* bars icon */}
-   
-  
+
+<nav className="z-20 fixed bottom-0 bg-slate-800 dark:bg-zinc-700 w-full">
+    <div className=" px-4 py-3 mx-auto md:px-6">
+        <div className="flex items-center">
+            <ul className="flex flex-row mt-0 space-x-32 2xl:space-x-80 text-sm font-medium py-5 w-full">
+                <li>
+                    <Link to="/" className=" 2xl:mx-26 xl:mx-8 text-white hover:underline" aria-current="page">Home</Link>
+                </li>
+                <li>
+                    <Link to="/" className="2xl:mx-26  xl:mx-8 text-white hover:underline">Terms of Service</Link>
+                </li>
+                <li>
+                    <Link to="/" className="2xl:mx-26 xl:mx-8 text-white hover:underline">Privacy Policy</Link>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div className=" flex items-center flex-row text-sm font-medium 2xl:h-full dark:bg-zinc-900 bg-white">
          {/*Code for displaying left box, containing link to sign up page */}
-        
+         <div>
+<img src={sideImage} className ="mb-11 object-cover z-10 font-Dosis sidebar text-slate-200 dark:text-slate-100 lg:left-0 w-[0px] sm:w-[0px] 2xl:w-[1003px] xl:w-[0px] text-left bg-slate-900 dark:bg-indigo-900"/>{/* bars icon */}
+   </div>
       
-      <div className= 'font-Dosis dark:bg-zinc-900'>
-        <div className='max-w-xl mx-auto w-full h-[900px]'>
-          <h1 className= 'py-16 text-7xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'> Login to COMPEER</h1> 
+      <div className= 'h-screen 2xl:pr-80 font-Dosis dark:bg-zinc-900 bg-white w-full '>
+        
+        <div className='z-20 pl-10 ml-10 2xl:w-3/4 pb-10 dark:bg-zinc-900 bg-white 2xl:h-1/2 sm:h-full mb-64'>
+
+
+          <h1 className= 'py-20 text-4xl sm:text-7xl  w-full text-slate-600 font-semibold dark:text-white rounded-md'> Login to COMPEER</h1> 
            {/*Title and form display*/}
   
            
-          <form onSubmit={handleSubmit} className="w-full max-w-sm">
-          <div className=" w-full ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">{failedVerifMessage}</div>
-          <div className="ml-36 text-l dark:text-white">Login as...</div>
-            <div className="inline-flex pl-32 pb-8 rounded-md" role="group">
+          <form onSubmit={handleSubmit} className="sm:w-full max-w-sm">
+          <div className=" w-2/3 sm:ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">{failedVerifMessage}</div>
+          <div className="sm:ml-36 text-l dark:text-white">Login as...</div>
+            <div className="inline-flex sm:ml-32 pb-8 rounded-md " role="group">
        
               {/*Account type buttons (Student or staff)*/}
-              <ul onChange = {(e) => setAccType(e.target.value)} className="grid w-full md:grid-cols-2  ">
+              <ul onChange = {(e) => setAccType(e.target.value)} className="grid w-full grid-cols-2  ">
                 <li>
                   <input type="radio" id="studentAccount" name="account" value="studentAccount" className="hidden peer" required />
                   <label for="studentAccount" className="rounded-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 peer-checked:bg-blue-100">                           
@@ -142,16 +165,13 @@ function Login() {
               </ul>
         
             </div>
-            <div className = "ml-32">
-            <DropDownSearch setInstitution ={setInstitution}></DropDownSearch>
-    
-            </div>
+           
             {/*Username input*/}
-            <div className="md:flex md:items-center mb-2">
+            <div className="flex items-center mb-2">
 
     
               
-              <div className="ml-32 md:flex md:items-center md:w-2/3">
+              <div className=" sm:ml-32 md:flex md:items-center w-2/3">
             
 
             <input
@@ -166,10 +186,10 @@ function Login() {
           </div>
 
           {/*password input*/}
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">    
+          <div className="flex md:items-center mb-6">
+            <div className=" sm:ml-32">    
             </div>
-          <div className="md:w-2/3">
+          <div className="w-2/3">
             <input 
               onChange = {(e) => setPwd(e.target.value)}
               value={pwd}
@@ -180,8 +200,8 @@ function Login() {
           </div>
 
           {/*forgotten password link*/}
-          <div className="md:flex md:items-center mb-6">
-          <div className="md:w-1/3"></div>
+          <div className="sm:flex sm:items-center mb-6">
+          <div className="sm:w-1/3"></div>
 
           <Link to="/" className="text-sm text-blue-500">
            Forgot Password?
@@ -189,9 +209,9 @@ function Login() {
           </div>
 
         {/*submit button */}
-          <div className="md:flex md:items-center">
-            <div className="md:w-1/3"></div>
-              <div className="md:w-2/3">
+          <div className="sm:flex md:items-center mb-32">
+            <div className="sm:w-1/3"></div>
+              <div className="sm:w-2/3">
                 <button type="submit" className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
                 Sign In
                 </button>
@@ -204,19 +224,15 @@ function Login() {
     </section>
     {/* Error Message ^ */}
 
+
+          
+           {/* Adding extra padding on bottom for horizontal phone users, so that the bottom section doesnt cover buttons */}
   </div>
+  
+</div>
 </div>
 
-{/*bottom section menu*/}
-<div className= 'py-5 h-[69px] bg-slate-800 dark:bg-zinc-800 text-gray-300'>
-        
-         <Link to="/" className = 'pr-64 pl-64 first-line:inset-y-0 left-0'>Home</Link>
-         <span className = 'pr-64 pl-64 inset-y-0 right-0'>Terms of Service</span>
-         <span className = 'pr-64 pl-64 inset-y-0 right-0'>Privacy Policy</span>
-         <p className='text-xs mt-2 text-white '>© COMPEER {new Date().getFullYear()}. All rights reserved
-        
-        </p>
-           </div>
+<div className="dark:bg-zinc-900 bg-white py-28 2xl:py-0"></div>
 </>
 )}
 </>
