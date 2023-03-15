@@ -82,7 +82,7 @@ const deleteModule = async (req, res) => {
 };
 
 // get modules of specific user
-const getModules = async (req, res) => {
+/*const getModules = async (req, res) => {
 	const { email } = req.query;
 	try {
 		//const user = await User.findOne({ email: email });
@@ -94,6 +94,17 @@ const getModules = async (req, res) => {
 	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
+};*/
+
+const getModules = (req, res) => {
+	const { email } = req.query;
+	Module.find({ students: { $regex: email, $options: "i" } })
+		.then((modules) => {
+			res.status(201).json(modules);
+		})
+		.catch((err) => {
+			res.status(500).json({ message: err.message });
+		});
 };
 
 // get teachers firstname, lastname & email of specific module
@@ -339,6 +350,6 @@ export default {
 	deleteFeedback,
 	addStudentToModule,
 	addTeacherToModule,
-  removeTeacherFromModule,
-  removeStudentFromModule,
+	removeTeacherFromModule,
+	removeStudentFromModule,
 };
