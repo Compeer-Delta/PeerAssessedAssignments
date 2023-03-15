@@ -30,7 +30,7 @@ afterAll(async () => {
 describe('notificationController', () => {
 
     // create notification test data
-    it('PUSH notification test data', async () => {
+    it('POST notification test data', async () => {
         const notif = await notificationController.createNotif({
             userId: userId,
             notifTitle: 'Test Title',

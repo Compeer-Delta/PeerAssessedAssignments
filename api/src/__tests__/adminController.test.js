@@ -24,7 +24,7 @@ afterAll(async () => {
 describe('Admin Controller', () => {
 
     // create admin
-    it('PUSH created admin', async () => {
+    it('POST created admin', async () => {
         const res = await request.post('/admin/create').send({
             password: 'test',
         }).set('Accept', 'application/json'); // fix with proper data
