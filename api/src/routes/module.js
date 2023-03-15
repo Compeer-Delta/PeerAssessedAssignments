@@ -13,6 +13,11 @@ router.delete("/module", auth, moduleController.deleteModule); //delete module
 router.get("/modules", auth, moduleController.getModules); //get all modules
 router.get("/moduleteachers", moduleController.getModuleTeachers); //get all module teachers
 
+// handle multiple students or teachers within a module
+router.post("/module/addteacher", moduleController.addTeacherToModule); //add teacher/s to module
+router.delete("/module/removeteacher", moduleController.removeTeacherFromModule); //remove teacher/s from module
+router.post("/module/addstudent", moduleController.addStudentToModule); //add student/s to module
+router.delete("/module/removestudent", moduleController.removeStudentFromModule); //remove student/s from module
 //routes for module submissions
 /*router.post("/modules/submit", auth, moduleController.getModules); //submit assignment
 router.get("/modules/submit", auth, moduleController.getModules); //submit assignment
