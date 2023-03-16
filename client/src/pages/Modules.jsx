@@ -1,86 +1,84 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ModuleItem from '../components/ModuleItem';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
 import {useRef, useState, useLayoutEffect} from 'react';
 import LoginCard from '../components/LoginCard';
 import {ReactSession} from 'react-client-session';
+import { get } from 'mongoose';
 
 
 function Modules() {
-
-  let session = {
-    token: "",
-    accType: "",
-    email: "",
-  };
-
-  session.token = ReactSession.get("token");
-  session.accType = ReactSession.get("accType");
-  session.email = ReactSession.get("email");
-
-  const modules = session.email == "gc435@kent.ac.uk" ? [
-    { title: 'Group Project', moduleCode:"COMP6000",  institution: "University of Kent"},
-    { title: 'Problem Solving', moduleCode:"COMP5180",  institution: "University of Kent"},
-    { title: 'Blockchains', moduleCode:"COMP5280",  institution: "University of Kent"},
-    { title: 'Data Mining', moduleCode:"COMP5320",  institution: "University of Kent"},
-    { title: 'Computational Law', moduleCode:"COMP5450",  institution: "University of Kent"},
-  ] : [
-    { title: 'Hacking', moduleCode:"COMP5830",  institution: "University of Kent"},
-    { title: 'Ethics', moduleCode:"COMP6360",  institution: "University of Kent"},
-    { title: 'Deep Learning', moduleCode:"COMP6620",  institution: "University of Kent"},
-    { title: 'AI Intermediate', moduleCode:"COMP6560",  institution: "University of Kent"},
-    { title: 'Foundations of Computing', moduleCode:"COMP6481",  institution: "University of Kent"},
-    { title: 'Computers and the Cloud', moduleCode:"COMP8320",  institution: "University of Kent"}
-  ];
+  // const modules = session.email == "gc435@kent.ac.uk" ? [
+  //   { title: 'Group Project', moduleCode:"COMP6000",  institution: "University of Kent"},
+  //   { title: 'Problem Solving', moduleCode:"COMP5180",  institution: "University of Kent"},
+  //   { title: 'Blockchains', moduleCode:"COMP5280",  institution: "University of Kent"},
+  //   { title: 'Data Mining', moduleCode:"COMP5320",  institution: "University of Kent"},
+  //   { title: 'Computational Law', moduleCode:"COMP5450",  institution: "University of Kent"},
+  // ] : [
+  //   { title: 'Hacking', moduleCode:"COMP5830",  institution: "University of Kent"},
+  //   { title: 'Ethics', moduleCode:"COMP6360",  institution: "University of Kent"},
+  //   { title: 'Deep Learning', moduleCode:"COMP6620",  institution: "University of Kent"},
+  //   { title: 'AI Intermediate', moduleCode:"COMP6560",  institution: "University of Kent"},
+  //   { title: 'Foundations of Computing', moduleCode:"COMP6481",  institution: "University of Kent"},
+  //   { title: 'Computers and the Cloud', moduleCode:"COMP8320",  institution: "University of Kent"}
+  // ];
   
-  const getModules = async () => {
-    const fr = "http://localhost:8081/modules?email=" + session.email;
-
-    const response = await fetch(fr, {
-      method: "GET",
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
-    });
-
-    const ar = await response.json();
-  }
-
-  console.log(session);
+  let session = {
+    token: ReactSession.get("token"),
+    accType: ReactSession.get("accType"),
+    email: ReactSession.get("email"),
+  };
 
   //if admin account we display ALL modules for the institution
   //if staff/student we display only assigned modules
   const [isAdmin, setIsAdmin] = useState(() => checkIfAdmin());
-
-  //const [modules, setModules] = useState(() => getModules());
-  //console.log(modules);
-
-  function checkIfAdmin()
-  {
-    if (session.accountType == "adminAccount") { return true;}
+  function checkIfAdmin() {
+    if (session.accType == "adminAccount") { return true;}
     else {return false;}
   }
 
-  useLayoutEffect(() => {
-    const onPageLoad = () => {
-      //setModules(getModules());
-      //setLoaded(true);
-    };
+  const [modules, setModules] = useState();
 
-    if(document.readyState === 'complete') {
-        onPageLoad();
-    } else {
-        window.addEventListener('load', onPageLoad);
-        return () => window.removeEventListener('load', onPageLoad);
+  // async function getModules() {
+  //   const fr = "http://localhost:8081/modules?email=" + session.email;
+
+  //   const response = await fetch(fr, {
+  //      method: "GET",
+  //      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+  //   });
+
+  //   const data = await response.json();
+    
+  //   console.log(data);
+    
+  //   return data;
+  // }
+
+  const fr = "http://localhost:8081/modules?email=" + session.email;  //Fetch Route
+
+  useEffect(() => {
+
+    console.log("======== IN THE USE EFFECT ========");
+
+    const fetchData = async () => {
+      const response = await fetch(fr, {
+        method: "GET",
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      });
+
+      const data = await response.json();
+      setModules(data);
     }
+    fetchData();
+    console.log(modules);
   }, []);
-
-
+  
   return (
-<>
-
-{isAdmin ? (
-<HeroSection prevPageName = "Admin view" prevUrl = "/adminview"></HeroSection>
-):(<HeroSection prevPageName = "login" prevUrl = "/login"></HeroSection>)}
+    <>
+    {isAdmin ? (
+    <HeroSection prevPageName = "Admin view" prevUrl = "/adminview"></HeroSection>
+    ):(<HeroSection prevPageName = "login" prevUrl = "/login"></HeroSection>)}
 
     <div className="fixed z-50">
     <LoginCard></LoginCard>
@@ -98,7 +96,7 @@ function Modules() {
               </Link>):(<></>)}
 
             {modules.map(module => (
-              <ModuleItem key={module.moduleCode} //key is temporarily title
+              <ModuleItem key={module.moduleCode}
                           title={module.title}
                           modId={module.moduleCode}>
               </ModuleItem>
