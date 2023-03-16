@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ModuleItem from '../components/ModuleItem';
 import { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import LoginCard from '../components/LoginCard';
@@ -18,8 +18,8 @@ function Modules() {
   //if staff/student we display only assigned modules
   const [isAdmin, setIsAdmin] = useState(() => checkIfAdmin());
   function checkIfAdmin() {
-    if (session.accType == "adminAccount") { return true;}
-    else {return false;}
+    if (session.accType == "adminAccount") { return true; }
+    else { return false; }
   }
 
   const [modules, setModules] = useState([]);
@@ -36,9 +36,10 @@ function Modules() {
       });
 
       const data = await response.json();
-
       setModules(data);
+      console.log(modules);
     }
+
     fetchData();
   }, []);
   
@@ -64,7 +65,7 @@ function Modules() {
   //             </div>
   //           </Link>):(<></>)}
   //       <>
-  //       {modules instanceof Promise ? (console.log(modules)) : 
+  //       {modules instanceof Promise ? (console.log("IS A PROMISE")) : 
   //           (<>
   //             {modules && modules.length > 0 ? ( 
   //               <div>
