@@ -61,13 +61,13 @@ function LoginCard() { //parameters might need changing
       }, []);
 
     return (
-        <div className = "z-30">
+        <div className = "fixed z-30">
     {/* Login tab */}
 
-    { minimized === true ? (
+    { minimized === false ? (
     
     <h1 className = 'dark:border-indigo-900 mt-2 rounded-bl-lg rounded-tl-lg border-solid border-2 border-zinc-600 font-semibold sidebar fixed right-0 p-5 w-[300px] overflow-y-auto text-center text-gray-900 dark:text-gray-300 bg-slate-300 dark:bg-zinc-800'> Logged in as {sessionUsername}
-    <button onClick={toggleMinimize} className = "text-sm absolute top-0 right-0 flex items-center  h-[20px] text-center px-1 cursor-pointer text-slate-100 dark:text-gray-300 bg-slate-600  transform transition">
+    <button onClick={toggleMinimize} className = "font-Dosis text-sm absolute top-0 right-0 flex items-center  h-[20px] text-center px-1 cursor-pointer text-slate-100 dark:text-gray-300 bg-slate-600  transform transition">
              <p> Minimize </p>
     </button>
     <button onClick={logout} className = "ml-14 p-0.5 mt-3 flex items-center  text-center px-12 cursor-pointer text-slate-100 dark:text-gray-300 bg-red-600  hover:bg-red-300 transform transition">

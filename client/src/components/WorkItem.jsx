@@ -45,21 +45,21 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
 
     return (
         
-        <div href={workUrl} target="_blank" rel="noreferrer" className='bg-slate-300 dark:bg-zinc-700 rounded-lg overflow-hidden w-full'>
+        <div href={workUrl} target="_blank" rel="noreferrer" className='bg-slate-300 dark:bg-zinc-700 rounded-lg overflow-hidden 2xl:w-full xl:w-[600px] md:w-[500px] w-[300px]'>
           
                 
                 <img src={imgUrl} className="w-full h-3 md:h-5 object-cover" onError={({ currentTarget }) => {currentTarget.onerror = null; currentTarget.src=defaultbg; }}/>
               
            <div className='text-gray-600 dark:text-gray-300 p-2 w-full'>
                 <h3 className ='text-lg md:text-xl mb-2 md:mb-1 font-semibold'>{title}</h3>
-                <p className ='text-lg md:text-sm mb-1 md:mb-1'>Description: Lorem ipsum dolor sit amet, consectetur
+                <p className ='text-sm md:text-sm mb-1 md:mb-1'>Description: Lorem ipsum dolor sit amet, consectetur
                  adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                   quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
                    in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
                     qui officia deserunt mollit anim id est laborum</p>
                 <p className=' text-right text-base'>Set: {setDate}</p>
             
-            <p className='flex flex-initial gap-2 flex-row items-center justify-start text-xs md:text-sm'>
+            <p className='flex flex-initial gap-2 flex-row items-center justify-start text-xs md:text-sm sticky z-0'>
                 {/* {//tech.map(item=> ( */}
 
                     
