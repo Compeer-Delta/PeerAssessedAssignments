@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ModuleItem from '../components/ModuleItem';
 import { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import LoginCard from '../components/LoginCard';
@@ -17,7 +17,6 @@ function Modules() {
   //if admin account we display ALL modules for the institution
   //if staff/student we display only assigned modules
   const [isAdmin, setIsAdmin] = useState(() => checkIfAdmin());
-
   function checkIfAdmin() {
     if (session.accType == "adminAccount") { return true;}
     else {return false;}
