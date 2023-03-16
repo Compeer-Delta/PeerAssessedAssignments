@@ -23,7 +23,6 @@ function SignUp() {
     const [email, setEmail] = useState('');
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
-    const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [repwd, setRePwd] = useState('');
     //data from the login form
@@ -36,7 +35,7 @@ function SignUp() {
     
     const [actualcode, setActualCode] = useState(()=> generateVerificationCode());
 
-    const [emailInputs, setEmailInputs] = useState({email: email, username: user, actualcode: actualcode });
+    const [emailInputs, setEmailInputs] = useState({email: email, username: firstname, actualcode: actualcode });
 
     const [validationMessage, setValidationMessage] = useState("");
 
@@ -112,7 +111,7 @@ function SignUp() {
       {
         setValidationMessage("Please make sure you have entered a valid email");
       }
-      else if (firstname == "" || lastname == "" || email=="" || user == "")
+      else if (firstname == "" || lastname == "" || email=="")
       {
         setValidationMessage("Please make sure you filled all the details");
       }
@@ -131,13 +130,13 @@ function SignUp() {
 
     function updateForEmail()
     {
-      setEmailInputs({email: email, username: user, actualcode: actualcode})
+      setEmailInputs({email: email, username: firstname, actualcode: actualcode})
      
       
     }
   
-    useEffect(() => {userRef.current.focus();}, [])
-    useEffect(() => {setErrMsg('');}, [user,pwd])
+    //useEffect(() => {userRef.current.focus();}, []) //COMMENTED OUT
+    useEffect(() => {setErrMsg('');}, [firstname,pwd])
     
     const handleSubmit = async (e) => {
       //checks all fields in form to see if they are ready to be verified if not display message to user
@@ -157,7 +156,7 @@ function SignUp() {
       {
         setValidationMessage("Please make sure you have entered a valid email");
       }
-      else if (firstname == "" || lastname == "" || email=="" || user == "")
+      else if (firstname == "" || lastname == "" || email=="")
       {
         setValidationMessage("Please make sure you filled all the details");
       }
@@ -181,7 +180,6 @@ function SignUp() {
     setSuccess(true);
     
     setInstitution('');
-    setUser('');
     setPwd('');
     //clears form data
     }
@@ -190,21 +188,40 @@ function SignUp() {
 
     return (
         <>
+        <nav className="z-20 fixed bottom-0 bg-slate-800 dark:bg-zinc-700 w-full ">
+    <div className=" px-4 py-3 mx-auto md:px-6">
+        <div className="flex items-center">
+            <ul className="flex flex-row mt-0 space-x-20 md:space-x-32 2xl:space-x-80 text-sm font-medium py-5 w-full">
+                <li>
+                    <Link to="/" className=" 2xl:ml-32 sm:mx-3  text-white hover:underline" aria-current="page">Home</Link>
+                </li>
+                <li>
+                    <Link to="/" className="2xl:ml-64 xl:mx-16 sm:mx-3 text-white hover:underline truncate">Terms of Service</Link>
+                </li>
+                <li>
+                    <Link to="/" className="2xl:ml-64 xl:mx-16 sm:mx-3 text-white hover:underline truncate">Privacy Policy</Link>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
          
-         <img src={sideImage} className ="font-Dosis sidebar text-slate-200 dark:text-slate-100 fixed lg:left-0 w-[600px] h-[900px] overflow-y-auto text-left bg-slate-900 dark:bg-indigo-900"/>{/* bars icon */}
-   
+         <div className=" flex items-center flex-row text-sm font-medium 2xl:h-full dark:bg-zinc-900 bg-white">
+         <div>
+          <img src={sideImage} className =" mb-11 object-fill z-10 font-Dosis sidebar text-slate-200 dark:text-slate-100 lg:left-0 w-[0px] sm:w-[0px] 2xl:w-[1003px] xl:w-[0px] 2xl:h-full text-left bg-slate-900 dark:bg-indigo-900"/>{/* bars icon */}
+         </div>
          {/*Code for displaying left box, containing link to sign up page */}
         {/*success variable will determine whether the next page (admin/teacher/student view) will be displayed or if false, display the login page */}
 
         {success && !verified ? (
            
-              <div className= 'font-Dosis dark:bg-zinc-900'>
+              <div className= 'h-screen 2xl:pr-80 font-Dosis dark:bg-zinc-900 bg-white w-full '>
                 
-              <div className='max-w-xl mx-auto w-3/12 h-[900px]'>
-                <h1 className= 'py-20 text-6xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'>Verify your COMPEER account</h1> 
+              <div className='z-20 pl-10 ml-10 2xl:w-3/4 pb-10 dark:bg-zinc-900 bg-white 2xl:h-1/2 sm:h-full mb-64'>
+                <h1 className= 'py-20 text-4xl sm:text-4xl md:text-7xl  w-full text-slate-600 font-semibold dark:text-white rounded-md'>Verify your COMPEER account</h1> 
                 {/*Title for account confirm*/}
                 
-                <div className= 'bg-indigo-100 ml-20 px-5 mt-32 rounded text-center py-10 border-2 border-indigo-900'>
+                <div className= 'bg-indigo-100 md:ml-20 mr-20 px-5 mt-8 rounded text-center py-10 border-2 border-indigo-900'>
                   We've sent a verification email to: {email}
                   <br></br><br></br>
 
@@ -224,17 +241,17 @@ function SignUp() {
               </div>   
            </div>         
          
-        ): verified ? (
+        ):verified ? (
           <>
-          <div className= 'dark:bg-zinc-900'>
+          <div className= 'h-screen 2xl:pr-80 font-Dosis dark:bg-zinc-900 bg-white w-full '>
                 
-          <div className='max-w-xl mx-auto w-3/12 h-[900px]'>
-            <h1 className= 'py-20 text-6xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md'>Success!</h1> 
+          <div className='z-20 pl-10 ml-10 2xl:w-3/4 pb-10 dark:bg-zinc-900 bg-white 2xl:h-1/2 sm:h-full mb-64'>
+            <h1 className= 'py-20 text-4xl sm:text-4xl md:text-7xl  w-full text-slate-600 font-semibold dark:text-white rounded-md'>Success!</h1> 
             {/*Title for account confirm*/}
-            <div className= 'bg-indigo-100 ml-20 px-5 mt-32 rounded text-center py-10 border-2 border-indigo-900'>
+            <div className= 'bg-indigo-100 md:ml-20 mr-20 px-5 mt-8 rounded text-center py-10 border-2 border-indigo-900'>
               Your account has now been verified with the email {email}
               <br></br><br></br>
-              <Link to="/" className=" rounded-lg font-Dosis text-slate-900 bg-slate-400 text-center w-[150px] py-3 px-2 ml-1  text-m md:text-l font-semibold hover:bg-slate-300"> Try logging in!</Link>
+              <Link to="/" className=" rounded-lg font-Dosis text-slate-900 bg-slate-100 text-center w-[150px] py-3 px-2 ml-1  text-m md:text-l font-semibold hover:bg-slate-300"> Try logging in!</Link>
 
         
               </div>
@@ -247,41 +264,52 @@ function SignUp() {
         <>
 
                 
-      <div className= 'font-Dosis dark:bg-zinc-900'>
-        <div className='max-w-xl mx-auto w-full h-[900px]'>
-          <h1 className= 'py-14 w-[1000px] text-7xl text-slate-600 font-semibold dark:text-white rounded-md'> Register to COMPEER</h1> 
+<div className= 'h-screen 2xl:pr-80 font-Dosis dark:bg-zinc-900 bg-white w-full '>
+        <div className='z-20 pl-10 ml-10 2xl:w-3/4 pb-10 dark:bg-zinc-900 bg-white 2xl:h-1/2 sm:h-full mb-64'>
+          <h1 className= 'py-20 text-4xl sm:text-7xl  w-full text-slate-600 font-semibold dark:text-white rounded-md'> Register to COMPEER</h1> 
            {/*Title and form display*/}
   
 
           <form className="w-full max-w-sm">
 
-          <div className=" w-full ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">{validationMessage}</div>
-          <div className="md:w-0 ml-32 dark:text-white">   
+          <div className="w-2/3 md:w-full md:ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">{validationMessage}</div>
+        
           
-          Institution
+          <div className=" md:ml-32 dark:text-white">Institution</div>
           {/*email*/}
-          <div className=" md:flex md:items-center">
+          <div className="md:flex md:items-center mb-6">
             
-              <div className="md:w-1/3 mb-10">
+
+              <div className="md:ml-32 w-2/3 md:w-full mb-10">
               <DropDownSearch setInstitution ={setInstitution}></DropDownSearch>
               </div>
               
               
-              <div className="md:w-1/3 mt-10 dark:text-white">
-            Email
+              
+            </div>
+            <div className= "mt-2">  
+          </div> 
+
+          <div className="md:flex md:items-center mb-6">
+          <div className="md:w-1/3">
+          </div>
+
+             <div className="md:w-2/3 dark:text-white"> Email
+             <div className = "flex flex-wrap z-50"></div>
                 <input
                   onChange = {(e) => setEmail(e.target.value)}
                   value={email}
                   name="email"
                   required 
-                  className=" bg-slate-100 appearance-none border-2 border-slate-200 rounded w-100 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="email" type="text" placeholder="E-mail">
+                  className="w-2/3 md:w-full bg-slate-100 appearance-none border-2 border-slate-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="email" type="text" placeholder="E-mail">
             
                 </input>
+                
+                </div>
               </div>
-            </div>
-            <div className= "mt-2 pl-40">  
-          </div> 
+          <div className= "mt-6">  
           </div>
+          
           {/*first Name*/}
           <div className="md:flex md:items-center mb-6">
               
@@ -298,7 +326,7 @@ function SignUp() {
              value={firstname}
              name="username"
               required 
-            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="First name">
+            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="First name">
             </input>
 
             </div>
@@ -319,33 +347,13 @@ function SignUp() {
              value={lastname}
              name="username"
               required 
-            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="Last name">
+            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="Last name">
             </input>
 
             </div>
           </div>
         
-            {/*Username input*/}
-            <div className="md:flex md:items-center mb-6">
-              
-              <div className="md:w-1/3">
-                
-              </div>
-              <div className="md:w-2/3 dark:text-white"> Username
-              <div className = "flex flex-wrap z-50">
-             
-              </div>
-            <input
-              ref={userRef} 
-              onChange = {(e) => setUser(e.target.value)}
-             value={user}
-             name="username"
-              required 
-            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="Username">
-            </input>
-
-            </div>
-          </div>
+            
 
           {/*password input*/}
           <div className="md:flex md:items-center mb-6">
@@ -356,7 +364,7 @@ function SignUp() {
               onChange = {(e) => setPwd(e.target.value)}
               value={pwd}
               required 
-              className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="password" type="password" placeholder="Password"> 
+              className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="password" type="password" placeholder="Password"> 
             </input>
           </div>
           </div>
@@ -369,7 +377,7 @@ function SignUp() {
               onChange = {(e) => setRePwd(e.target.value)}
               value={repwd}
               required 
-              className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="password" type="password" placeholder="Re-Password"> 
+              className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="password" type="password" placeholder="Re-Password"> 
             </input>
           </div>
           </div>
@@ -394,22 +402,15 @@ function SignUp() {
     </section>
     {/* Error Message ^ */}
 
-  </div>
+ 
+</div>
 </div>
 
 </>
 }
 
-{/*bottom section menu*/}
-  <div className= 'py-5 h-[69px] bg-slate-800 dark:bg-zinc-800 text-gray-300'>
-        
-         <Link to="/" className = 'pr-64 pl-64 first-line:inset-y-0 left-0'>Home</Link>
-         <span className = 'pr-64 pl-64 inset-y-0 right-0'>Terms of Service</span>
-         <span className = 'pr-64 pl-64 inset-y-0 right-0'>Privacy Policy</span>
-         <p className='text-xs mt-2 text-white '>© COMPEER {new Date().getFullYear()}. All rights reserved
-        
-        </p>
  </div>
+ <div className="dark:bg-zinc-900 bg-white py-72 2xl:py-0"></div>
 </>
     )
 }

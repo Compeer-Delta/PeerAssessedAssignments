@@ -82,11 +82,14 @@ function Modules() {
 <HeroSection prevPageName = "Admin view" prevUrl = "/adminview"></HeroSection>
 ):(<HeroSection prevPageName = "login" prevUrl = "/login"></HeroSection>)}
 
+    <div className="fixed z-50">
     <LoginCard></LoginCard>
-    <div className = 'py-2 dark:bg-zinc-900 h-screen'>
-    <h1 className= ' font-Dosis pl-72 py-10 text-5xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '> Your Modules...</h1> 
+    </div>
+
+    <div className = 'relative z-10 py-2 pb-80 dark:bg-zinc-900 h-full w-full'>
+    <h1 className= ' font-Dosis pl-12 md:pl-52 py-10 text-5xl w-[full] text-slate-600 font-semibold dark:text-white rounded-md '> Your Modules...</h1> 
     <h1>{session.accountType}</h1>
-            <div className='pr-80 pl-80 grid grid-cols-3 gap-3 '>
+            <div className=' pl-10 pr-10 2xl:w-[full] xl:w-[full] lg:w-[full] md:w-[full] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-10 '>
               {isAdmin ? (
                   <Link to="/CreateModule" rel="noreferrer"  className='bg-slate-500 dark:bg-zinc-300 rounded-lg w-full h-20 overflow-hidden hover:-translate-y-1 transform transition '>
                       <div className='text-gray-100 dark:text-gray-800 p-3'>
@@ -100,15 +103,12 @@ function Modules() {
                           modId={module.moduleCode}>
               </ModuleItem>
             ))}
+
+            
             </div>
+           
           </div>
-      {/*bottom section menu*/}
-      <div className= ' py-5 h-[69px] bg-slate-800 dark:bg-zinc-800 text-gray-300'>
-        <Link to="/" className = 'pr-64 pl-64 first-line:inset-y-0 left-0'>Home</Link>
-        <span className = 'pr-64 pl-64 inset-y-0 right-0'>Terms of Service</span>
-        <span className = 'pr-64 pl-64 inset-y-0 right-0'>Privacy Policy</span>
-      <p className='text-xs mt-2 text-white '>© COMPEER {new Date().getFullYear()}. All rights reserved</p>
-    </div>
+          <div className="2xl:pb-80 dark:bg-zinc-900"></div>
     </>
           
   );
