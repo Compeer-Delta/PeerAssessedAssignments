@@ -154,8 +154,8 @@ function PeerManager() {
 
   return (
     <>
-    <div  className="ml-80 mr-80 font-Dosis text-3xl font-bold py-2">Closed Assignments</div>
-    <table className="table-fixed w-2/3 text-sm text-left text-gray-500 dark:text-gray-400 ml-80">
+    <div  className="sm:ml-80 sm:mr-80 font-Dosis text-3xl font-bold py-2">Closed Assignments</div>
+    <table className="sm:table-fixed w-[1200px] text-sm text-left text-gray-500 dark:text-gray-400 sm:ml-80">
     <thead className="text-s text-gray-700 font-Dosis  bg-slate-50 dark:bg-gray-700 dark:text-gray-400 border-2 border-slate-900 ">
     <tr>
       <th className="px-6 py-3 border border-width-10">Assignment Title</th>
@@ -174,7 +174,7 @@ function PeerManager() {
 
             
             <tr className=" dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <th scope="row" className=" px-6 py-4 font-medium text-gray-900 whitespace dark:text-white">
                     {assignment.title}
                 </th>
                 <td className="px-6 py-4">
