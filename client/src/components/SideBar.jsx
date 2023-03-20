@@ -50,7 +50,7 @@ function SideBar({moduleTitle, moduleId}) {
                     {sidebardata.map((item, index) =>{
                         return (
 
-                            ((item.path === "viewfeedback" && "teacherAccount" === "teacherAccount")) ? (<></>):( //outputData.accountType
+                            ((item.path === "viewfeedback" && "teacherAccount" === "teacherAccount")) ? (<></>):( //outputData.accountType //change ! teacheraccount  for debugging viewfeedback
 
                             <Link to={"/modules/" + moduleId} state={{moduleTitle: moduleTitle, nestedPage: item.path}} className = 
                             "p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer text-slate-900 dark:text-gray-300 bg-slate-100 dark:bg-zinc-900 hover:-translate-y-2 transform transition ">
