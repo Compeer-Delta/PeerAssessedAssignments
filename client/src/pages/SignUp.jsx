@@ -45,7 +45,7 @@ function SignUp() {
 
       const response = await fetch("http://localhost:8081/admin", {
         method: "POST",
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.JWT_SECRET },
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({
           "password": pwd,
           "firstname": firstname,
