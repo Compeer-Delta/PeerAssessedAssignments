@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useLayoutEffect} from 'react'
 import StudentView from '../pages/StudentView'
 import { Link, Navigate, Routes, Route} from 'react-router-dom';
 import Welcome from '../pages/Welcome';
@@ -9,21 +9,6 @@ function LoginCard() { //parameters might need changing
     const [loggedOut, setLoggedOut] = useState(false);
     const [sessionUsername, setSessionUsername] = useState("");
     const [minimized, setMinimized] = useState(false);
-    
-    const getFirstName = async () => {
-        const email = ReactSession.get("email");
-
-        const fr = "http://localhost:8081/modules?email=" + email;
-
-        const response = await fetch(fr, {
-            method: "GET",
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        });
-
-        const userData = await response.json()
-
-        return userData.firstname;
-    }
 
     function logout(){
         
@@ -44,20 +29,22 @@ function LoginCard() { //parameters might need changing
 
     }
 
-    useEffect(() => {
-        const onPageLoad = () => {
-            if (sessionUsername == "" && ReactSession.get("email") != null)
-            {
-                setSessionUsername(getFirstName());
-            }
-        };
+    useLayoutEffect(() => {
+        const getFirstName = async () => {
+            const email = ReactSession.get("email");
+            const fr = "http://localhost:8081/user/me?email=" + email;
     
-        if(document.readyState === 'complete') {
-            onPageLoad();
-        } else {
-            window.addEventListener('load', onPageLoad);
-            return () => window.removeEventListener('load', onPageLoad);
+            const response = await fetch(fr, {
+                method: "GET",
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            });
+
+            const userData = await response.json();
+
+            setSessionUsername(userData.firstname);
         }
+
+        getFirstName();
       }, []);
 
     return (

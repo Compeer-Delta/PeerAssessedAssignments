@@ -27,7 +27,7 @@ function Modules() {
   const fr = "http://localhost:8081/modules?email=" + session.email;  //Fetch Route
 
   useLayoutEffect(() => {
-    console.log("===== useEffect TRIGGERED =====");
+    //console.log("===== useEffect TRIGGERED =====");
 
     const fetchData = async () => {
       const response = await fetch(fr, {
@@ -37,7 +37,6 @@ function Modules() {
 
       const data = await response.json();
       setModules(data);
-      console.log(modules);
     }
 
     fetchData();
@@ -49,13 +48,13 @@ function Modules() {
   //   <HeroSection prevPageName = "Admin view" prevUrl = "/adminview"></HeroSection>
   //   ):(<HeroSection prevPageName = "login" prevUrl = "/login"></HeroSection>)}
 
-  //   <div className="fixed z-50">
-  //   <LoginCard></LoginCard>
-  //   </div>
+  // <div className="fixed z-50">
+  // <LoginCard></LoginCard>
+  // </div>
 
-  //   <div className = 'relative z-10 py-2 pb-80 dark:bg-zinc-900 h-full w-full'></div>    
-  //   <h1 className= ' font-Dosis pl-12 md:pl-52 py-10 text-5xl w-[full] text-slate-600 font-semibold dark:text-white rounded-md '> Your Modules...</h1> 
-  //   <h1>{session.accountType}</h1>
+  // <div className = 'relative z-10 py-2 pb-80 dark:bg-zinc-900 h-full w-full'></div>    
+  // <h1 className= ' font-Dosis pl-12 md:pl-52 py-10 text-5xl w-[full] text-slate-600 font-semibold dark:text-white rounded-md '> Your Modules...</h1> 
+  // <h1>{session.accountType}</h1>
 
   //   <div className=' pl-10 pr-10 2xl:w-[full] xl:w-[full] lg:w-[full] md:w-[full] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-10 '>
   //       {isAdmin ? (
@@ -85,18 +84,25 @@ function Modules() {
 
   return (
     <>
-        {modules instanceof Promise ? (console.log(modules)) : 
-            (<>
-              {modules && modules.length > 0 ? ( 
-                <div>
-                {modules.map(module => (
-                  <ModuleItem key={module.moduleCode} //key is temporarily title
-                              title={module.title}
-                              modId={module.moduleCode}>
-                  </ModuleItem>
-                ))}
-                </div>) : (<div></div>)}
-            </>)}
+        <div className="fixed z-50">
+          <LoginCard></LoginCard>
+        </div>
+        
+        <div className = 'relative z-10 py-2 pb-80 dark:bg-zinc-900 h-full w-full'></div>    
+        <h1 className= ' font-Dosis pl-12 md:pl-52 py-10 text-5xl w-[full] text-slate-600 font-semibold dark:text-white rounded-md '> Your Modules...</h1> 
+        <h1>{session.accountType}</h1>
+
+        <div className=' pl-10 pr-10 2xl:w-[full] xl:w-[full] lg:w-[full] md:w-[full] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-10 '>
+        {modules && modules.length > 0 ? ( 
+          <div>
+            {modules.map(module => (
+              <ModuleItem key={module.moduleCode} //key is temporarily title
+                          title={module.title}
+                           modId={module.moduleCode}>
+              </ModuleItem>
+            ))}
+          </div>) : (<div></div>)}
+        </div>
     </>
   );
 }
