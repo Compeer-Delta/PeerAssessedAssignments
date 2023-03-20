@@ -82,9 +82,9 @@ const deleteUser = async (req, res) => {
 
 //get user
 const getUser = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.query;
   try {
-    const user = User.findOne({ email: email });
+    const user = await User.findOne({ email: email });
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
