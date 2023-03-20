@@ -39,7 +39,7 @@ function Modules() {
 
     const response = await fetch(fr, {
       method: "GET",
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.JWT_SECRET }
     });
 
     const ar = await response.json();

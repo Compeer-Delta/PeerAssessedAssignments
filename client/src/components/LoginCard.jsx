@@ -17,7 +17,7 @@ function LoginCard() { //parameters might need changing
 
         const response = await fetch(fr, {
             method: "GET",
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.JWT_SECRET },
         });
 
         const userData = await response.json()
