@@ -32,7 +32,7 @@ function Modules() {
     const fetchData = async () => {
       const response = await fetch(fr, {
         method: "GET",
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': session.token },
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': process.env.JWT_SECRET },
       });
 
       const data = await response.json();
