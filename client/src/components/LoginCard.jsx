@@ -36,7 +36,7 @@ function LoginCard() { //parameters might need changing
     
             const response = await fetch(fr, {
                 method: "GET",
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json','Authorization': ReactSession.get("token")},
             });
 
             const userData = await response.json();
