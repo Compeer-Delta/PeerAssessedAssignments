@@ -49,7 +49,7 @@ function Login() {
 
     const response = await fetch(fr, {
       method: "POST",
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': process.env.JWT_SECRET },
       body: JSON.stringify({
         "email": user,
         "password": pwd,
