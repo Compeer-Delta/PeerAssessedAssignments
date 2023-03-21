@@ -71,8 +71,9 @@ function ApproveFeedback() {
 
   return (
     <>
-    <div  className="ml-80 mr-80 font-Dosis text-3xl font-bold py-2">Approve student feedback</div>
-    <table className="table-fixed w-2/3 text-sm text-left text-gray-500 dark:text-gray-400 ml-80">
+    <div  className="xl:ml-80 xl:mr-80 ml-24  font-Dosis text-2xl sm:text-3xl font-bold py-2">Approve student feedback</div>
+    <div className=" overflow-x-scroll">
+    <table className="table-fixed md:w-[1200px] w-full  ml-16 text-sm text-left text-gray-500 dark:text-gray-400 xl:ml-80">
     <thead className="text-s text-gray-700 font-Dosis  bg-slate-50 dark:bg-gray-700 dark:text-gray-400 border-2 border-slate-900 ">
     <tr>
       <th className="px-6 py-3 border border-width-10">Assignment Title</th>
@@ -91,8 +92,8 @@ function ApproveFeedback() {
             assignment.approved=="pending" ? ( //displays row if the assignment due date has passed and teacher has not opened the assignment
 
             <>
-            <tr class=" dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <tr className="  dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace dark:text-white">
                     {assignment.title}
                 </th>
                 <td className="px-6 py-4">
@@ -106,13 +107,13 @@ function ApproveFeedback() {
                 </td>
 
                
-                <td className="px-6 py-4 text-center">
+                <td className="px-3 md:px-6 py-4 text-center ">
 
                
-                 <button onClick={() => toggleFeedback(assignment, "yes")} className="mr-2 font-Dosis text-blue-100 text-l bg-green-500 border-black px-6 py-1 rounded-3xl hover:bg-green-200 hover:text-green-800 mb-3">             
+                 <button onClick={() => toggleFeedback(assignment, "yes")} className=" font-Dosis text-blue-100 text-l bg-green-500 border-black md:px-6 px-1 py-1 rounded-3xl hover:bg-green-200 hover:text-green-800 mb-3">             
                  <p>Approve</p>
                  </button>
-                 <button onClick={() => toggleFeedback(assignment, "no")} className=" font-Dosis text-blue-100 text-l bg-red-500 border-black px-8 py-1 rounded-3xl hover:bg-red-200 hover:text-red-800">             
+                 <button onClick={() => toggleFeedback(assignment, "no")} className="font-Dosis text-blue-100 text-l bg-red-500 border-black  md:px-8 px-2 py-1 rounded-3xl hover:bg-red-200 hover:text-red-800">             
                  <p>Reject</p>
                  </button>
                  
@@ -124,7 +125,7 @@ function ApproveFeedback() {
             </tr>
        
        
-                <div className="mb-5 w-[1266px] bg-slate-200">
+                <div className="mb-5 sm:w-[1200px] w-[400px] bg-slate-200">
                     <p className="font-Dosis ml-10  text-xl font-semibold dark:text-white text-green-600 "> Given Feedback:</p>
                     <p className="whitespace-pre-wrap break-words font-Dosis ml-10  text-l text-slate-600 font-semibold dark:text-white rounded-md">{assignment.feedback}</p>
                     </div>
@@ -139,6 +140,7 @@ function ApproveFeedback() {
         ))}
   </tbody>
   </table>
+  </div>
     </>
     
   )
