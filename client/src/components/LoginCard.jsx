@@ -33,10 +33,9 @@ function LoginCard() { //parameters might need changing
         const getFirstName = async () => {
             const email = ReactSession.get("email");
             const fr = "http://localhost:8081/user/me?email=" + email;
-    
             const response = await fetch(fr, {
                 method: "GET",
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': process.env.JWT_SECRET},
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ReactSession.get("token")},
             });
 
             const userData = await response.json();
