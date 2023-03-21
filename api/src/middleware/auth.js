@@ -7,16 +7,13 @@ import Admin from "../schemas/admin.js";
 
 const auth = async (req, res, next) => {
   try {
-    // token is in the header of the request
-    const token = req.header("Authorization").replace("Bearer ", "");
-    // verifies the token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const token = req.header("Authorization").replace("Bearer ", "").replace('"', "").replace('"', ""); // remove "Bearer " from the token and remove the " from the token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // decode the token returning {email: "email@email.com", iat: 123456789, exp: 123456789}
     let user;
-    if (decoded.adminId) {
-      user = await Admin.findOne({ _id: decoded._id, "tokens.token": token });
-    } else {
-      user = await User.findOne({ _id: decoded._id, "tokens.token": token });
-    }
+    user =
+      (await User.findOne({ email: decoded.email })) ||
+      (await Admin.findOne({ email: decoded.email })); // find the user in the database
+
     if (!user) {
       throw new Error();
     }
@@ -24,6 +21,7 @@ const auth = async (req, res, next) => {
     if (!token) {
       return res.status(401).send({ error: "Access denied." });
     }
+
     req.token = token;
     req.user = user;
     next();
