@@ -68,12 +68,12 @@ function ViewFeedback() {
 
   return (
     <>
-   <h1 className= ' font-Dosis ml-80 text-3xl w-full text-slate-600 font-semibold dark:text-white rounded-md pb-4'>  Your Feedback:</h1> 
+   <h1 className= ' font-Dosis md:ml-80 ml-28 text-3xl 2xl:w-[1000px] md:w-[600px] w-[200px] text-slate-600 font-semibold dark:text-white rounded-md pb-4'>  Your Feedback:</h1> 
     {recievedFeedback.map(fb => (
-        <div className=" ml-80 w-2/3 bg-slate-300 mb-2 rounded">
-    <h1 className= 'ml-10 pt-4  text-3xl w-[700px] text-slate-600 font-semibold dark:text-white rounded-md font-Dosis '> {fb.assignmentTitle} </h1> 
-    <h1 className= 'ml-10 py-1  text-xl w-[700px] text-slate-600 font-semibold dark:text-white rounded-md font-Dosis '> marked by {fb.markedBy}</h1> 
-    <h1 className= 'font-Dosis ml-10  text-l w-[700px] text-blue-600 font-semibold dark:text-white rounded-md '> Given mark / grade: {fb.mark}</h1> 
+        <div className=" ml-16 xl:ml-80 2xl:w-[1200px] md:w-[600px] sm:w-[538px] w-[280px]  bg-slate-300 mb-2 rounded break-normal">
+    <h1 className= 'ml-10 pt-4  text-xl xl:text-3xl md:w-[600px] w-[240px] text-slate-600 font-semibold dark:text-white rounded-md font-Dosis '> {fb.assignmentTitle} </h1> 
+    <h1 className= 'ml-10 py-1  text-md xl:text-xl md:w-[600px] w-[280px] text-slate-600 font-semibold dark:text-white rounded-md font-Dosis '> marked by {fb.markedBy}</h1> 
+    <h1 className= 'font-Dosis ml-10  text-l md:w-[600px] w-[280px] text-blue-600 font-semibold dark:text-white rounded-md '> Given mark / grade: {fb.mark}</h1> 
      <button onClick={() => toggleFeedback(fb)} className= 'mt-2 mb-2 font-Dosis ml-10 text-l py-2 px-2 text-slate-600 font-semibold dark:text-white rounded-md bg-slate-50'>
       {toggleButtonText(fb) === true ? (
         <p>Hide Feedback</p>
@@ -82,9 +82,9 @@ function ViewFeedback() {
       </button>
 
      {fb.viewFeedback === true ?(
-     <div className="bg-slate-200">
+     <div className="bg-slate-200 overflow-x-auto">
       <p className="font-Dosis ml-10  text-xl w-[700px] font-semibold dark:text-white text-green-600 "> Your Feedback:</p>
-     <p className="whitespace-pre-wrap break-words font-Dosis ml-10  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md">{fb.writtenFeedback}</p>
+     <p className=" whitespace-pre-wrap break-words font-Dosis ml-10  text-l w-[1000px] text-slate-600 font-semibold dark:text-white rounded-md">{fb.writtenFeedback}</p>
      </div>
     ):(<></>)}
     </div>

@@ -81,8 +81,8 @@ function AddAssignment() {
      
         
    <div className = 'py-3 dark:bg-zinc-900 h-screen'>
-   <h1 className= ' font-Dosis ml-80 text-3xl text-slate-600 font-semibold dark:text-white rounded-md pb-4'>  Add Assignment:</h1> 
-      <div className=" font-Dosis text-xl border-2 border-slate-700 rounded ml-80 mr-80 px-80  bg-slate-300 py-10"> 
+   <h1 className= ' font-Dosis sm:ml-80 ml-32 text-3xl text-slate-600 font-semibold dark:text-white rounded-md pb-4'>  Add Assignment:</h1> 
+      <div className=" font-Dosis  2xl:w-[1200px] w-screen text-xl border-2 border-slate-700 rounded  2xl:ml-80 2xl:mr-80 bg-slate-300 py-10"> 
      
       {confirmedAssignment  === true ? (<>
             <p className = "text-center bg-green-200">You have set a new assignment {assignTitle} </p>
@@ -93,10 +93,10 @@ function AddAssignment() {
               Add New Assignment
             </button> </>
 
-           ):(<>
+           ):(<div className="pl-10">
      
 
-      <h1 className= ' text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Title: </h1> 
+      <h1 className= ' ml-8 text-l   text-slate-600 font-semibold dark:text-white rounded-md '> Title: </h1> 
       
       <input
              
@@ -104,24 +104,23 @@ function AddAssignment() {
              value={assignTitle}
              name="username"
               required 
-            className="mb-10 bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="Assignment Title">
+            className="ml-8  mb-10 bg-slate-100 appearance-none border-2 border-slate-200 rounded w-[260px] sm:w-[500px] py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="Assignment Title">
       </input>
-      <h1 className= '  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Description: </h1> 
+      <h1 className= ' ml-8  text-l  text-slate-600 font-semibold dark:text-white rounded-md '> Description: </h1> 
       <textarea
              
             onChange = {(e) => setAssignDesc(e.target.value)}
              value={assignDesc}
              name="username"
               required 
-              id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write an assignment description...">
+              id="message" rows="4" className="ml-8  block p-2.5 w-[260px] sm:w-[500px] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write an assignment description...">
       </textarea>
 
-<div className="flex flex-row">
-      <h1 className= ' mt-10 text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Due Date: </h1> 
-      <h1 className= ' mt-10 text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Due Time: </h1> 
+      <h1 className= 'ml-8 mt-10 text-l text-slate-600 font-semibold dark:text-white rounded-md'> Due Date and time: </h1> 
+    
 
-</div>
-<div className="flex flex-row mr-36 "> 
+
+<div className="ml-8 flex flex-row mr-36  sm:w-[395px] w-[330px]"> 
         <DatePicker className="rounded-md " selected={selectedDate} onChange={date => setSelectedDate(date)} dateFormat='dd/MM/yyyy' minDate={new Date()} />
 
         <input required  placeholder = "0" className=" text-center rounded-md" type="number" min="1" max="12" step="1" value={dueHour} onChange={(e => {if (e.target.value > 12){setDueHour(12)} else if (e.target.value < 1){setDueHour(1)} else {setDueHour(e.target.value)} if (meridiem === "AM" && e.target.value === "12") {setDueHour(11)} })}></input>
@@ -130,25 +129,23 @@ function AddAssignment() {
         <button  className="ml-3 text-center rounded hover:bg-slate-400 text-slate-700 bg-slate-100" value={meridiem} onClick={switchMeridiem}> {meridiem} </button>
       
 </div>   
+<br></br>
 
-<div className=" text-l w-[700px] text-slate-600 font-semibold dark:text-white py-10">
-  Peers per submission:
-  <input  className=" ml-2 text-center rounded-md" type="number" min="0" max="34" step="1" value={numPeerAssess} onChange={(e => {if (e.target.value > 12){setNumPeerAssess(12)} else if (e.target.value < 0){setNumPeerAssess(0)} else {setNumPeerAssess(e.target.value)}})}></input>
-      {/* CHANGE THIS LATER TO MAKE MAX EQUAL TO THE NUMBER OF STUDENTS IN THE MODULE */}
-</div>
-<h1 className= ' mb-2 text-l w-full text-slate-600 font-semibold dark:text-white rounded-md '> Upload Breif below: </h1> 
+<h1 className= 'ml-8 mb-2 text-l w-[200px] text-slate-600 font-semibold dark:text-white rounded-md '> Upload Breif below: </h1> 
+<div className = "object-center">
 <FileUploader></FileUploader>
+</div>
 
 
       {/*submit button */}
-      <div className="md:flex md:items-center py-5">
+      <div className="ml-8 md:flex md:items-center py-5">
         
-          <div className="md:w-1/3"></div>
+         
             <div className="md:w-2/3 ">
               
            
 
-            <button onClick={addNewAssignment} className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
+            <button onClick={addNewAssignment} className="ml-8 shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
               Add Assignment
               </button>
 
@@ -163,7 +160,7 @@ function AddAssignment() {
               
           </div>
           
-          </>)}
+          </div>)}
           </div>
           
 
