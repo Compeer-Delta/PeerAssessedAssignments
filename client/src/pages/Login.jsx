@@ -182,6 +182,7 @@ function Login() {
                           value="studentAccount"
                           className="hidden peer"
                           required
+                          defaultChecked
                         />
                         <label
                           for="studentAccount"
