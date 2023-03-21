@@ -39,6 +39,12 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
+    
+    /*const token = jwt.sign(
+      { exp: Math.floor(Date.now() / 1000) + 60 * 60, email: user.email },
+      process.env.JWT_SECRET
+    );*/
+    console.log("logged in with:",token)
     res.status(200).json({ token });
   } catch (err) {
     res.status(500).json({ message: err.message });
