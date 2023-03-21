@@ -5,6 +5,7 @@ import {useRef, useState, useEffect} from 'react';
 import AccountSearchBox from '../components/AccountSearchBox';
 import FileUploader from '../components/FileUploader';
 import AdminView from './AdminView';
+import LoginCard from '../components/LoginCard';
 
 //still working on this, functionality not entirely implemented yet !
 function ManageAccounts()
@@ -77,17 +78,17 @@ function ManageAccounts()
    return(
     <>
     <HeroSection prevPageName = "Admin view" prevUrl= "/adminview"></HeroSection>
- 
+    <LoginCard></LoginCard>
    
    <div className = 'py-2 dark:bg-zinc-900 h-screen'>
-      <h1 className= ' pl-72 py-10 text-5xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '> Add Accounts</h1> 
+      <h1 className= '  2xl:pl-72 pl-10 py-10 2xl:text-5xl text-2xl  2xl:w-[1200px] text-slate-600 font-semibold dark:text-white rounded-2xl  '> Add Accounts</h1> 
 
-      <div className=" ml-80 mr-80 px-80  bg-slate-200 py-10"> 
+      <div className="  2xl:ml-80 2xl:mr-80 ml-10 mr-10 2xl:px-80  bg-slate-200 px-2"> 
 
       
 
 
-      <h1 className= ' text-2xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md pb-4'>  Accounts: </h1> 
+      <h1 className= ' text-2xl w-[100px] text-slate-600 font-semibold dark:text-white rounded-md pb-4'>  Accounts: </h1> 
 
       <div className= "bg-slate-100 w-full p-2 flex items-center justify-between rounded ">
 <ul
@@ -115,19 +116,19 @@ function ManageAccounts()
 </div>
       
 
-      <h1 className= '  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Upload .csv file of format: firstname, secondname, username,password to add accounts: </h1> 
+      <h1 className= '  text-l w-[270px] md:w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Upload .csv file of format: firstname, secondname, username,password to add accounts: </h1> 
       <div className="flex flex-row"> 
       <FileUploader UploadedData ={uploadedAccountData => setUploadedAccountData(uploadedAccountData)} uploadType="accounts" ></FileUploader> {/*DOESNT WORK FOR ACCOUNTS YET.*/}
       {uploadedAccountData}
       </div>
 
       {/*submit button */}
-      <div className="md:flex md:items-center px-32 py-5">
+      <div className="md:flex md:items-center sm:pl-18 py-5">
         
-          <div className="md:w-1/3"></div>
-            <div className="md:w-2/3 ">
+          <div className="md:w-[0px]"></div>
+            <div className="w-[200px] ">
 
-            <Link to="/adminview" className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
+            <Link to="/adminview" className=" shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
               Confirm changes
               </Link>
             </div>   

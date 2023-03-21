@@ -74,7 +74,7 @@ const AccountSearchBox = ({setInstitution, MemberType}) => {
               "bg-indigo-600 text-white"
             }
             ${
-              inst?.name?.toLowerCase().startsWith(inputValue)
+              inst?.name?.toLowerCase().includes(inputValue)
                 ? "block"
                 : "hidden"
             }`}
