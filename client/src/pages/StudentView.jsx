@@ -65,7 +65,7 @@ function StudentView({title}) {
         return () => window.removeEventListener('load', onPageLoad);
     }
   }, []);
-//////////////////////////////////////////////////////////////////////////////////////////////////////TO CHANGE BACK: 6065 TO module.moduleId AND "teacherAccount" === "teacherAccout" to ... === outputData.accountType
+//////////////////////////////////////////////////////////////////////////////////////////////////////TO CHANGE BACK: 6065 TO module.moduleId AND "teacherAccount" === "teacherAccount" to ... === outputData.accountType
 function toggleMinimizeTO() //toggle minimize for teacher list
 {
     if (minimizedTO == true){setMinimizedTO(false)}
@@ -82,9 +82,9 @@ return(
             <div className='w-full mx-auto h-full'>
               
               <div className="fixed z-30">
-                <SideBar moduleTitle={moduleTitle} moduleId={"6065"}> </SideBar> {/*reverse errors: replace all module.moduleId with random string e.g. "6065"*/}
+                <SideBar moduleTitle={moduleTitle} moduleId={module.moduleId}> </SideBar> {/*reverse errors: replace all module.moduleId with random string e.g. "6065" replace m.moduleId*/}
 
-                {("teacherAccount" === "teacherAccount") && (minimizedTO === false)  ? ( //reverse errors: replace outputData.accountType with "teacherAccount"
+                {(outputData.accountType === "teacherAccount") && (minimizedTO === false)  ? ( //reverse errors: replace outputData.accountType with "teacherAccount"
 
                 
                  <div className = 
@@ -95,20 +95,20 @@ return(
                </button>
 
                   <p className="dark:bg-zinc-800 py-6 px-16 underline underline-offset-8 text-center text-xl mb-1 font-semibold dark:text-zinc-300">Teacher Options </p>
-                  <Link to={"/modules/" + "6065"} state={{moduleTitle: modTitle, nestedPage: "addassignment"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 mt-20 ml-4 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                  <Link to={"/modules/" + module.moduleId} state={{moduleTitle: modTitle, nestedPage: "addassignment"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 mt-20 ml-4 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                     <h3 className= " text-center text-lg   font-semibold ">Add Assignment </h3>
                   </Link>
 
-                  <Link to={"/modules/" +"6065"} state={{moduleTitle: modTitle, nestedPage: "peermanager"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300  p-3 ml-4 mt-36 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                  <Link to={"/modules/" +module.moduleId} state={{moduleTitle: modTitle, nestedPage: "peermanager"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300  p-3 ml-4 mt-36 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                   <h3 className= " text-center text-lg font-semibold ">Open Assignments to Peers </h3>
                 </Link>
 
-                <Link to={"/modules/" + "6065"} state={{moduleTitle: modTitle, nestedPage: "approvefeedback"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 ml-4 mt-52 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                <Link to={"/modules/" + module.moduleId} state={{moduleTitle: modTitle, nestedPage: "approvefeedback"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 ml-4 mt-52 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                   <h3 className= " text-center text-lg font-semibold ">Peer Feedback requests </h3>
                 </Link>
                 </div>
 
-                ): ("teacherAccount" === "teacherAccount") && (minimizedTO === true)  ? (//CHANGE TO outputData.account
+                ): (outputData.account === "teacherAccount") && (minimizedTO === true)  ? (//CHANGE TO outputData.account
                 <button onClick={toggleMinimizeTO} className = "dark:border-indigo-900 border-2 border-slate-700 rounded-r-md fixed mt-80 h-[320px] w-[60px] flex px-1 bg-slate-700 dark:bg-zinc-800 border-l-0">
                <p className="dark:bg-zinc-800 py-24 text-left text-md font-semibold text-gray-100">View Teacher Options </p>
                </button>
