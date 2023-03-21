@@ -13,7 +13,7 @@ function ApproveFeedback() {
         {title: "Introduction to AI submission",markedBy: 'Hathan Khatkar',submissionBy: 'Gregory Clews',gradeGiven:"3", approved:"pending", id: 4, feedback:"Well done\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt "},
         {title: 'RE A* Algorithm Assignment',markedBy: 'Hathan Khatkar',submissionBy: 'Gregory Clews',gradeGiven:"6", approved:"pending", id: 5, feedback:"Needs improvement"},
         {title: "RE Class work 3 submission",markedBy: 'Hathan Khatkar',submissionBy: 'Gregory Clews',gradeGiven:"3", approved:"pending", id: 6, feedback:"Well done"},
-        {title: "RE Class work 2 submission",markedBy: 'Hathan Khatkar',submissionBy: 'Gregory Clews',gradeGiven:1, approved:"pending", id: 7, feedback:"Well done"},
+        {title: "RE Class work 2 submission",markedBy: 'Hathan Khatkar',submissionBy: 'Gregory Clews',gradeGiven:"1", approved:"pending", id: 7, feedback:"Well done"},
         { title: "RE Introduction to AI submission",markedBy: 'Hathan Khatkar',submissionBy: 'Gregory Clews',gradeGiven:"7", approved:"pending",id: 8, feedback:"Well done"}]);
         //DB: get all feedback where approved = false
 
