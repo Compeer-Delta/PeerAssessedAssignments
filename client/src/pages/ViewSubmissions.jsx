@@ -39,7 +39,7 @@ function ViewSubmissions() {
          function limitViewedSubmissions()
          {
           var arr=[];
-          if (outputData.accountType === "studentAccount")
+          if (outputData.accountType === "studentAccount") 
           {
             for (var i=0; i < numOfSubmissions; i++)
             {
@@ -70,9 +70,10 @@ function ViewSubmissions() {
     <HeroSection prevPageName = "Home Page" prevUrl= {"/modules/" + modId} moduleTitle= {modTitle}></HeroSection>
     <LoginCard/>
     
-    <h1 className= ' pl-72 py-10 text-3xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '> {assignmentTitle}'s Submissions</h1> 
+    <h1 className= ' xl:pl-72 pl-10 py-10 text-3xl xl:w-[1200px] w-[400px] text-slate-600 font-semibold dark:text-white rounded-md '> {assignmentTitle}'s Submissions</h1> 
     
-    <table className="table-fixed w-2/3 text-sm text-left text-gray-500 dark:text-gray-400 ml-72">
+    <div className="overflow-x-scroll md:overflow-auto"> 
+    <table className="table-fixed xl:w-2/3 w-[700px]  text-sm text-left text-gray-500 dark:text-gray-400 xl:ml-72 ml-10">
     <thead className="text-s text-gray-700 font-Dosis  bg-slate-50 dark:bg-gray-700 dark:text-gray-400 border-2 border-slate-900  ">
     <tr>
       <th className="px-6 py-3 border border-width-10">Submission Title</th>
@@ -84,7 +85,7 @@ function ViewSubmissions() {
   <tbody>
         {limitViewedSubmissions().map(submission => (
             <tr className=" dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace dark:text-white">
                     {submission.submissionTitle}
                 </th>
                 <td class="px-6 py-4">
@@ -103,6 +104,7 @@ function ViewSubmissions() {
         ))}
   </tbody>
   </table>
+  </div>
 
     </>
     

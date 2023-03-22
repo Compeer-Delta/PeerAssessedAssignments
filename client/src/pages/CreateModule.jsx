@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import {useRef, useState, useEffect} from 'react';
 import AccountSearchBox from '../components/AccountSearchBox';
 import FileUploader from '../components/FileUploader';
+import LoginCard from '../components/LoginCard';
 
 function CreateModule() {
 //onSubmit={handleSubmit} 
@@ -148,32 +149,32 @@ useEffect(() => {
 return (
     <>
       <HeroSection prevPageName = "Admin view" prevUrl= "/adminview"></HeroSection>
-   
+    <LoginCard></LoginCard>
      
      <div className = 'py-2 dark:bg-zinc-900 h-screen'>
      {uploadedTeacherData}
         
-     {(false === false) ? ( //check if edit or add module shoulld be displayed
-        <h1 className= ' pl-72 py-10 text-5xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '> Add Module</h1> 
-      ):(<h1 className= ' pl-72 py-10 text-5xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '> Edit Module</h1> )}
+   
+        <h1 className= ' 2xl:pl-72 pl-10 py-10 2xl:text-5xl text-2xl  2xl:w-[1200px] text-slate-600 font-semibold dark:text-white rounded-2xl '> Add Module</h1> 
+      
 
-        <div className=" ml-80 mr-80 px-80  bg-slate-200"> 
+        <div className=" 2xl:ml-80 2xl:mr-80 ml-10 mr-10 2xl:px-80  bg-slate-200 px-2"> 
 
-        <div className="md:flex md:items-center mb-6">        
-            <div className="md:w-1/3"></div>
-            <div className=" md:flex md:items-center px-32 py-5">
+        <div className="2xl:flex 2xl:items-center mb-6">        
+            <div className="2xl:w-1/3"></div>
+            <div className=" 2xl:flex 2xl:items-center 2xl:px-32 px-1 py-5">
                 <input
                     onChange = {(e) => setModuleTitle(e.target.value)}
                     value={moduleTitle}
                     required 
-                    className="bg-slate-100 appearance-none border-2 border-slate-200 rounded  w-80 px-3 py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="moduleTitle" type="text" placeholder="Module Title">
+                    className="bg-slate-100 appearance-none border-2 border-slate-200 rounded  w-[250px] px-3 py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="moduleTitle" type="text" placeholder="Module Title">
                 </input>
 
             </div>
         </div>
 
 
-        <h1 className= ' text-2xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '>  Teachers: </h1> 
+        <h1 className= ' text-22xl w-[150px]  2xl:w-[1200px] text-slate-600 font-semibold dark:text-white rounded-2xl '>  Teachers: </h1> 
 
         <div className= "bg-slate-100 w-full p-2 flex items-center justify-between rounded ">
   <ul
@@ -192,7 +193,7 @@ return (
 
           <li
             key={t}
-            className="p-0 text-sm hover:bg-sky-600 hover:text-white ">
+            className="p-0 text-2xl hover:bg-sky-600 hover:text-white ">
             {t}
           </li>
 
@@ -210,16 +211,16 @@ return (
         </button>
         </div>
   
-        <h1 className= '  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Or upload .csv file of usernames to automatically add teachers: </h1> 
+        <h1 className= '  text-l w-[350px] pr-16 2xl:pr-0 2xl:w-[700px] text-slate-600 font-semibold dark:text-white rounded-2xl '> Or upload .csv file of usernames to automatically add teachers: </h1> 
         <div className="flex flex-row"> 
         <FileUploader UploadedData ={uploadedTeacherData => setUploadedTeacherData(uploadedTeacherData)} uploadType="modules"></FileUploader> {/*onSubmit={getUploadedTeacherData} */}
         
         </div>
 
 
-        <h1 className= '  text-2xl w-[1200px] text-slate-600 font-semibold dark:text-white rounded-md '> Students: </h1>
+        <h1 className= '  text-22xl w-[150px] 2xl:w-[1200px] text-slate-600 font-semibold dark:text-white rounded-2xl '> Students: </h1>
 
-        <div className= "bg-slate-100 w-full p-2 flex items-center justify-between rounded ">
+        <div className= "bg-slate-100 2xl:w-[500px] w-full p-2 flex items-center justify-between rounded ">
        <ul
         className="bg-white overflow-y-auto sticky max-h-28 w-full">
           {addedStudents?.map((addedStudents) => (
@@ -238,7 +239,7 @@ return (
 
        <li 
          key={t}
-         className="p-0 text-sm hover:bg-sky-600 hover:text-white ">
+         className="p-0 text-2xl hover:bg-sky-600 hover:text-white ">
          
          {t}
        </li>
@@ -263,7 +264,7 @@ return (
         </div>
 
         
-        <h1 className= 'text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Or upload .csv file of usernames to automatically add students: </h1> 
+        <h1 className= ' text-l w-[350px] pr-16 2xl:pr-0 2xl:w-[700px] text-slate-600 font-semibold dark:text-white rounded-2xl'> Or upload .csv file of usernames to automatically add students: </h1> 
     
         <div className="flex flex-row"> 
         <FileUploader UploadedData ={uploadedStudentData => setUploadedStudentData(uploadedStudentData)} uploadType="modules"></FileUploader> {/*onSubmit={getUploadedTeacherData} */}
@@ -277,10 +278,10 @@ return (
   
 
         {/*submit button */}
-        <div className="md:flex md:items-center px-32 py-5">
+        <div className="2xl:flex 2xl:items-center 2xl:px-32 pl-20 py-5">
           
-            <div className="md:w-1/3"></div>
-              <div className="md:w-2/3 ">
+            <div className="2xl:w-1/3"></div>
+              <div className="2xl:w-2/3 ">
                 <button onClick={addModule} className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
                 Add module
                 </button>
