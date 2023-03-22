@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useLayoutEffect, useState} from 'react'
 import HeroSection from '../components/HeroSection'
 import SideBar from '../components/SideBar';
 import SubmitWork from './SubmitWork';
@@ -11,14 +11,18 @@ import ViewFeedback from './ViewFeedback';
 import Notifications from './Notifications';
 import PeerManager from './PeerManager';
 import temporaryModulesData from '../data/temporaryModulesData';
-import ApproveFeedback from './ApproveFeedback'
+import ApproveFeedback from './ApproveFeedback';
+import { ReactSession } from 'react-client-session';
 
 function StudentView({title}) {
   // const [toggle, setToggle] = useState(true);
   // const [isShown, setIsShown] = useState(false);
 
-  let outputData = sessionStorage.getItem('loginSessionData');
-  outputData = JSON.parse(outputData);
+  let session = {
+    token: ReactSession.get("token"),
+    accType: ReactSession.get("accType"),
+    email: ReactSession.get("email"),
+  };
 
   const [minimizedTO, setMinimizedTO] = useState(false);
 
@@ -47,25 +51,15 @@ function StudentView({title}) {
     }
   };
 
-  useEffect(() => {
-    const onPageLoad = () => {
-
-        //Debugging
-        console.log(params.id);
-        setModuleDetails(getModuleDetails(params.id));
-        console.log(getModuleDetails(params.id));
+  useLayoutEffect(() => {
+    //Debugging
+    console.log(params.id);
+    setModuleDetails(getModuleDetails(params.id));
+    console.log(getModuleDetails(params.id));
          
-        // //console.log(userData);
-    };
-
-    if(document.readyState === 'complete') {
-        onPageLoad();
-    } else {
-        window.addEventListener('load', onPageLoad);
-        return () => window.removeEventListener('load', onPageLoad);
-    }
+    // //console.log(userData);
   }, []);
-//////////////////////////////////////////////////////////////////////////////////////////////////////TO CHANGE BACK: 6065 TO module.moduleId AND "teacherAccount" === "teacherAccount" to ... === outputData.accountType
+//////////////////////////////////////////////////////////////////////////////////////////////////////TO CHANGE BACK: 6065 TO module.moduleId AND "teacherAccount" === "teacherAccount" to ... === session.accountType
 function toggleMinimizeTO() //toggle minimize for teacher list
 {
     if (minimizedTO == true){setMinimizedTO(false)}
@@ -84,7 +78,7 @@ return(
               <div className="fixed z-30">
                 <SideBar moduleTitle={moduleTitle} moduleId={module.moduleId}> </SideBar> {/*reverse errors: replace all module.moduleId with random string e.g. "6065" replace m.moduleId*/}
 
-                {(outputData.accountType === "teacherAccount") && (minimizedTO === false)  ? ( //reverse errors: replace outputData.accountType with "teacherAccount"
+                {(session.accType === "teacherAccount") && (minimizedTO === false)  ? ( //reverse errors: replace session.accountType with "teacherAccount"
 
                 
                  <div className = 
@@ -108,7 +102,7 @@ return(
                 </Link>
                 </div>
 
-                ): (outputData.account === "teacherAccount") && (minimizedTO === true)  ? (//CHANGE TO outputData.account
+                ): (session.accType === "teacherAccount") && (minimizedTO === true)  ? (//CHANGE TO session.account
                 <button onClick={toggleMinimizeTO} className = "dark:border-indigo-900 border-2 border-slate-700 rounded-r-md fixed mt-80 h-[320px] w-[60px] flex px-1 bg-slate-700 dark:bg-zinc-800 border-l-0">
                <p className="dark:bg-zinc-800 py-24 text-left text-md font-semibold text-gray-100">View Teacher Options </p>
                </button>
