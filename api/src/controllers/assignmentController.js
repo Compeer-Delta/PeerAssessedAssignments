@@ -78,6 +78,7 @@ const updateSubmission = async (req, res) => {
 const addAssignment = async (req, res) => {
   const {
     supervistorId,
+    moduleId,
     title,
     description,
     brief,
@@ -92,6 +93,7 @@ const addAssignment = async (req, res) => {
   const setAssignment = new Assignment({
     _id: new mongoose.Types.ObjectId(),
     supervistorId: supervistorId,
+    moduleId: moduleId,
     title: title,
     description: description,
     brief: brief,
