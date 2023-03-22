@@ -12,6 +12,12 @@ const asssignmentSchema = new Schema(
       default: generateUUID,
       unique: true,
     },
+    moduleId: {
+      type: String,
+      required: true,
+      ref: "Module",
+      index: true,
+    },
     title: {
       type: String,
       required: true,
@@ -23,11 +29,11 @@ const asssignmentSchema = new Schema(
       type: String,
     },
     startDate: {
-        type: Date,
+        type: Number,
         required: true,
     },
     endDate: {
-        type: Date,
+        type: Number,
         required: true,
     },
     numOfReviewers:{
@@ -37,7 +43,6 @@ const asssignmentSchema = new Schema(
     },
     imageURL:{
         type: String,
-        required: true,
         default: null,
     },
     teachers: [
