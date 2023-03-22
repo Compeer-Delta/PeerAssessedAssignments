@@ -40,8 +40,8 @@ const moduleSchema = new Schema(
     }],
     institutionName: {
       type: String,
+      ref: 'Institution',
       required: true,
-      default: null,
     },
   },
   {
