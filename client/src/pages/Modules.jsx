@@ -10,6 +10,7 @@ function Modules() {
     token: ReactSession.get("token"),
     accType: ReactSession.get("accType"),
     email: ReactSession.get("email"),
+    inst: ReactSession.get("inst"),
   };
 
   //if admin account we display ALL modules for the institution
