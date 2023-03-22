@@ -4,10 +4,6 @@ import {useForm} from 'react-hook-form';
 import {useRef, useState, useEffect} from 'react';
 import StudentView from '../pages/StudentView';
 import DropDownSearch from '../components/DropDownSearch';
-//const mongoose = require("mongoose");
-import mongoose from 'mongoose';
-//const Admin = require(`../schemas/admin`);
-//import Admin from '../schemas/admin';
 import Login from './Login';
 
 import emailjs from '@emailjs/browser';
@@ -65,23 +61,6 @@ function SignUp() {
       console.log(inputcode, actualcode);
       if (inputcode == actualcode)
       {
-         //lookup admin
-        // let storedAdmin = await Admin.findOne({ userId: user });
-         //create new entry if no admin account found
-         //if (!storedUser) {
-           //create admin entry in DB
-          // storedUser = await new Inventory({
-         //    _id: mongoose.Types.ObjectId(),
-         //    userId: user,
-         //    details: {
-         //      firstname: firstname,
-         //      surname: lastname,
-         //      email: email,
-         //    },
-        //     school: institution,
-         //   password: pwd,
-        //   });
-        //   await storedAdmin.save().catch(console.error);
         setVerified(true);
         createUser();
         // } else {
