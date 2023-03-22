@@ -37,18 +37,20 @@ function StudentView({title}) {
   const params = useParams();
   
   const getModuleDetails = function(id) {
-    const moduleArray = Object.values(temporaryModulesData);
+    // const moduleArray = Object.values(temporaryModulesData);
 
-    for(let i = 0; i < moduleArray.length; i++) {
-        let m = moduleArray[i];
+    // for(let i = 0; i < moduleArray.length; i++) {
+    //     let m = moduleArray[i];
 
-        if(m.moduleId == id) {
-            //calcTimeLeft(w.dueDate);
-            console.log("MODULE" + m);
-            return m;
+    //     if(m.moduleId == id) {
+    //         //calcTimeLeft(w.dueDate);
+    //         console.log("MODULE" + m);
+    //         return m;
            
-        }
-    }
+    //     }
+    // }
+
+    
   };
 
   useLayoutEffect(() => {
