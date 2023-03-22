@@ -82,6 +82,7 @@ function Login() {
       ReactSession.set("token", token);
       ReactSession.set("accType", accType);
       ReactSession.set("email", user);
+      ReactSession.set("inst", userData.institutionName);
 
       //Debug: displays session data in console
     }
