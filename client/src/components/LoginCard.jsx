@@ -10,6 +10,14 @@ function LoginCard() { //parameters might need changing
     const [sessionUsername, setSessionUsername] = useState("");
     const [minimized, setMinimized] = useState(false);
 
+    let session = {
+        token: ReactSession.get("token"),
+        accType: ReactSession.get("accType"),
+        email: ReactSession.get("email"),
+    };
+
+    const fr = "http://localhost:8081/user/me?email=" + session.email;
+
     function logout(){
         
         setLoggedOut(true);
@@ -18,7 +26,7 @@ function LoginCard() { //parameters might need changing
         ReactSession.remove("email");
         ReactSession.remove("accType");
         ReactSession.remove("token");
-
+        
         console.log("LOGOUT SUCCESS")
     }
 
@@ -31,9 +39,6 @@ function LoginCard() { //parameters might need changing
 
     useLayoutEffect(() => {
         const getFirstName = async () => {
-            const email = ReactSession.get("email");
-            const fr = "http://localhost:8081/user/me?email=" + email;
-    
             const response = await fetch(fr, {
                 method: "GET",
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.JWT_SECRET },
