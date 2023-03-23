@@ -3,7 +3,7 @@
 import { Schema, model } from "mongoose";
 import { generateUUID } from "../functions/generateUUID.js";
 
-const asssignmentSchema = new Schema(
+const assignmentSchema = new Schema(
   {
     _id: Schema.Types.ObjectId,
     assignmentId: {
@@ -75,4 +75,4 @@ const asssignmentSchema = new Schema(
   }
 );
 
-export default model("Assignment", asssignmentSchema, "assignment");
+export default model("Assignment", assignmentSchema, "assignment");

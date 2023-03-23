@@ -3,8 +3,10 @@ import { useState } from "react";
 import { render } from "react-dom";
 
 function FileUploader(props, uploadType) {
-  const [file, setFile] = useState({ fileName: "", fileContent: "" });
-  const [formattedData, setFormattedData] = useState([]);
+
+
+    const [file, setFile] = useState({fileName:'', fileContent:'' });
+    const [formattedData, setFormattedData] = useState([]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -37,19 +39,19 @@ function FileUploader(props, uploadType) {
               reader.result.split(/\n/)[0].split(",")
           );
         }
-      }
-    };
-    reader.onerror = () => {
-      console.log("file error", reader.error);
-    };
-  };
-
-  return (
-    <div>
-      <input type="file" onChange={handleFileChange}></input>
-      <br />
-      <br />
-    </div>
-  );
+      } 
+    }
+  }
+   
+    return (
+        <div>
+            
+            
+            <input type="file" onChange={handleFileChange} ></input>
+            <br/><br/>
+ 
+        </div>
+    )
 }
-export default FileUploader;
+  
+export default FileUploader

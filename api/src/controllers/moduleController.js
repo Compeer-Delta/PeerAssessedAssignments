@@ -36,7 +36,7 @@ const createModule = async (req, res) => {
 const getModule = async (req, res) => {
   const { moduleCode, institutionName } = req.query;
   try {
-    const foundModule = Module.findOne({ moduleCode: moduleCode, institutionName: institutionName });
+    const foundModule = await Module.findOne({ moduleCode: moduleCode, institutionName: institutionName });
     res.status(201).json(foundModule);
   } catch (err) {
     res.status(500).json({ message: err.message });

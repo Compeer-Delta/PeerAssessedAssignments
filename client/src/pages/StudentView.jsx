@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useLayoutEffect, useState} from 'react'
 import HeroSection from '../components/HeroSection'
 import SideBar from '../components/SideBar';
 import SubmitWork from './SubmitWork';
@@ -22,60 +22,52 @@ function StudentView({title}) {
     token: ReactSession.get("token"),
     accType: ReactSession.get("accType"),
     email: ReactSession.get("email"),
+    inst: ReactSession.get("inst"),
   };
 
   const [minimizedTO, setMinimizedTO] = useState(false);
-
   const [module, setModuleDetails] = useState({});
-  const toggleClass = <SubmitWork/>;
+  const [assignments, setAssignments] = useState([]);
+
+  // const toggleClass = <SubmitWork/>;
   // console.log(type + "test ");
+
+  //Setting Module Details (Hathan)
   const location = useLocation();
   const {nestedPage} = location.state;
   const {moduleTitle} = location.state;
   const modTitle = moduleTitle;
 
-  const params = useParams();
   
-  const getModuleDetails = function(id) {
-    const moduleArray = Object.values(temporaryModulesData);
+//////////////////////////////////////////////////////////////////////////////////////////////////////TO CHANGE BACK: 6065 TO module.moduleCode AND "teacherAccount" === "teacherAccount" to ... === session.accountType
+  // function toggleMinimizeTO() { //toggle minimize for teacher list
+  //   if (minimizedTO == true){setMinimizedTO(false)}
+  //   else {setMinimizedTO(true)
+  //   }
+  // }
 
-    for(let i = 0; i < moduleArray.length; i++) {
-        let m = moduleArray[i];
+  const params = useParams();
 
-        if(m.moduleId == id) {
-            //calcTimeLeft(w.dueDate);
-            console.log("MODULE" + m);
-            return m;
-           
-        }
-    }
-  };
+  useLayoutEffect(() => {
+    const getModuleData = async () => {
+      const fr = "http://localhost:8081/module?moduleCode=" + params.id + "&institutionName=" + session.inst; //Fetch Route
 
-  useEffect(() => {
-    const onPageLoad = () => {
+      const response = await fetch(fr, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + ReactSession.get("token"),
+        },
+      });
 
-        //Debugging
-        console.log(params.id);
-        setModuleDetails(getModuleDetails(params.id));
-        console.log(getModuleDetails(params.id));
-         
-        // //console.log(userData);
+      const moduleData = await response.json();
+      setModuleDetails(moduleData);
+      setAssignments(moduleData.assignments);
     };
 
-    if(document.readyState === 'complete') {
-        onPageLoad();
-    } else {
-        window.addEventListener('load', onPageLoad);
-        return () => window.removeEventListener('load', onPageLoad);
-    }
-  }, []);
-//////////////////////////////////////////////////////////////////////////////////////////////////////TO CHANGE BACK: 6065 TO module.moduleId AND "teacherAccount" === "teacherAccount" to ... === session.accountType
-function toggleMinimizeTO() //toggle minimize for teacher list
-{
-    if (minimizedTO == true){setMinimizedTO(false)}
-    else {setMinimizedTO(true)}
-
-}
+    getModuleData();
+}, []);
 
 return(
     <div className="dark:bg-zinc-900 h-[1200px]">
@@ -86,7 +78,7 @@ return(
             <div className='w-full mx-auto h-full'>
               
               <div className="fixed z-30">
-                <SideBar moduleTitle={moduleTitle} moduleId={module.moduleId}> </SideBar> {/*reverse errors: replace all module.moduleId with random string e.g. "6065" replace m.moduleId*/}
+                <SideBar moduleTitle={moduleTitle} moduleId={module.moduleCode}> </SideBar> {/*reverse errors: replace all module.moduleCode with random string e.g. "6065" replace m.moduleId*/}
 
                 {(session.accType === "teacherAccount") && (minimizedTO === false)  ? ( //reverse errors: replace session.accountType with "teacherAccount"
 
@@ -99,15 +91,15 @@ return(
                </button>
 
                   <p className="dark:bg-zinc-800 py-6 px-16 underline underline-offset-8 text-center text-xl mb-1 font-semibold dark:text-zinc-300">Teacher Options </p>
-                  <Link to={"/modules/" + module.moduleId} state={{moduleTitle: modTitle, nestedPage: "addassignment"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 mt-20 ml-4 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                  <Link to={"/modules/" + module.moduleCode} state={{moduleTitle: modTitle, nestedPage: "addassignment"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 mt-20 ml-4 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                     <h3 className= " text-center text-lg   font-semibold ">Add Assignment </h3>
                   </Link>
 
-                  <Link to={"/modules/" +module.moduleId} state={{moduleTitle: modTitle, nestedPage: "peermanager"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300  p-3 ml-4 mt-36 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                  <Link to={"/modules/" +module.moduleCode} state={{moduleTitle: modTitle, nestedPage: "peermanager"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300  p-3 ml-4 mt-36 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                   <h3 className= " text-center text-lg font-semibold ">Open Assignments to Peers </h3>
                 </Link>
 
-                <Link to={"/modules/" + module.moduleId} state={{moduleTitle: modTitle, nestedPage: "approvefeedback"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 ml-4 mt-52 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
+                <Link to={"/modules/" + module.moduleCode} state={{moduleTitle: modTitle, nestedPage: "approvefeedback"}} className='dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 ml-4 mt-52 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition '>
                   <h3 className= " text-center text-lg font-semibold ">Peer Feedback requests </h3>
                 </Link>
                 </div>
@@ -131,7 +123,7 @@ return(
         ): nestedPage === "viewfeedback" ? (
           <ViewFeedback></ViewFeedback>
         ): nestedPage === "submitwork" ? (
-          <Works modulename={moduleTitle}></Works>
+          <Works a = {assignments}></Works>
         ): nestedPage === "addassignment" ? (
           <AddAssignment></AddAssignment>
         ): nestedPage === "peermanager" ? (
