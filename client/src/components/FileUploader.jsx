@@ -21,7 +21,16 @@ function FileUploader(props, uploadType) {
         if (reader.result.split(/\n/)[0].split(",").length == 5) {
           console.log(reader.result.split(/\n/)[0].split(","));
 
-          props.UploadedData(reader.result.split(/\n/)[0].split(","));
+          const returnArray = [];
+          //returns in format [[username1, password1, firstname1, lastname1, account1], [username2, password2, firstname2, lastname2, account2], [...]]
+          for (let i=0; i < (reader.result.split(/\n/)).length; i++)
+          {
+            returnArray.push(reader.result.split(/\n/)[i].split(","))
+          }
+
+          props.UploadedData(returnArray);
+          
+        
         } else {
           console.log(
             "error with size of row not equal to 4" +
