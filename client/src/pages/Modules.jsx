@@ -29,7 +29,7 @@ function Modules() {
   useLayoutEffect(() => {
     //console.log("===== useEffect TRIGGERED =====");
     const fr = "http://localhost:8081/modules?email=" + session.email; //Fetch Route
-    console.log(fr);
+    //console.log(fr);
     const fetchData = async () => {
       const response = await fetch(fr, {
         method: "GET",
@@ -37,8 +37,8 @@ function Modules() {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: "Bearer " + ReactSession.get("token"),
-        },
-      });
+      },
+    });
 
       const data = await response.json();
       setModules(data);
