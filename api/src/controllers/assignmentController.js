@@ -111,7 +111,7 @@ const addAssignment = async (req, res) => {
 		const savedAssignment = await setAssignment.save();
 		const assignmentId = savedAssignment.assignmentId;
 
-		const updatedModule = await Module.FineOneAndupdate(
+		const updatedModule = await Module.findOneAndUpdate(
 			{ moduleId: moduleId },
 			{ $push: { assignments: assignmentId } },
 			{ new: true }
@@ -161,8 +161,8 @@ const updateAssignment = async (req, res) => {
 
 const getAssignment = async (req, res) => {
 	try {
-		const moduleId = req.params.moduleId;
-		const assignmentId = req.params.assignmentId;
+		const moduleId = req.query.moduleId;
+		const assignmentId = req.query.assignmentId;
 
 		const module = await Module.findOne({ moduleId: moduleId });
 
@@ -194,7 +194,7 @@ const deleteAssignment = async (req, res) => {
 	}
 };
 
-//get all modules (no params)
+//get all modules (no params; admin only)
 const getAllAssignments = async (req, res) => {
 	try {
 	  const assigns = await Assignment.find();
@@ -202,7 +202,8 @@ const getAllAssignments = async (req, res) => {
 	} catch (err) {
 	  res.status(500).json({ message: err.message });
 	}
-  };
+};
+
 
 export default {
 	createSubmission,
