@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useState } from 'react'
 
 import WorkItem from './WorkItem'
-import works from '../data/works'
 import Modules from '../pages/Modules';
+import { ReactSession } from 'react-client-session';
 
 function Works(mod) {
     
@@ -21,53 +21,68 @@ function Works(mod) {
     const [module, setModuleDetails] = useState(mod.mod);
     const [assignments, setAssignments] = useState([]);
 
+    let session = {
+        token: ReactSession.get("token"),
+        accType: ReactSession.get("accType"),
+        email: ReactSession.get("email"),
+        inst: ReactSession.get("inst"),
+    };
+
     console.log(module);
     console.log(module.assignments);
     console.log(module.moduleId);
 
     useLayoutEffect(() => {
 
-        const assignmentIds = module.assignments;
         const moduleId = module.moduleId;
 
-        //Make a call to this for each id w/in assignmentIds
-        const getAssignmentDetails = async (fr) => {
-            const response = await fetch(fr, {
-                method: "GET",
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                  Authorization: "Bearer " + ReactSession.get("token"),
-                }
-            });
+        //Make a call to this for each id w/in module.assignments
+        const getAssignmentDetails = async () => {
+            const results = await Promise.all(
+                module.assignments.map(async (id) => {
+                    const response = await fetch(`http://localhost:8081/assignment?assignmentId=${id}`, {
+                        method: "GET",
+                        headers: {
+                        Accept: "application/json",
+                            "Content-Type": "application/json",
+                        Authorization: "Bearer " + ReactSession.get("token"),
+                        }
+                    });
 
-            const data = await response.json();
-            setAssignments([...assignments, data]);
+                    const data = await response.json();
+                    return data;
+                })
+            );
+
+            //const data = await response.json();
+            setAssignments(results);
+            //setAssignments([...assignments, data]);
         }
 
-        for(const i = 0; i < assignmentIds.length; i++) {
-            const fr = "http://localhost:8081/?moduleId=" + moduleId + "&assignmentID=" + assignmentIds[i];
-            getAssignmentDetails(fr);
-        }
+        //getAssignmentDetails("http://localhost:8081/assignment?assignmentId=" + module.assignments[0]);
+        //let fr = "http://localhost:8081/assignment?assignmentID=" + module.assignments[i];
+
+        getAssignmentDetails();
     }, []);
 
+    //console.log(assignments);
     return (
         <div className = 'py-2 dark:bg-zinc-900'>
           {
             }
             <div className='pr-80 lg:pl-80 pl-16 grid grid-cols-1 gap-3'>
-                {assignments.map(work => (
-                    <WorkItem key={work.id}
-                              id={work.id}
-                              imgUrl={work.imgUrl}
-                              title={work.title}
-                              tech={work.tech}
-                              workUrl={"/upload/" + work.id}
-                              dueDate={work.dueDate}
-                              setDate={work.setDate}
-                              open= {work.open}
-                              moduleId = {work.moduleId}
-                              moduleTitle = {modulename}>
+                {assignments.map(a => (
+                    <WorkItem key={a.assignmentId}
+                              id={a.assignmentId}
+                              imgUrl={a.imageURL}
+                              title={a.title}
+                              tech={"none"}
+                              workUrl={"/upload/" + a.assignmentId}
+                              dueDate={a.endDate}
+                              setDate={a.startDate}
+                              open= {true}
+                              moduleId = {a.moduleId}
+                              moduleTitle = {module.title}>
                     </WorkItem>
                 ))}
             </div>

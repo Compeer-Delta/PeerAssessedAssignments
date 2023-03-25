@@ -6,12 +6,12 @@ import defaultbg from '/images/DEFAULT_ASSIGNMENT_BG.jpg';
 
 function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, moduleId, moduleTitle}) {
 
-    const [BreifUrl, setBreifUrl] = useState("/compeerSamplePDF.pdf");
-    //DB: read the file where the passed id (or title) matches with the breifing (select from breifs where title/id = passed parameter in workitem [title/id])
+    const [BriefUrl, setBriefUrl] = useState("/compeerSamplePDF.pdf");
+    //DB: read the file where the passed id (or title) matches with the briefing (select from briefs where title/id = passed parameter in workitem [title/id])
 
     let current = new Date();
-    let time = formatTime();
-    let date = new Date(dueDate.split(/(\s+)/)[2] + " " + time);
+    // let time = formatTime();
+    // let date = new Date(dueDate.split(/(\s+)/)[2] + " " + time);
 
     function formatTime()
     {//formats the the time so it is able to be read by Date
@@ -63,7 +63,7 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
                 {/* {//tech.map(item=> ( */}
 
                     
-                    {LockAfterDue() === true ? (
+                    {/*LockAfterDue() === true*/ true ? (
 
                     <Link to={"/modules/" + moduleId +"/upload/" + id} state={{modId: moduleId, modTitle: moduleTitle}} key="SubmitWork" className='inline-block px-2 py-3 text-yellow-800 font-bold bg-yellow-100 dark:bg-zinc-900 dark:text-yellow-400 hover:-translate-y-1 transform transition'>
                         Submit Work 📂
@@ -90,8 +90,8 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
                     
                 
                {/* )) }*/}
-               <a href={BreifUrl} download className='inline-block px-2 py-3 text-blue-800 font-bold bg-blue-100 dark:bg-zinc-900 dark:text-blue-400 hover:-translate-y-1 transform transition'>
-                        Download Breif 📖
+               <a href={BriefUrl} download className='inline-block px-2 py-3 text-blue-800 font-bold bg-blue-100 dark:bg-zinc-900 dark:text-blue-400 hover:-translate-y-1 transform transition'>
+                        Download Brief 📖
                     </a>
 
            
