@@ -27,10 +27,6 @@ router.delete("/module", auth, moduleController.delete); //delete module submiss
 //routes for module feedback
 router.post("/module/feedback/submit", auth, moduleController.giveFeedback); //submit feedback
 router.get("/module/feedback/view", auth, moduleController.viewFeedback); //view feedback
-router.delete("/module/feedback/submit", auth, moduleController.deleteFeedback); //submit feedback
-
-//routes for module submissions (admin)
-router.get("/module/submissions", auth, moduleController.getModules); //view all submissions
-router.get("/module/submissions", auth, moduleController.getModules); //view submission
+router.delete("/module/feedback/submit", auth, moduleController.deleteFeedback); //delete feedback
 
 export default router;
