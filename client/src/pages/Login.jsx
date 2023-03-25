@@ -179,7 +179,7 @@ function Login() {
                 {/*Title and form display*/}
 
                 <form onSubmit={handleSubmit} className="sm:w-full max-w-sm">
-                  <div className=" w-2/3 sm:ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">
+                  <div id= "loginError" className=" w-2/3 sm:ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">
                     {failedVerifMessage}
                   </div>
                   <div className="sm:ml-36 text-l dark:text-white">
@@ -247,7 +247,7 @@ function Login() {
                         value={user}
                         required
                         className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                        id="username"
+                        id="email"
                         type="text"
                         placeholder="Email"
                       ></input>
@@ -285,6 +285,7 @@ function Login() {
                     <div className="sm:w-2/3">
                       <button
                         type="submit"
+                        id="SignIn"
                         className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                       >
                         Sign In

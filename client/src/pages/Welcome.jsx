@@ -94,11 +94,11 @@ function Welcome() {
         {/* login by university account */}
           <div className="border-t w-72 mx-4 mb-4 border-t-slate-400 "></div> 
           <div className = "flex flex-row w-80">
-          <Link to="/login" className='mr-3 btn btn-primary inline-block border border-slate-300 dark:bg-indigo-500 dark:border-indigo-500 px-70 py-1 mb-4 h-12 w-3/4 text-center bg-slate-100 hover:-translate-y-1 transform transition'>
+          <Link to="/login" id="toLogin" className='mr-3 btn btn-primary inline-block border border-slate-300 dark:bg-indigo-500 dark:border-indigo-500 px-70 py-1 mb-4 h-12 w-3/4 text-center bg-slate-100 hover:-translate-y-1 transform transition'>
                    Sign in with University account
           </Link>
           <br></br>
-          <Link to="/register" className='ml-3 btn btn-primary inline-block border border-slate-300 dark:bg-indigo-500 dark:border-indigo-500 px-70 py-1 mb-4 h-12 w-3/4 text-center bg-slate-100 hover:-translate-y-1 transform transition'>
+          <Link to="/register" id="toRegister" className='ml-3 btn btn-primary inline-block border border-slate-300 dark:bg-indigo-500 dark:border-indigo-500 px-70 py-1 mb-4 h-12 w-3/4 text-center bg-slate-100 hover:-translate-y-1 transform transition'>
                    Register a new Admin account
           </Link>
           </div>
