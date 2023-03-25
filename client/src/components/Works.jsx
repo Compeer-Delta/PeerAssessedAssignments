@@ -45,7 +45,7 @@ function Works(mod) {
             setAssignments([...assignments, data]);
         }
 
-        for(const i = 0; i < assignmentIds.length; i++) {
+        for(let i = 0; i < assignmentIds.length; i++) {
             const fr = "http://localhost:8081/?moduleId=" + moduleId + "&assignmentID=" + assignmentIds[i];
             getAssignmentDetails(fr);
         }
