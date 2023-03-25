@@ -159,26 +159,38 @@ const updateAssignment = async (req, res) => {
 	}
 };
 
+// const getAssignment = async (req, res) => {
+// 	try {
+// 		const moduleId = req.query.moduleId;
+// 		const assignmentId = req.query.assignmentId;
+
+// 		const module = await Module.findOne({ moduleId: moduleId });
+
+// 		const assignment = module.assignments.find((assignment) => {
+// 			return assignment.assignmentId === assignmentId;
+// 		});
+
+// 		if (assignment === null) {
+// 			return res.status(404).json({ message: "Cannot find assignment" });
+// 		} else {
+// 			res.status(201).json(assignment);
+// 		}
+// 	} catch (err) {
+// 		res.status(500).json({ message: err.message });
+// 	}
+// };
+
+//get particular assignment details - jd750 25/03
 const getAssignment = async (req, res) => {
+	const { assignmentId } = req.query;
 	try {
-		const moduleId = req.query.moduleId;
-		const assignmentId = req.query.assignmentId;
-
-		const module = await Module.findOne({ moduleId: moduleId });
-
-		const assignment = module.assignments.find((assignment) => {
-			return assignment.assignmentId === assignmentId;
-		});
-
-		if (assignment === null) {
-			return res.status(404).json({ message: "Cannot find assignment" });
-		} else {
-			res.status(201).json(assignment);
-		}
-	} catch (err) {
+		const foundAssign = await Assignment.findOne({assignmentId: assignmentId});
+		res.status(201).json(foundAssign);
+	} catch(err) {
 		res.status(500).json({ message: err.message });
 	}
 };
+
 
 const deleteAssignment = async (req, res) => {
 	const { moduleId, assignmentId } = req.body;
@@ -194,7 +206,7 @@ const deleteAssignment = async (req, res) => {
 	}
 };
 
-//get all modules (no params; admin only)
+//get all assignments (no params; admin only) - jd750 24/03
 const getAllAssignments = async (req, res) => {
 	try {
 	  const assigns = await Assignment.find();
