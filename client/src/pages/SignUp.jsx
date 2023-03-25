@@ -118,6 +118,7 @@ function SignUp() {
     useEffect(() => {setErrMsg('');}, [firstname,pwd])
     
     const handleSubmit = async (e) => {
+      e.preventDefault();
       //checks all fields in form to see if they are ready to be verified if not display message to user
       if (institution== "" || institution == "Unlisted")
       {
@@ -140,7 +141,7 @@ function SignUp() {
         setValidationMessage("Please make sure you filled all the details");
       }
       else{
-        e.preventDefault();
+        
 
       {/* gmail service */}
       emailjs.send('service_awsfb8e', 'template_n35f2mi', {email, user, actualcode}, 'jBQKDXy824tIJnH8b') //form.current
