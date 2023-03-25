@@ -44,7 +44,7 @@ function LoginCard() {
       });
 
       const userData = await response.json();
-
+      
       setSessionUsername(userData.firstname);
     };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { Link, Navigate, Route, Routes } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useRef, useState, useEffect } from "react";
@@ -19,7 +19,7 @@ function Login() {
   // const TEST_ADMIN_ACCOUNT = {username: "test_admin", password:"test123"}
 
   //const [institution, setInstitution] = useState('');
-  const [accType, setAccType] = useState("");
+  const [accType, setAccType] = useState("studentAccount");
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   //data from the login form
@@ -37,7 +37,9 @@ function Login() {
     setErrMsg("");
   }, [accType, user, pwd]);
 
-  ReactSession.setStoreType("sessionStorage");
+  useLayoutEffect(() => {
+    ReactSession.setStoreType("sessionStorage");
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +67,7 @@ function Login() {
     });
 
     const userData = await response.json();
-    //console.log(JSON.stringify(userData.token));
+    console.log(userData);
     const token = JSON.stringify(userData.token);
 
     if (accType == "adminAccount") {
@@ -83,7 +85,25 @@ function Login() {
       ReactSession.set("accType", accType);
       ReactSession.set("email", user);
 
-      //Debug: displays session data in console
+
+      //New Route to get all details necessary (can be expanded on)
+      const fr2 =
+        accType === "adminAccount"
+          ? "http://localhost:8081/admin/me?email=" + user
+          : "http://localhost:8081/user/me?email=" + user;
+
+      const response = await fetch(fr2, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: ReactSession.get("token"),
+        },
+      });
+
+      //Await JSON response and set session var(s)
+      const details = await response.json();
+      ReactSession.set("inst", details.institutionName);
     }
 
     //clear form data

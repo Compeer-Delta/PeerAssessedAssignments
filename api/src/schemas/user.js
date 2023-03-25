@@ -34,6 +34,11 @@ const userSchema = new Schema(
       default: null,
       unique: true,
     },
+    institutionName: {
+      type: String,
+      ref: 'Institution',
+      required: true,
+    },
     role: {
       type: String,
       required: true,

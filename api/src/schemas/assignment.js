@@ -3,7 +3,7 @@
 import { Schema, model } from "mongoose";
 import { generateUUID } from "../functions/generateUUID.js";
 
-const asssignmentSchema = new Schema(
+const assignmentSchema = new Schema(
   {
     _id: Schema.Types.ObjectId,
     assignmentId: {
@@ -11,6 +11,12 @@ const asssignmentSchema = new Schema(
       required: true,
       default: generateUUID,
       unique: true,
+    },
+    moduleId: {
+      type: String,
+      required: true,
+      ref: "Module",
+      index: true,
     },
     title: {
       type: String,
@@ -23,11 +29,11 @@ const asssignmentSchema = new Schema(
       type: String,
     },
     startDate: {
-        type: Date,
+        type: Number,
         required: true,
     },
     endDate: {
-        type: Date,
+        type: Number,
         required: true,
     },
     numOfReviewers:{
@@ -37,7 +43,6 @@ const asssignmentSchema = new Schema(
     },
     imageURL:{
         type: String,
-        required: true,
         default: null,
     },
     teachers: [
@@ -70,4 +75,4 @@ const asssignmentSchema = new Schema(
   }
 );
 
-export default model("Assignment", asssignmentSchema, "assignment");
+export default model("Assignment", assignmentSchema, "assignment");

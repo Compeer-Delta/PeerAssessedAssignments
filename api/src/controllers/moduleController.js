@@ -34,9 +34,9 @@ const createModule = async (req, res) => {
 
 // get module by id
 const getModule = async (req, res) => {
-  const { moduleId } = req.params;
+  const { moduleCode, institutionName } = req.query;
   try {
-    const foundModule = Module.findOne({ moduleId: moduleId });
+    const foundModule = await Module.findOne({ moduleCode: moduleCode, institutionName: institutionName });
     res.status(201).json(foundModule);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -336,6 +336,16 @@ const getSubmissions = async (req, res) => {
   }
 };
 
+//get all modules (no params)
+const getAllModules = async (req, res) => {
+  try {
+    const modules = await Module.find();
+    res.status(200).json(modules);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export default {
   createModule,
   getModule,
@@ -352,4 +362,5 @@ export default {
   addTeacherToModule,
   removeTeacherFromModule,
   removeStudentFromModule,
+  getAllModules
 };

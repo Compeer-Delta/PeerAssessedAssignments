@@ -10,6 +10,7 @@ function Modules() {
     token: ReactSession.get("token"),
     accType: ReactSession.get("accType"),
     email: ReactSession.get("email"),
+    inst: ReactSession.get("inst"),
   };
 
   //if admin account we display ALL modules for the institution
@@ -28,7 +29,7 @@ function Modules() {
   useLayoutEffect(() => {
     //console.log("===== useEffect TRIGGERED =====");
     const fr = "http://localhost:8081/modules?email=" + session.email; //Fetch Route
-    console.log(fr);
+    //console.log(fr);
     const fetchData = async () => {
       const response = await fetch(fr, {
         method: "GET",
@@ -36,8 +37,8 @@ function Modules() {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: "Bearer " + ReactSession.get("token"),
-        },
-      });
+      },
+    });
 
       const data = await response.json();
       setModules(data);
