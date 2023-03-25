@@ -16,7 +16,7 @@ router.post("/admin/register/institution", adminController.addInstitution); // a
 
 router.get("/admin/getallusers", auth, userController.getAllUsers); // get all users
 router.get("/admin/getalladmins", auth, adminController.getAllAdmins); // get all admins
-router.get("/admin/getallmodules", moduleController.getAllModules); // get all admins
-router.get("/admin/getallassign", assignmentController.getAllAssignments); // get all admins
+router.get("/admin/getallmodules", auth, moduleController.getAllModules); // get all admins
+router.get("/admin/getallassign", auth, assignmentController.getAllAssignments); // get all admins
 
 export default router;

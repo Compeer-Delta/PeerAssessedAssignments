@@ -11,9 +11,8 @@ router.patch("/assignment/", auth, assignmentController.updateAssignment); //upd
 router.delete("/assignment/", auth, assignmentController.deleteAssignment); //delete assignment
 
 //routes for submissions
-router.post("/assignment/submit/", assignmentController.createSubmission); //Submit assignment work
+router.post("/assignment/submit/", auth, assignmentController.createSubmission); //Submit assignment work
 router.get("/submission/", auth, assignmentController.getSubmission); //Get submission
 router.patch("/submission/", auth, assignmentController.updateSubmission); //Update submission
-// router.delete("/submission/", auth, assignmentController.deleteSubmission); --------- TODO
-
+router.delete("/submission/", auth, assignmentController.deleteSubmission);
 export default router;

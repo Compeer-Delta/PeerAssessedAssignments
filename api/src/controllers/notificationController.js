@@ -1,6 +1,7 @@
 import Notification from "../schemas/notification.js";
 import mongoose from "mongoose";
 
+// create notification
 const createNotif = async (req, res) => {
   const { userId, messageId, notifTitle, notifContent, urgency } = req.body;
   const notification = new Notification({
@@ -19,6 +20,7 @@ const createNotif = async (req, res) => {
   }
 };
 
+// get notification by user id and message id
 const getNotif = async (req, res) => {
   const { userId, messageId } = req.params;
   try {
@@ -32,6 +34,7 @@ const getNotif = async (req, res) => {
   }
 };
 
+// delete notification by user id and message id
 const deleteNotif = async (req, res) => {
   const { userId, messageId } = req.params;
   try {
