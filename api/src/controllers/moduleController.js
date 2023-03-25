@@ -336,6 +336,16 @@ const getSubmissions = async (req, res) => {
   }
 };
 
+//get all modules (no params)
+const getAllModules = async (req, res) => {
+  try {
+    const modules = await Module.find();
+    res.status(200).json(modules);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export default {
   createModule,
   getModule,
@@ -352,4 +362,5 @@ export default {
   addTeacherToModule,
   removeTeacherFromModule,
   removeStudentFromModule,
+  getAllModules
 };

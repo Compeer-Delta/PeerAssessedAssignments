@@ -77,7 +77,7 @@ const updateSubmission = async (req, res) => {
 
 const addAssignment = async (req, res) => {
 	const {
-		supervistorId,
+		supervisorId,
 		moduleId,
 		title,
 		description,
@@ -92,7 +92,7 @@ const addAssignment = async (req, res) => {
 
 	const setAssignment = new Assignment({
 		_id: new mongoose.Types.ObjectId(),
-		supervistorId: supervistorId,
+		supervisorId: supervisorId,
 		moduleId: moduleId,
 		title: title,
 		description: description,
@@ -111,7 +111,7 @@ const addAssignment = async (req, res) => {
 		const savedAssignment = await setAssignment.save();
 		const assignmentId = savedAssignment.assignmentId;
 
-		const updatedModule = await Module.FineOneAndupdate(
+		const updatedModule = await Module.findOneAndUpdate(
 			{ moduleId: moduleId },
 			{ $push: { assignments: assignmentId } },
 			{ new: true }
@@ -128,7 +128,7 @@ const updateAssignment = async (req, res) => {
 	const {
 		moduleId,
 		assignmentId,
-		supervistorId,
+		supervisorId,
 		assignmentTitle,
 		assignmentDescription,
 		assignmentBreif,
@@ -161,8 +161,8 @@ const updateAssignment = async (req, res) => {
 
 const getAssignment = async (req, res) => {
 	try {
-		const moduleId = req.params.moduleId;
-		const assignmentId = req.params.assignmentId;
+		const moduleId = req.query.moduleId;
+		const assignmentId = req.query.assignmentId;
 
 		const module = await Module.findOne({ moduleId: moduleId });
 
@@ -194,6 +194,17 @@ const deleteAssignment = async (req, res) => {
 	}
 };
 
+//get all modules (no params; admin only)
+const getAllAssignments = async (req, res) => {
+	try {
+	  const assigns = await Assignment.find();
+	  res.status(200).json(assigns);
+	} catch (err) {
+	  res.status(500).json({ message: err.message });
+	}
+};
+
+
 export default {
 	createSubmission,
 	getSubmission,
@@ -202,4 +213,5 @@ export default {
 	updateAssignment,
 	deleteAssignment,
 	getAssignment,
+	getAllAssignments
 };

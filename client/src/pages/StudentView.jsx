@@ -27,7 +27,6 @@ function StudentView({title}) {
 
   const [minimizedTO, setMinimizedTO] = useState(false);
   const [module, setModuleDetails] = useState({});
-  const [assignments, setAssignments] = useState([]);
 
   // const toggleClass = <SubmitWork/>;
   // console.log(type + "test ");
@@ -63,7 +62,6 @@ function StudentView({title}) {
 
       const moduleData = await response.json();
       setModuleDetails(moduleData);
-      setAssignments(moduleData.assignments);
     };
 
     getModuleData();
@@ -123,7 +121,7 @@ return(
         ): nestedPage === "viewfeedback" ? (
           <ViewFeedback></ViewFeedback>
         ): nestedPage === "submitwork" ? (
-          <Works a = {assignments}></Works>
+          <Works mod = {module}></Works>
         ): nestedPage === "addassignment" ? (
           <AddAssignment></AddAssignment>
         ): nestedPage === "peermanager" ? (
