@@ -4,10 +4,18 @@ import * as FAIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { sidebardata } from "../data/sidebardata";
 import ViewFeedback from "../pages/ViewFeedback";
+import { ReactSession } from 'react-client-session';
 
 function SideBar({ moduleTitle, moduleId }) {
   let outputData = sessionStorage.getItem("loginSessionData");
   outputData = JSON.parse(outputData);
+
+  let session = {
+    token: ReactSession.get("token"),
+    accType: ReactSession.get("accType"),
+    email: ReactSession.get("email"),
+    inst: ReactSession.get("inst"),
+  };
 
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
@@ -56,7 +64,7 @@ function SideBar({ moduleTitle, moduleId }) {
           </button>
           {sidebardata.map((item, index) => {
             return item.path === "viewfeedback" &&
-              "teacherAccount" === "teacherAccount" ? (
+            session.accType === "teacherAccount" ? (
               <></> //outputData.accountType //change ! teacheraccount  for debugging viewfeedback
             ) : (
               <Link
