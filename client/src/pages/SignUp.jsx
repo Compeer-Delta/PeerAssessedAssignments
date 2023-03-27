@@ -252,7 +252,7 @@ function SignUp() {
 
           <form className="w-full max-w-sm">
 
-          <div className="w-2/3 md:w-full md:ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">{validationMessage}</div>
+          <div id="validationMessage" className="w-2/3 md:w-full md:ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">{validationMessage}</div>
         
           
           <div className=" md:ml-32 dark:text-white">Institution</div>
@@ -278,10 +278,11 @@ function SignUp() {
              <div className = "flex flex-wrap z-50"></div>
                 <input
                   onChange = {(e) => setEmail(e.target.value)}
+                  id = "registerEmail"
                   value={email}
                   name="email"
                   required 
-                  className="w-2/3 md:w-full bg-slate-100 appearance-none border-2 border-slate-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="email" type="text" placeholder="E-mail">
+                  className="w-2/3 md:w-full bg-slate-100 appearance-none border-2 border-slate-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" type="text" placeholder="E-mail">
             
                 </input>
                 
@@ -303,10 +304,11 @@ function SignUp() {
             <input
               ref={userRef} 
               onChange = {(e) => setFirstName(e.target.value)}
+              id = "registerFirstName"
              value={firstname}
              name="username"
               required 
-            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="First name">
+            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" type="text" placeholder="First name">
             </input>
 
             </div>
@@ -324,10 +326,11 @@ function SignUp() {
             <input
               ref={userRef} 
               onChange = {(e) => setLastName(e.target.value)}
+              id = "registerLastName"
              value={lastname}
              name="username"
               required 
-            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="Last name">
+            className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" type="text" placeholder="Last name">
             </input>
 
             </div>
@@ -342,9 +345,10 @@ function SignUp() {
           <div className="md:w-2/3 dark:text-white"> Password (Must contain 10 characters and numbers)
             <input 
               onChange = {(e) => setPwd(e.target.value)}
+              id = "registerPassword"
               value={pwd}
               required 
-              className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="password" type="password" placeholder="Password"> 
+              className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" type="password" placeholder="Password"> 
             </input>
           </div>
           </div>
@@ -355,9 +359,10 @@ function SignUp() {
           <div className="md:w-2/3">
             <input 
               onChange = {(e) => setRePwd(e.target.value)}
+              id = "registerRePassword"
               value={repwd}
               required 
-              className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="password" type="password" placeholder="Re-Password"> 
+              className="bg-slate-100 appearance-none border-2 border-slate-200 rounded w-2/3 md:w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" type="password" placeholder="Re-Password"> 
             </input>
           </div>
           </div>
@@ -367,7 +372,7 @@ function SignUp() {
           <div className="md:flex md:items-center">
             <div className="md:w-1/3"></div>
               <div className="md:w-2/3">
-                <button onClick= {handleSubmit} type="submit" className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                <button id = "createAccount" onClick= {handleSubmit} type="submit" className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
                 Create Account
                 </button>
               </div>   
