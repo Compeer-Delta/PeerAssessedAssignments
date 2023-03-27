@@ -40,7 +40,7 @@ function Works(mod) {
         const getAssignmentDetails = async () => {
             const results = await Promise.all(
                 module.assignments.map(async (id) => {
-                    const response = await fetch(`http://localhost:8081/assignment?assignmentId=${id}`, {
+                    const response = await fetch(`http://localhost:8081/assignment/${moduleId}/${id}`, {
                         method: "GET",
                         headers: {
                         Accept: "application/json",
@@ -56,6 +56,7 @@ function Works(mod) {
 
             //const data = await response.json();
             setAssignments(results);
+            //console.log(results);
             //setAssignments([...assignments, data]);
         }
 
