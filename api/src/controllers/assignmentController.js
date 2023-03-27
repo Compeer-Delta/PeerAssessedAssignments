@@ -193,7 +193,7 @@ const updateAssignment = async (req, res) => {
 
 //get particular assignment details
 const getAssignment = async (req, res) => {
-  const { assignmentId } = req.query;
+  const { assignmentId } = req.params;
   try {
     const foundAssignment = await Assignment.findOne({
       assignmentId: assignmentId,
