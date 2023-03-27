@@ -104,6 +104,7 @@ function Login() {
       //Await JSON response and set session var(s)
       const details = await response.json();
       ReactSession.set("inst", details.institutionName);
+      ReactSession.set("uid", details.userId);
     }
 
     //clear form data

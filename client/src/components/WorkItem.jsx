@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import { useState } from 'react';
 import defaultbg from '/images/DEFAULT_ASSIGNMENT_BG.jpg';
 
-function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, moduleId, moduleTitle}) {
+function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, moduleId, moduleTitle, moduleCode}) {
 
     const [BriefUrl, setBriefUrl] = useState("/compeerSamplePDF.pdf");
     //DB: read the file where the passed id (or title) matches with the briefing (select from briefs where title/id = passed parameter in workitem [title/id])
@@ -65,7 +65,7 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
                     
                     {/*LockAfterDue() === true*/ true ? (
 
-                    <Link to={"/modules/" + moduleId +"/upload/" + id} state={{modId: moduleId, modTitle: moduleTitle}} key="SubmitWork" className='inline-block px-2 py-3 text-yellow-800 font-bold bg-yellow-100 dark:bg-zinc-900 dark:text-yellow-400 hover:-translate-y-1 transform transition'>
+                    <Link to={"/modules/" + moduleCode +"/upload/" + id} state={{modId: moduleId, modTitle: moduleTitle}} key="SubmitWork" className='inline-block px-2 py-3 text-yellow-800 font-bold bg-yellow-100 dark:bg-zinc-900 dark:text-yellow-400 hover:-translate-y-1 transform transition'>
                         Submit Work 📂
                     </Link>
                     ):
