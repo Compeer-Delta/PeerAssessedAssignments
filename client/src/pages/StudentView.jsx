@@ -23,6 +23,7 @@ function StudentView({title}) {
     accType: ReactSession.get("accType"),
     email: ReactSession.get("email"),
     inst: ReactSession.get("inst"),
+    uid: ReactSession.get("uid")
   };
 
   const [minimizedTO, setMinimizedTO] = useState(false);

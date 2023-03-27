@@ -26,11 +26,12 @@ function Works(mod) {
         accType: ReactSession.get("accType"),
         email: ReactSession.get("email"),
         inst: ReactSession.get("inst"),
+        uid: ReactSession.get("uid")
     };
 
-    console.log(module);
-    console.log(module.assignments);
-    console.log(module.moduleId);
+    // console.log(module);
+    // console.log(module.assignments);
+    // console.log(module.moduleId);
 
     useLayoutEffect(() => {
 
@@ -56,6 +57,7 @@ function Works(mod) {
 
             //const data = await response.json();
             setAssignments(results);
+            //console.log(results);
             //setAssignments([...assignments, data]);
         }
 
@@ -82,7 +84,8 @@ function Works(mod) {
                               setDate={a.startDate}
                               open= {true}
                               moduleId = {a.moduleId}
-                              moduleTitle = {module.title}>
+                              moduleTitle = {module.title}
+                              moduleCode = {module.moduleCode}>
                     </WorkItem>
                 ))}
             </div>

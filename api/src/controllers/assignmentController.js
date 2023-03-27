@@ -5,12 +5,12 @@ import mongoose from "mongoose";
 
 // Create User Assignment Submission
 const createSubmission = async (req, res) => {
-  const { userId, moduleId, submissionId, binData } = req.body;
+  const { userId, moduleId, assignmentId, binData } = req.body;
   const submissionContent = new Submission({
     _id: new mongoose.Types.ObjectId(),
     userId: userId,
     moduleId: moduleId,
-    submissionId: submissionId,
+    assignmentId: assignmentId,
     binData: binData,
   });
   try {
@@ -193,7 +193,7 @@ const updateAssignment = async (req, res) => {
 
 //get particular assignment details
 const getAssignment = async (req, res) => {
-  const { assignmentId } = req.query;
+  const { assignmentId } = req.params;
   try {
     const foundAssignment = await Assignment.findOne({
       assignmentId: assignmentId,

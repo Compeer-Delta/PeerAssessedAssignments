@@ -1,8 +1,7 @@
 import React from 'react';
-import { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { format } from 'date-fns';
-import works from '../data/works';
+import { useState, useRef, useLayoutEffect } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import { ReactSession } from 'react-client-session';
 import '../styles/uploader.css';
 
 
@@ -19,48 +18,23 @@ function StudentFileUploader(props) {
     const fDetails = useRef(null);
 
     const params = useParams();
-    const userData = JSON.parse(sessionStorage.getItem('loginSessionData'));
+    const location = useLocation();
+
+    const moduleCode = params.id;
+    const assignmentId = params.aid;
+    const moduleId = location.state.modId;
+
+    let session = {
+        token: ReactSession.get("token"),
+        accType: ReactSession.get("accType"),
+        email: ReactSession.get("email"),
+        inst: ReactSession.get("inst"),
+        uid: ReactSession.get("uid")
+    };;
 
     const handleFile = function(e) {
-        {
-        //HATHAN contrib:
-        // const reader = new FileReader();
-        // reader.readAsText(e[0]);
-        // reader.onload = () => {
-        
-        //setFile({fileName: e[0].name, fileContent: reader.result});
-        // console.log("UT: " + props.uploadType);
-        // // if ((((fileContent.split(/\n/))[0]).split(",")).length() == 4) //checks if its formatted in account data
-        // if (props.uploadType === "modules") {
-        //         props.UploadedData((reader.result).split(","))
-        // }
-        // else if (props.uploadType === "accounts") {
-        //     if ((((((reader.result).split(/\n/))[0]).split(",")).length == 5)) {
-        //         {props.UploadedData(((reader.result).split(/\n/)))}
-        //     }
-        //     else { 
-        //         console.log("error with size of row not equal to 4 : " +(((((reader.result).split(/\n/))[0]).split(",")).length) )
-        //     }
-        // }
-        
-        // }
-
-        // reader.onerror= () => {
-        //     console.log("file error", reader.error);
-        // }
-        //END HATHAN contrib.
-        }
-
         setFile(e[0]);
-        
-
-        //GREG: Please put MongoDB queries for: object insert for the submittedFile, returning if user is part of this module, returning if there is a record of them submitting already.
-        //(I will do the if statements and everything else)
-
-        //If user is not part of this module, throw error
-        //Else, check if user studies the module AND has not uploaded already
-        //Submit file to the db etc.
-        
+        console.log("FILE CHANGE");
     };
 
     //Handles drag/drop
@@ -97,19 +71,6 @@ function StudentFileUploader(props) {
         inputRef.current.click();
     };
 
-    const getAssignmentDetails = function(id) {
-        const worksArray = Object.values(works);
-
-        for(let i = 0; i < worksArray.length; i++) {
-            let w = worksArray[i];
-
-            if(w.id == id) {
-                //calcTimeLeft(w.dueDate);
-                return w;
-            }
-        }
-    };
-
     const removeFile = () => {
         if(file != {}) {
             setFile({});
@@ -126,25 +87,57 @@ function StudentFileUploader(props) {
         // console.log(currDate.getTime());
     };
 
-    //Page Loading single-calls
+    //Commit the file to the DB, and redirect
+    const submitFile = async () => {
+        if(file) {
+            const fr_submit = `http://localhost:8081/assignment/submit/`;
 
-    useEffect(() => {
-        const onPageLoad = () => {
+            const response = await fetch(fr, {
+                method: "POST",
+                headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: ReactSession.get("token"),
+                },
+                body: JSON.stringify({
+                    userId: session.uid,
+                    moduleId: moduleId,
+                    assignmentId: assignmentId,
+                    binData: file
+                }),
+            });
 
-            //Debugging
-            console.log(params.id);
-            setAssignmentDetails(getAssignmentDetails(params.aid));
-            console.log(getAssignmentDetails(params.aid));
-             
-            // //console.log(userData);
-        };
+            const data = await response.json();
+            console.log(data); //For Debug only
 
-        if(document.readyState === 'complete') {
-            onPageLoad();
+            //Needs to redirect back to the assignment page (i.e. /modules/ABCDxxxx)
+            //Submit Work to change to View Submission?
+
         } else {
-            window.addEventListener('load', onPageLoad);
-            return () => window.removeEventListener('load', onPageLoad);
+            //Needs to throw an error
+            console.log("ERR: no file, see here: ", file);
         }
+    };
+
+    //Page Loading single-calls
+    useLayoutEffect(() => {
+        const getAssignmentDetails = async () => {
+            const fr = `http://localhost:8081/assignment/${moduleId}/${assignmentId}`;
+
+            const response = await fetch(fr, {
+                method: "GET",
+                headers: {
+                Accept: "application/json",
+                        "Content-Type": "application/json",
+                Authorization: "Bearer " + ReactSession.get("token"),
+                }
+            });
+
+            const data = await response.json();
+            setAssignmentDetails(data);
+        }
+
+        getAssignmentDetails();
     }, []);
     
     return (
@@ -156,9 +149,9 @@ function StudentFileUploader(props) {
 
             <h1><b>{assignment.title}</b></h1>
             <br></br>
-            <b>Set:</b>{assignment.setDate} 
+            <b>Set:</b>{assignment.startDate} 
             <br></br>
-            <b>Due:</b>{assignment.dueDate}
+            <b>Due:</b>{assignment.endDate}
             <br></br>
             </div>
 
@@ -186,7 +179,7 @@ function StudentFileUploader(props) {
 
             <button id="clearButton" role="button" onClick={removeFile}>Remove File</button>
             <br></br>
-            <button id="submitButton" role="button">Submit Work</button>
+            <button id="submitButton" role="button" onClick={submitFile}>Submit Work</button>
         </div> 
     )
 }
