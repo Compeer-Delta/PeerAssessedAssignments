@@ -5,12 +5,12 @@ import mongoose from "mongoose";
 
 // Create User Assignment Submission
 const createSubmission = async (req, res) => {
-  const { userId, moduleId, submissionId, binData } = req.body;
+  const { userId, moduleId, assignmentId, binData } = req.body;
   const submissionContent = new Submission({
     _id: new mongoose.Types.ObjectId(),
     userId: userId,
     moduleId: moduleId,
-    submissionId: submissionId,
+    assignmentId: assignmentId,
     binData: binData,
   });
   try {
