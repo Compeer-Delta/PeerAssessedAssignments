@@ -1,3 +1,4 @@
+// Description: This file contains the functions that will be used to create, read, update and delete modules
 import Module from "../schemas/module.js";
 import User from "../schemas/user.js";
 import submission from "../schemas/submission.js";

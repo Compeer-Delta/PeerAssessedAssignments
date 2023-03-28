@@ -1,3 +1,4 @@
+// Description: This file contains the functions that will be used to create, get, and delete notifications
 import Notification from "../schemas/notification.js";
 import mongoose from "mongoose";
 

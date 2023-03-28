@@ -32,10 +32,17 @@ const submissionSchema = new Schema(
         ref: "Module",
       },
     ],
-    binData: {
+    fileName: {
+      type: String,
+      required: true,
+    },
+    fileType: {
+      type: String,
+      required: true,
+    },
+    fileData: {
       type: Buffer,
       required: true,
-      default: null,
     },
     reviewers: [
       {
