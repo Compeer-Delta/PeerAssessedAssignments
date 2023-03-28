@@ -24,7 +24,7 @@ const DropDownSearch = ({setInstitution}) => {
     <div className="w-72 h-16 font-small ">
       
       {/*clicking the drop down should open the search bar and list of options */}
-      <div onClick={() => setOpen(!open)} className={`bg-indigo-100 w-full p-2 flex items-center justify-between rounded ${!selected && "text-gray-700"}`}>
+      <div id="registerInstitution" onClick={() => setOpen(!open)} className={`bg-indigo-100 w-full p-2 flex items-center justify-between rounded ${!selected && "text-gray-700"}`}>
         {selected
           ? selected?.length > 25 ? selected?.substring(0, 25) + "...": selected: "Select Institution"}
         {setInstitution(selected)}
@@ -41,6 +41,7 @@ const DropDownSearch = ({setInstitution}) => {
           <AiOutlineSearch size={18} className="text-gray-700" />
           {/*search bar*/}
           <input
+            id="institutionSearchBar"
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value.toLowerCase())}
@@ -52,6 +53,7 @@ const DropDownSearch = ({setInstitution}) => {
         {ukinstitutions?.map((inst) => (
           <li
             key={inst?.name}
+            id={inst?.name}
             className={`p-0 text-sm hover:bg-sky-600 hover:text-white
             ${
               inst?.name?.toLowerCase() === selected?.toLowerCase() &&

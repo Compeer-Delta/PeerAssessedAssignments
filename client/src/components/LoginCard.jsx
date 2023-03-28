@@ -18,6 +18,9 @@ function LoginCard() {
     ReactSession.remove("email");
     ReactSession.remove("accType");
     ReactSession.remove("token");
+    ReactSession.remove("inst");
+
+    ReactSession.clear();
 
     console.log("LOGOUT SUCCESS");
   }
@@ -67,6 +70,7 @@ function LoginCard() {
           </button>
           <button
             onClick={logout}
+            id="logoutButton"
             className="ml-14 p-0.5 mt-3 flex items-center  text-center px-12 cursor-pointer text-slate-100 dark:text-gray-300 bg-red-600  hover:bg-red-300 transform transition"
           >
             <p> Logout</p>

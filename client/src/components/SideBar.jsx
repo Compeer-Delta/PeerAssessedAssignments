@@ -55,7 +55,8 @@ function SideBar({ moduleTitle, moduleId }) {
       {minimizedMT === false ? (
         <h1 className="dark:border-indigo-900 rounded-br-lg rounded-tr-lg border-solid border-l-0 border-2 border-zinc-600 font-semibold sidebar fixed lg:left-0 p-5 w-[300px] overflow-y-auto text-center text-gray-900 dark:text-gray-300 bg-slate-300 dark:bg-zinc-800">
           {" "}
-          {moduleTitle} Tabs
+          <div id="moduleTabTitle" >{moduleTitle} Tabs</div>
+          
           <button
             onClick={toggleMinimizeMT}
             className="text-sm absolute top-0 right-0 flex items-center  h-[20px] text-center px-1 cursor-pointer text-slate-100 dark:text-gray-300 bg-slate-600  transform transition"

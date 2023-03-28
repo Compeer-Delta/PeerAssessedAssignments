@@ -116,7 +116,7 @@ return(
       </div>
 
       <LoginCard></LoginCard>
-      <div className= "dark:bg-zinc-900 font-bold py-4 font-Dosis text-center text-4xl text-slate-400 dark:text-indigo-700">Module: {moduleTitle} </div>
+      <div  id="moduleTitle" className= "dark:bg-zinc-900 font-bold py-4 font-Dosis text-center text-4xl text-slate-400 dark:text-indigo-700">Module: {moduleTitle} </div>
       {nestedPage === "notifications" ? (
         <Notifications/>
         ): nestedPage === "viewfeedback" ? (

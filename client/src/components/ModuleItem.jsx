@@ -32,8 +32,11 @@ function ModuleItem({ title, modId }) {
       >
         <div className="w-full h-5 object-cover bg-slate-600 dark:bg-indigo-900 rounded-lg rounded-b-none" />
         <div className="text-gray-600 dark:text-gray-300 p-3 rounded-lg">
-          <h3 className="font-semibold text-center text-2xl mb-2 md:mb-1 rounded-lg">
+          <h3 id={modulename} className="font-semibold text-center text-2xl mb-2 md:mb-1 rounded-lg">
             {modulename}
+          </h3>
+          <h3 id={modId}  className="font-semibold text-center text-l text-blue-600 dark:text-indigo-200 rounded-lg">
+            {modId}
           </h3>
 
           {!isStudentorTeacher ? (
