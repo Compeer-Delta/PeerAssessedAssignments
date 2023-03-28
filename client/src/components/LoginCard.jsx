@@ -19,6 +19,7 @@ function LoginCard() {
     ReactSession.remove("accType");
     ReactSession.remove("token");
     ReactSession.remove("inst");
+    ReactSession.remove("uid");
 
     ReactSession.clear();
 

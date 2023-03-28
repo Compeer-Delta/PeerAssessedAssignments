@@ -6,7 +6,7 @@ import { sidebardata } from "../data/sidebardata";
 import ViewFeedback from "../pages/ViewFeedback";
 import { ReactSession } from 'react-client-session';
 
-function SideBar({moduleTitle, moduleId}) {
+function SideBar({moduleTitle, moduleId, moduleCode}) {
   let session = {
     token: ReactSession.get("token"),
     accType: ReactSession.get("accType"),
@@ -93,7 +93,8 @@ function SideBar({moduleTitle, moduleId}) {
               <></> //outputData.accountType //change ! teacheraccount  for debugging viewfeedback
             ) : (
               <Link
-                to={"/modules/" + moduleId}
+                to={"/modules/" + moduleCode}
+                id={"tab_" + item.path}
                 state={{ moduleTitle: moduleTitle, nestedPage: item.path }}
                 className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer text-slate-900 dark:text-gray-300 bg-slate-100 dark:bg-zinc-900 hover:-translate-y-2 transform transition "
               >

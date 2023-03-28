@@ -82,7 +82,7 @@ return(
               
               <div className="fixed z-30">
                 {module ? 
-                  (<SideBar moduleTitle={moduleTitle} moduleId={module.moduleId}></SideBar>)
+                  (<SideBar moduleTitle={moduleTitle} moduleId={module.moduleId} moduleCode={module.moduleCode}></SideBar>)
                   :
                   (<></>)
                 }

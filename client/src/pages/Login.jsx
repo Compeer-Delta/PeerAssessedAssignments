@@ -210,7 +210,7 @@ function Login() {
                           className="rounded-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 peer-checked:bg-blue-100"
                         >
                           <div className="block">
-                            <div className="w-full text-b font-semibold">
+                            <div id="loginAsStudentStaff" className="w-full text-b font-semibold">
                               Student/Staff
                             </div>
                           </div>
@@ -230,7 +230,7 @@ function Login() {
                           className=" rounded-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 peer-checked:bg-blue-100"
                         >
                           <div className="block">
-                            <div className=" px-5 w-full text-b font-semibold">
+                            <div id="loginAsAdmin" className=" px-5 w-full text-b font-semibold">
                               Admin
                             </div>
                           </div>

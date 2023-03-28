@@ -4,6 +4,7 @@ import { useRef, useState, useLayoutEffect, useEffect } from "react";
 import LoginCard from "../components/LoginCard";
 import { ReactSession } from "react-client-session";
 import HeroSection from "../components/HeroSection";
+import { Link } from "react-router-dom";
 
 function Modules() {
   let session = {

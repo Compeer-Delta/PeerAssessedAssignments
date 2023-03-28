@@ -95,6 +95,7 @@ function SignUp() {
         setValidationMessage("Please make sure you filled all the details");
       }
       else{
+
        return true;
       }
       return false;
@@ -144,18 +145,18 @@ function SignUp() {
         
 
       {/* gmail service */}
-      emailjs.send('service_awsfb8e', 'template_n35f2mi', {email, user, actualcode}, 'jBQKDXy824tIJnH8b') //form.current
+      emailjs.send('service_awsfb8e', 'template_n35f2mi', {email, firstname, actualcode}, 'jBQKDXy824tIJnH8b') //form.current
       .then((result) => {
           console.log(result.text);
       }, (error) => {
           console.log(error.text);
       });
 
-    console.log(user, pwd, institution, firstname, lastname);
+    console.log(pwd, institution, firstname, lastname);
     console.log(emailInputs);
     //Debug: displays form data in console
   
-    let userData = {username: user, pass: pwd}
+    //let userData = {username: user, pass: pwd}
     
     setSuccess(true);
     
