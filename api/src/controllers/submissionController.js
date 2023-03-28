@@ -6,13 +6,19 @@ import mongoose from "mongoose";
 
 // Create User Assignment Submission
 const createSubmission = async (req, res) => {
-  const { userId, moduleId, assignmentId, binData } = req.body;
+  const { userId, moduleId, assignmentId, fileData } = req.body;
+  const file = req.file;
+  if (!file) {
+    return res.status(400).json({ message: "Please upload a file" });
+  }
   const submissionContent = new Submission({
     _id: new mongoose.Types.ObjectId(),
     userId: userId,
     moduleId: moduleId,
     assignmentId: assignmentId,
-    binData: binData,
+    fileName: file.originalname, // file name
+    fileType: file.mimetype, // file type e.g. image/jpeg/image/png/excel/pdf
+    fileData: file.buffer, // file data in binary format
   });
   try {
     const savedSubmission = await submissionContent.save();
@@ -43,7 +49,7 @@ const getSubmission = async (req, res) => {
 
 // Update User Assignment Submission
 const updateSubmission = async (req, res) => {
-  const { userId, submissionId, binData, marker, marked } = req.params;
+  const { userId, submissionId, fileData, marker, marked } = req.params;
   if (marked) {
     try {
       const updatedSubmission = await Submission.updateOne(
@@ -66,11 +72,11 @@ const updateSubmission = async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   }
-  if (binData) {
+  if (fileData) {
     try {
       const updatedSubmission = await Submission.updateOne(
         { userId: userId, submissionId: submissionId },
-        { $set: { binData: binData } }
+        { $set: { fileData: fileData } }
       );
       res.status(201).json(updatedSubmission);
     } catch (err) {
