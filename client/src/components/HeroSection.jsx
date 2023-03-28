@@ -7,6 +7,7 @@ function HeroSection({
   moduleId,
   assignmentTitle,
   assignmentId,
+  moduleCode
 }) {
   return (
     <div
@@ -22,6 +23,7 @@ function HeroSection({
               modTitle: moduleTitle,
               nestedPage: "submitwork",
               modId: moduleId,
+              modCode: moduleCode,
               assignmentTitle: assignmentTitle,
               assignmentId: assignmentId,
             }}
@@ -33,7 +35,7 @@ function HeroSection({
         ) : prevUrl.includes("/upload/") == true ? (
           <Link
             to={prevUrl}
-            state={{ modId: moduleId, modTitle: moduleTitle }}
+            state={{ modId: moduleId, modTitle: moduleTitle, moduleCode: moduleCode }}
             className=" rounded-lg font-Dosis text-slate-900 bg-slate-400 text-center w-[150px] py-4 ml-1  text-m md:text-l font-semibold hover:bg-slate-300"
           >
             {" "}
@@ -42,7 +44,7 @@ function HeroSection({
         ) : prevUrl.includes("/modules/") == true ? (
           <Link
             to={prevUrl}
-            state={{ moduleTitle: moduleTitle, nestedPage: "submitwork" }}
+            state={{ moduleTitle: moduleTitle, nestedPage: "default", moduleCode: moduleCode }}
             className=" rounded-lg font-Dosis text-slate-900 bg-slate-400 text-center w-[150px] py-4 ml-1  text-m md:text-l font-semibold hover:bg-slate-300"
           >
             {" "}

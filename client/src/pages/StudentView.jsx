@@ -36,7 +36,9 @@ function StudentView({title}) {
   const location = useLocation();
   const {nestedPage} = location.state;
   const {moduleTitle} = location.state;
+  const {moduleCode} = location.state;
   const modTitle = moduleTitle;
+ 
 
   
 //////////////////////////////////////////////////////////////////////////////////////////////////////TO CHANGE BACK: 6065 TO module.moduleCode AND "teacherAccount" === "teacherAccount" to ... === session.accountType
@@ -47,7 +49,9 @@ function StudentView({title}) {
   // }
 
   const params = useParams();
+  
 
+  
   useLayoutEffect(() => {
     const getModuleData = async () => {
       const fr = "http://localhost:8081/module?moduleCode=" + params.id + "&institutionName=" + session.inst; //Fetch Route
@@ -70,14 +74,14 @@ function StudentView({title}) {
 
 return(
     <div className="dark:bg-zinc-900 h-[1200px]">
-    
+
     <HeroSection prevPageName = "Modules" prevUrl= "/modules"></HeroSection>
  
           <div className = 'font-Dosis bg:white dark:bg-zinc-900'>
             <div className='w-full mx-auto h-full'>
               
               <div className="fixed z-30">
-                <SideBar moduleTitle={moduleTitle} moduleId={module.moduleCode}> </SideBar> {/*reverse errors: replace all module.moduleCode with random string e.g. "6065" replace m.moduleId*/}
+                <SideBar moduleTitle={moduleTitle} moduleId={moduleCode}> </SideBar> {/*reverse errors: replace all module.moduleCode with random string e.g. "6065" replace m.moduleId*/}
 
                 {(session.accType === "teacherAccount") && (minimizedTO === false)  ? ( //reverse errors: replace session.accountType with "teacherAccount"
 
