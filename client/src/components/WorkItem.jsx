@@ -65,7 +65,7 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
                     
                     {/*LockAfterDue() === true*/ true ? (
 
-                    <Link to={"/modules/" + moduleCode +"/upload/" + id} state={{modId: moduleId, modTitle: moduleTitle}} key="SubmitWork" className='inline-block px-2 py-3 text-yellow-800 font-bold bg-yellow-100 dark:bg-zinc-900 dark:text-yellow-400 hover:-translate-y-1 transform transition'>
+                    <Link to={"/modules/" + moduleCode +"/upload/" + id} state={{modId: moduleId, modTitle: moduleTitle, modCode: moduleCode}} key="SubmitWork" className='inline-block px-2 py-3 text-yellow-800 font-bold bg-yellow-100 dark:bg-zinc-900 dark:text-yellow-400 hover:-translate-y-1 transform transition'>
                         Submit Work 📂
                     </Link>
                     ):
@@ -77,7 +77,7 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
                     }
 
                     {open === true ? (
-                    <Link to={"/modules/" + moduleId + "/viewsubmissions/" + id} state={{assignmentTitle: title, assignmentId: id, modId: moduleId, modTitle: moduleTitle}} key="View Submissions" className='inline-block px-2 py-3 text-green-800 font-bold bg-green-100 dark:bg-zinc-900 dark:text-green-400 hover:-translate-y-1 transform transition'>
+                    <Link to={"/modules/" + moduleCode + "/viewsubmissions/" + id} state={{assignmentTitle: title, assignmentId: id, modId: moduleId, modTitle: moduleTitle, modCode: moduleCode}} key="View Submissions" className='inline-block px-2 py-3 text-green-800 font-bold bg-green-100 dark:bg-zinc-900 dark:text-green-400 hover:-translate-y-1 transform transition'>
                         Peer Assess 📝
                     </Link>
                     ):(

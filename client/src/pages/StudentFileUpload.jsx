@@ -7,11 +7,12 @@ function StudentFileUpload() {
   
   const location = useLocation();
   const {modId} = location.state; //module id
+  const {modCode} = location.state;
   const {modTitle} = location.state;
   return (
     
     <>
-    <HeroSection prevPageName = "Home Page" prevUrl={"/modules/" + modId} moduleTitle={modTitle}></HeroSection>
+    <HeroSection prevPageName = "Home Page" prevUrl={"/modules/" + modCode} moduleCode={modCode} moduleId= {modId} moduleTitle={modTitle}></HeroSection>
     <StudentFileUploader></StudentFileUploader>
     </>
     

@@ -17,6 +17,7 @@ function PeerAssessWork() {
   const {assignmentId} = location.state;  
   const {modId} = location.state; //module id
   const {modTitle} = location.state;
+  const {modCode} = location.state;
   const [minimized, setMinimized] = useState(false);
 
     const [pdfFile, setPdfFile] = useState(null);
@@ -64,7 +65,7 @@ function PeerAssessWork() {
   return (
     <>
     
- <HeroSection prevPageName = "Submissions" prevUrl= {"/modules/"+ modId + "/viewsubmissions/" + assignmentId} moduleTitle= {modTitle} moduleId = {modId} assignmentTitle={assignmentTitle} assignmentId={assignmentId} ></HeroSection>
+ <HeroSection prevPageName = "Submissions" prevUrl= {"/modules/"+ modCode + "/viewsubmissions/" + assignmentId} moduleTitle= {modTitle} moduleId = {modId} assignmentTitle={assignmentTitle} assignmentId={assignmentId} moduleCode={modCode}  ></HeroSection>
  <h1 className= ' xl:pl-72 pl-3 py-6 text-3xl  text-slate-600 font-semibold dark:text-white bg-slate-100 border-b-2 border-slate-400 font-Dosis'> Peer Assessing: Hathan Khatkar</h1> 
  <div className="flex row-2">
  <div className=" pdf-container xl:w-1/2 w-full h-full ">
