@@ -4,10 +4,8 @@ import { useLocation, useParams } from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
 import '../styles/uploader.css';
 
-
 function StudentFileUploader(props) {
-
-    const [file, setFile] = useState({});
+    const [file, setFile] = useState();
     const [assignment, setAssignmentDetails] = useState({});
 
     const [timeLeft, setTimeLeft] = useState();
@@ -35,6 +33,7 @@ function StudentFileUploader(props) {
     const handleFile = function(e) {
         setFile(e[0]);
         console.log("FILE CHANGE");
+        //console.log(file);
     };
 
     //Handles drag/drop
@@ -92,7 +91,7 @@ function StudentFileUploader(props) {
         if(file) {
             const fr_submit = `http://localhost:8081/assignment/submit/`;
 
-            const response = await fetch(fr, {
+            const response = await fetch(fr_submit, {
                 method: "POST",
                 headers: {
                 Accept: "application/json",
@@ -171,7 +170,7 @@ function StudentFileUploader(props) {
             <br></br>
 
             <div id="fileDetails" ref={fDetails}>
-            <i>{file.name}</i>
+            <i>{file ? (file.name) : (<></>)}</i>
             <br></br>
             </div>
 

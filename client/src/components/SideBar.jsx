@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as FAIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
@@ -6,31 +6,32 @@ import { sidebardata } from "../data/sidebardata";
 import ViewFeedback from "../pages/ViewFeedback";
 import { ReactSession } from 'react-client-session';
 
-function SideBar({ moduleTitle, moduleId }) {
-  let outputData = sessionStorage.getItem("loginSessionData");
-  outputData = JSON.parse(outputData);
-
+function SideBar({moduleTitle, moduleId}) {
   let session = {
     token: ReactSession.get("token"),
     accType: ReactSession.get("accType"),
     email: ReactSession.get("email"),
     inst: ReactSession.get("inst"),
+    uid: ReactSession.get("uid")
   };
 
   const [sidebar, setSidebar] = useState(false);
-  const showSidebar = () => setSidebar(!sidebar);
-
   const [minimizedTL, setMinimizedTL] = useState(false);
   const [minimizedMT, setMinimizedMT] = useState(false);
 
-  const [moduleTeachers, setModuleTeachers] = useState([
+  /*
+  [
     { firstname: "Hathan", lastname: "Khatkar", username: "hsk24" },
     { firstname: "Jordan", lastname: "DSouza", username: "jd750" },
     { firstname: "Gregory", lastname: "Clews", username: "gc436" },
     { firstname: "Temp", lastname: "Teacher", username: "T4" },
-  ]);
-  //needs a function to read teachers first, last and usernames where module is the same as moduleTitle into moduleTeachers
+  ]
+  */
 
+  const showSidebar = () => setSidebar(!sidebar);
+
+  const [moduleTeachers, setModuleTeachers] = useState();
+  
   function toggleMinimizeMT() {
     //toggle minimize for module tab
     if (minimizedMT == true) {
@@ -47,6 +48,29 @@ function SideBar({ moduleTitle, moduleId }) {
       setMinimizedTL(true);
     }
   }
+
+  
+  useLayoutEffect(() => { 
+    //16485c21-93c5-4016-8094-4a0de6bb394c
+    const getTeachers = async () => {
+      const fr = "http://localhost:8081/moduleteachers?moduleId=" + moduleId;
+      //console.log(fr);
+
+      const response = await fetch(fr, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + ReactSession.get("token"),
+        },
+      });
+
+      const data = await response.json();
+      setModuleTeachers(data);
+    };
+
+    getTeachers();
+  }, [moduleId]);
 
   return (
     <div className="fixed z-30">
@@ -103,19 +127,25 @@ function SideBar({ moduleTitle, moduleId }) {
           >
             <p> Minimize </p>
           </button>
-          {moduleTeachers.map((teachers) => {
-            return (
-              <div className="p-1 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer text-slate-900 dark:text-gray-300 bg-slate-200 dark:bg-zinc-900 hover:-translate-y-2 transform transition">
-                <div key={teachers.username}>
-                  <p>
-                    <span>
-                      {teachers.firstname} {teachers.lastname}
-                    </span>
-                  </p>
+          {moduleTeachers && moduleTeachers.length > 0 ? (
+            <>
+            {moduleTeachers.map((teachers) => {
+              return (
+                <div className="p-1 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer text-slate-900 dark:text-gray-300 bg-slate-200 dark:bg-zinc-900 hover:-translate-y-2 transform transition">
+                  <div key={teachers.email}>
+                    <p>
+                      <span>
+                        {teachers.firstname} {teachers.surname}
+                      </span>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+            </>
+          ) : ( 
+            <></>
+          )}
         </h1>
       ) : (
         <button

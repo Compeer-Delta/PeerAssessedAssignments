@@ -81,7 +81,12 @@ return(
             <div className='w-full mx-auto h-full'>
               
               <div className="fixed z-30">
-                <SideBar moduleTitle={moduleTitle} moduleId={moduleCode}> </SideBar> {/*reverse errors: replace all module.moduleCode with random string e.g. "6065" replace m.moduleId*/}
+                {module ? 
+                  (<SideBar moduleTitle={moduleTitle} moduleId={module.moduleId}></SideBar>)
+                  :
+                  (<></>)
+                }
+                
 
                 {(session.accType === "teacherAccount") && (minimizedTO === false)  ? ( //reverse errors: replace session.accountType with "teacherAccount"
 
