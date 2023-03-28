@@ -69,9 +69,9 @@ function Works(mod) {
 
     //console.log(assignments);
     return (
+     
         <div className = 'py-2 dark:bg-zinc-900'>
-          {
-            }
+          
             <div className='pr-80 lg:pl-80 pl-16 grid grid-cols-1 gap-3'>
                 {assignments.map(a => (
                     <WorkItem key={a.assignmentId}
@@ -83,7 +83,7 @@ function Works(mod) {
                               dueDate={a.endDate}
                               setDate={a.startDate}
                               open= {true}
-                              moduleId = {a.moduleId}
+                              moduleId = {module.moduleId}
                               moduleTitle = {module.title}
                               moduleCode = {module.moduleCode}>
                     </WorkItem>

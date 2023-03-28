@@ -26,7 +26,7 @@ function ModuleItem({ title, modId }) {
     <>
       <Link
         to={"/modules/" + modId}
-        state={{ moduleTitle: modulename, nestedPage: "default" }}
+        state={{ moduleTitle: modulename, nestedPage: "default", moduleCode: modId }}
         rel="noreferrer"
         className="z-10 font-Dosis bg-slate-300 dark:bg-zinc-700 rounded-lg w-[340px] h-32 overflow-hidden hover:-translate-y-1 transform transition "
       >

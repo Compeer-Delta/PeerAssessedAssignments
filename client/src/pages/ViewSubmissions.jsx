@@ -6,11 +6,20 @@ import { useState } from 'react'
 import {Link} from 'react-router-dom';
 import {useLocation} from 'react-router-dom';
 import LoginCard from '../components/LoginCard'
+import { ReactSession} from "react-client-session"
 
 function ViewSubmissions() {
 
     let outputData = sessionStorage.getItem('loginSessionData');
     outputData = JSON.parse(outputData);
+
+    let session = {
+      token: ReactSession.get("token"),
+      accType: ReactSession.get("accType"),
+      email: ReactSession.get("email"),
+      inst: ReactSession.get("inst"),
+      uid: ReactSession.get("uid")
+    };
 
     const [submissions, setSubmission] = useState([
         {submissionTitle: "My Submission", submitBy: "Hathan Khatkar", numFeedback: 2,  submissionId:1},
@@ -27,7 +36,9 @@ function ViewSubmissions() {
         const {assignmentTitle} = location.state;
         const {assignmentId} = location.state;  
         const {modId} = location.state; //module id
+        const {modCode} = location.state; //module id
         const {modTitle} = location.state;
+        
          //use id / title to get peersPerSubmission to display this number of submissions
          //select peersPerSubmission from assignmentsschema where assignmentId = id in schema
          const peersPerSubmission = 3;
@@ -39,7 +50,7 @@ function ViewSubmissions() {
          function limitViewedSubmissions()
          {
           var arr=[];
-          if (outputData.accountType === "studentAccount") 
+          if (session.accType === "studentAccount") 
           {
             for (var i=0; i < numOfSubmissions; i++)
             {
@@ -67,9 +78,9 @@ function ViewSubmissions() {
     <>
 
     {/* {assignmentId} + {modId} + {assignmentTitle} */}
-    <HeroSection prevPageName = "Home Page" prevUrl= {"/modules/" + modId} moduleTitle= {modTitle}></HeroSection>
+    <HeroSection prevPageName = "Home Page" prevUrl= {"/modules/" + modCode} moduleTitle= {modTitle} moduleCode= {modCode}></HeroSection>
     <LoginCard/>
-    
+
     <h1 className= ' xl:pl-72 pl-10 py-10 text-3xl xl:w-[1200px] w-[400px] text-slate-600 font-semibold dark:text-white rounded-md '> {assignmentTitle}'s Submissions</h1> 
     
     <div className="overflow-x-scroll md:overflow-auto"> 
@@ -95,7 +106,7 @@ function ViewSubmissions() {
                 {submission.numFeedback}
                 </td>
                 <td class="px-6 py-4 text-center">
-                 <Link to={"/modules/"+ modId + "/viewsubmissions/"+ assignmentId + "/peerassess/"+ submission.submissionId} state={{assignmentTitle: assignmentTitle, assignmentId: assignmentId, modId: modId, modTitle: modTitle}} className=" font-Dosis text-blue-100 text-l bg-blue-500 border-black px-6 py-1 rounded-3xl hover:bg-blue-200 hover:text-blue-800">
+                 <Link to={"/modules/"+ modId + "/viewsubmissions/"+ assignmentId + "/peerassess/"+ submission.submissionId} state={{assignmentTitle: assignmentTitle, assignmentId: assignmentId, modId: modId, modTitle: modTitle, modCode: modCode}} className=" font-Dosis text-blue-100 text-l bg-blue-500 border-black px-6 py-1 rounded-3xl hover:bg-blue-200 hover:text-blue-800">
                  Peer Assess
                  </Link>
                 </td>

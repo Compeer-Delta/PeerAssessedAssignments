@@ -1,3 +1,4 @@
+// Description: This file contains the functions that handle the admin routes
 import Admin from "../schemas/admin.js";
 import User from "../schemas/user.js";
 import Institution from "../schemas/institution.js";
