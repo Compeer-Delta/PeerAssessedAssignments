@@ -1,3 +1,4 @@
+// Description: This file contains the functions that are used to handle the user routes
 import User from "../schemas/user.js";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
