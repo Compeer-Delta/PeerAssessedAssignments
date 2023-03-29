@@ -75,6 +75,7 @@ function Modules() {
           {isAdmin ? (
             <Link
               to="/CreateModule"
+              id="createModule"
               rel="noreferrer"
               className="bg-slate-500 dark:bg-zinc-300 rounded-lg w-full h-20 overflow-hidden hover:-translate-y-1 transform transition "
             >

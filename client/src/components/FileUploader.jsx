@@ -47,7 +47,7 @@ function FileUploader(props, uploadType) {
         <div>
             
             
-            <input type="file" onChange={handleFileChange} ></input>
+            <input id="fileUpload" type="file" onChange={handleFileChange} ></input>
             <br/><br/>
  
         </div>

@@ -38,17 +38,17 @@ function SignUp() {
     const createUser = async () => {
 
       //const { password, firstname, surname, email, institution, role } = req.body;
-
-      const response = await fetch("http://localhost:8081/admin", {
+      console.log(pwd + " " + institution + " " + firstname + " " + lastname + " " + email); //PASSWORD, INSTITUTION IS BLANK FOR SOME REASON<<<<<<<<<<<<<<<<<<
+      const response = await fetch("http://localhost:8081/admin/register", {
         method: "POST",
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({
           "password": pwd,
+          "institution": institution,
           "firstname": firstname,
           "surname": lastname,
           "email": email,
-          "institution": institution,
-          "role": "admin" 
+          
         })
       });
 
@@ -160,8 +160,7 @@ function SignUp() {
     
     setSuccess(true);
     
-    setInstitution('');
-    setPwd('');
+    
     //clears form data
     }
   }
