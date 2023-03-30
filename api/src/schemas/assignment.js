@@ -29,21 +29,21 @@ const assignmentSchema = new Schema(
       type: String,
     },
     startDate: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
     endDate: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
-    numOfReviewers:{
-        type: Number,
-        required: true,
-        default: 1,
+    numOfReviewers: {
+      type: Number,
+      required: true,
+      default: 1,
     },
-    imageURL:{
-        type: String,
-        default: null,
+    imageURL: {
+      type: String,
+      default: null,
     },
     teachers: [
       {

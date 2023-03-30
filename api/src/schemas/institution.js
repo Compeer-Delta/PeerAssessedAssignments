@@ -31,18 +31,24 @@ const institutionSchema = new Schema(
       required: true,
       default: null,
     },
-    modules: [{
+    modules: [
+      {
         type: String,
         ref: "Module",
-    }],
-    admins: [{
+      },
+    ],
+    admins: [
+      {
         type: String,
         ref: "Admin",
-    }],
-    users: [{
+      },
+    ],
+    users: [
+      {
         type: String,
         ref: "User",
-    }],
+      },
+    ],
   },
   {
     timestamps: {

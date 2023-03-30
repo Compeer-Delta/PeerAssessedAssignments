@@ -33,15 +33,11 @@ const loginAdmin = async (req, res) => {
 
     const admin = await Admin.findOne({ email: email });
     if (!admin) {
-      return res
-        .status(401)
-        .json({ message: "Incorrect email or password" });
+      return res.status(401).json({ message: "Incorrect email or password" });
     }
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
-      return res
-        .status(402)
-        .json({ message: "Incorrect email or password" });
+      return res.status(402).json({ message: "Incorrect email or password" });
     }
 
     const payload = { adminId: admin.adminId };
@@ -154,7 +150,6 @@ const getStudents = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 export default {
   createAdmin,
