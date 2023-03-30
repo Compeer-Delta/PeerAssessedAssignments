@@ -57,13 +57,14 @@ const loginAdmin = async (req, res) => {
 // get a specific admin's details
 const getAdmin = async (req, res) => {
   try {
-    const admin = await Admin.findOne({ adminId: req.admin.adminId });
+    const admin = await Admin.findOne({ email: req.admin.email });
     res.status(200).json(admin);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
+// get all admins
 const getAllAdmins = async (req, res) => {
   try {
     const admins = await Admin.find();
@@ -84,7 +85,7 @@ const deleteAdmin = async (req, res) => {
   }
 };
 
-// change user role
+// change user role (teacher, student)
 const setUserRole = async (req, res) => {
   const { userId, role } = req.body;
   try {
