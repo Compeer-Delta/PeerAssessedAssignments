@@ -40,7 +40,7 @@ const loginAdmin = async (req, res) => {
       return res.status(402).json({ message: "Incorrect email or password" });
     }
 
-    const payload = { adminId: admin.adminId };
+    const payload = { email: admin.email};
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
@@ -52,8 +52,9 @@ const loginAdmin = async (req, res) => {
 
 // get a specific admin's details
 const getAdmin = async (req, res) => {
+  const { email } = req.query;
   try {
-    const admin = await Admin.findOne({ email: req.admin.email });
+    const admin = await Admin.findOne({ email: email });
     res.status(200).json(admin);
   } catch (err) {
     res.status(500).json({ message: err.message });
