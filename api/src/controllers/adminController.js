@@ -114,7 +114,7 @@ const addInstitution = async (req, res) => {
   } = req.body;
   const institution = new Institution({
     _id: new mongoose.Types.ObjectId(),
-    institutionName,
+    institutionName: institutionName.toLowerCase(),
     institutionEmail,
     institutionAddress,
     institutionPhone,

@@ -29,7 +29,7 @@ const createModule = async (req, res) => {
   try {
     const savedModule = await module.save();
     await Institution.updateOne(
-      { name: institutionName },
+      { name: institutionName.toLowerCase() },
       { $push: { modules: module._id } }
     );
     res.status(201).json(savedModule);
@@ -44,7 +44,7 @@ const getModule = async (req, res) => {
   try {
     const foundModule = await Module.findOne({
       moduleCode: moduleCode,
-      institutionName: institutionName,
+      institutionName: institutionName.toLowerCase(),
     });
     res.status(201).json(foundModule);
   } catch (err) {
@@ -68,7 +68,7 @@ const updateModule = async (req, res) => {
     );
     const updatedModule = await updateModule.save();
     await Institution.updateOne(
-      { name: institutionName },
+      { name: institutionName.toLowerCase() },
       { $push: { modules: module._id } }
     );
     res.status(201).json(updatedModule);

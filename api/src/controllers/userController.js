@@ -21,7 +21,7 @@ const createUser = async (req, res) => {
   try {
     const savedUser = await user.save();
     await Institution.updateOne(
-      { name: institutionName },
+      { name: institutionName.toLowerCase() },
       { $push: { users: email } }
     );
     res.status(201).json(savedUser);
@@ -74,6 +74,7 @@ const updateUser = async (req, res) => {
       user.details = details;
     }
     if (institutionName) {
+      institutionName = institutionName.toLowerCase();
       user.institutionName = institutionName;
     }
     const savedUser = await user.save();
@@ -112,7 +113,7 @@ const getUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
 	const { institutionName } = req.query;
 	try {
-		const users = await User.find({ institutionName: institutionName });
+		const users = await User.find({ institutionName: institutionName.toLowerCase() });
 		res.json({ users });
 	} catch (err) {
 		res.status(500).json({ message: err.message });
