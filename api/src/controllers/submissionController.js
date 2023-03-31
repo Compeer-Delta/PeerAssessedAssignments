@@ -6,11 +6,22 @@ import mongoose from "mongoose";
 
 // Create User Assignment Submission
 const createSubmission = async (req, res) => {
-  const { userId, moduleId, assignmentId, fileData } = req.body;
+  const { userId, moduleId, assignmentId } = req.body;
   const file = req.file;
+
+  if (!userId || !moduleId || !assignmentId) {
+    return res
+      .status(400)
+      .json({
+        message:
+          "Please provide all required fields, missing userId, moduleId or assignmentId",
+      });
+  }
+
   if (!file) {
     return res.status(400).json({ message: "Please upload a file" });
   }
+
   const submissionContent = new Submission({
     _id: new mongoose.Types.ObjectId(),
     userId: userId,
