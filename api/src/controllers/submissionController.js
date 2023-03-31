@@ -22,6 +22,10 @@ const createSubmission = async (req, res) => {
   });
   try {
     const savedSubmission = await submissionContent.save();
+    await Assignment.updateOne(
+      { _id: assignmentId },
+      { $push: { submissions: savedSubmission._id } }
+    );
     res.status(201).json(savedSubmission);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -30,10 +34,10 @@ const createSubmission = async (req, res) => {
 
 // Get User Assignment Submission
 const getSubmission = async (req, res) => {
-  const { userId, moduleId, submissionId } = req.params;
+  const { userId, moduleId, assignmentId } = req.params;
   try {
     const foundSubmission = await Submission.findOne({
-      submissionId: submissionId,
+      assignmentId: assignmentId,
       userId: userId,
       moduleId: moduleId,
     });

@@ -2,6 +2,7 @@
 import Module from "../schemas/module.js";
 import User from "../schemas/user.js";
 import submission from "../schemas/submission.js";
+import Institution from "../schemas/institution.js";
 import mongoose from "mongoose";
 
 // create module
@@ -27,6 +28,10 @@ const createModule = async (req, res) => {
   });
   try {
     const savedModule = await module.save();
+    await Institution.updateOne(
+      { name: institutionName },
+      { $push: { modules: module._id } }
+    );
     res.status(201).json(savedModule);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -62,6 +67,10 @@ const updateModule = async (req, res) => {
       }
     );
     const updatedModule = await updateModule.save();
+    await Institution.updateOne(
+      { name: institutionName },
+      { $push: { modules: module._id } }
+    );
     res.status(201).json(updatedModule);
   } catch (err) {
     res.status(500).json({ message: err.message });
