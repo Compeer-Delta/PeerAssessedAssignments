@@ -104,10 +104,11 @@ const getUser = async (req, res) => {
 	}
 };
 
-//get all users
+//get all users by institution
 const getAllUsers = async (req, res) => {
+	const { institutionName } = req.query;
 	try {
-		const users = await User.find();
+		const users = await User.find({ institutionName: institutionName });
 		res.json({ users });
 	} catch (err) {
 		res.status(500).json({ message: err.message });

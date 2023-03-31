@@ -1,4 +1,4 @@
-// routes for assignment
+// routes for submission
 import express from "express";
 const router = express.Router();
 import auth from "../middleware/auth.js";

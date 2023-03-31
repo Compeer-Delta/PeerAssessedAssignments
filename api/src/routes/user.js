@@ -13,5 +13,6 @@ router.post("/register", userController.createUser); //register user
 router.get("/user/me", auth, userController.getUser); //get user account
 router.patch("/user/update", auth, userController.updateUser); //update user account
 router.delete("/user/delete", auth, userController.deleteUser); //delete user account
+router.get("/user/all", auth, userController.getAllUsers); //get all users by institution
 
 export default router;
