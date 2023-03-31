@@ -1,6 +1,4 @@
 // Authentication controller for validating user credentials
-
-//need to change token "thisismynewcourse" to something else with process.env.JWT_SECRET
 import jwt from "jsonwebtoken";
 import User from "../schemas/user.js";
 import Admin from "../schemas/admin.js";
