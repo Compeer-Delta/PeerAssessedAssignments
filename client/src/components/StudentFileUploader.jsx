@@ -72,7 +72,7 @@ function StudentFileUploader(props) {
 
     const removeFile = () => {
         if(file != {}) {
-            setFile({});
+            setFile(null);
         }
     };
     
@@ -88,6 +88,8 @@ function StudentFileUploader(props) {
 
     //Commit the file to the DB, and redirect
     const submitFile = async () => {
+        console.log(file);
+
         if(file) {
             const fr_submit = `http://localhost:8081/assignment/submit/`;
 
@@ -102,8 +104,9 @@ function StudentFileUploader(props) {
                     userId: session.uid,
                     moduleId: moduleId,
                     assignmentId: assignmentId,
-                    binData: file
+                    // binData: file
                 }),
+                file: file,
             });
 
             const data = await response.json();
