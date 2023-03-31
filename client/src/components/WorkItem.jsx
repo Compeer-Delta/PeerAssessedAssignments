@@ -51,7 +51,7 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
                 <img src={imgUrl} className="w-full h-3 md:h-5 object-cover" onError={({ currentTarget }) => {currentTarget.onerror = null; currentTarget.src=defaultbg; }}/>
               
            <div className='text-gray-600 dark:text-gray-300 p-2 w-full'>
-                <h3 className ='text-lg md:text-xl mb-2 md:mb-1 font-semibold'>{title}</h3>
+                <h3 id ={title} className ='text-lg md:text-xl mb-2 md:mb-1 font-semibold'>{title}</h3>
                 <p className ='text-sm md:text-sm mb-1 md:mb-1'>Description: Lorem ipsum dolor sit amet, consectetur
                  adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                   quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit

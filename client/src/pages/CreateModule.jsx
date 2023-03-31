@@ -188,10 +188,11 @@ return (
           </li>
         ))}
         {uploadedTeacherData?.map((t) => (
-       
+  
           (allTeachers.includes(t.replace(/^\s+|\s+$/g, ''))) == true ? (
 
           <li
+            id="Teachers"
             key={t}
             className="p-0 text-2xl hover:bg-sky-600 hover:text-white ">
             {t}
@@ -212,7 +213,7 @@ return (
         </div>
   
         <h1 className= '  text-l w-[350px] pr-16 2xl:pr-0 2xl:w-[700px] text-slate-600 font-semibold dark:text-white rounded-2xl '> Or upload .csv file of usernames to automatically add teachers: </h1> 
-        <div className="flex flex-row"> 
+        <div id="teacherFileUpload" className="flex flex-row"> 
         <FileUploader UploadedData ={uploadedTeacherData => setUploadedTeacherData(uploadedTeacherData)} uploadType="modules"></FileUploader> {/*onSubmit={getUploadedTeacherData} */}
         
         </div>
@@ -238,6 +239,7 @@ return (
 
 
        <li 
+         id="Students"
          key={t}
          className="p-0 text-2xl hover:bg-sky-600 hover:text-white ">
          
@@ -266,7 +268,7 @@ return (
         
         <h1 className= ' text-l w-[350px] pr-16 2xl:pr-0 2xl:w-[700px] text-slate-600 font-semibold dark:text-white rounded-2xl'> Or upload .csv file of usernames to automatically add students: </h1> 
     
-        <div className="flex flex-row"> 
+        <div id="studentFileUpload" className="flex flex-row"> 
         <FileUploader UploadedData ={uploadedStudentData => setUploadedStudentData(uploadedStudentData)} uploadType="modules"></FileUploader> {/*onSubmit={getUploadedTeacherData} */}
         {uploadedStudentData}
         {/*}

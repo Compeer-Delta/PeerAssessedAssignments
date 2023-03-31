@@ -7,7 +7,10 @@ import Admin from "../schemas/admin.js";
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.header("Authorization").replace("Bearer ", "").replace(/"/g, ""); // remove "Bearer " from the token and remove the " from the token
+    const token = req
+      .header("Authorization")
+      .replace("Bearer ", "")
+      .replace(/"/g, ""); // remove "Bearer " from the token and remove the " from the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET); // decode the token returning {email: "email@email.com", iat: 123456789, exp: 123456789}
     let user;
     user =

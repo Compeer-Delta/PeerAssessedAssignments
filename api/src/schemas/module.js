@@ -23,24 +23,30 @@ const moduleSchema = new Schema(
     description: {
       type: String,
     },
-    teachers: [{
-      type: String,
-      ref: 'User',
-      index: true,
-    }],
-    students: [{
-      type: String,
-      ref: 'User',
-      index: true,
-    }],
-    assignments: [{
-      type: String,
-      ref: 'Assignment',
-      index: true,
-    }],
+    teachers: [
+      {
+        type: String,
+        ref: "User",
+        index: true,
+      },
+    ],
+    students: [
+      {
+        type: String,
+        ref: "User",
+        index: true,
+      },
+    ],
+    assignments: [
+      {
+        type: String,
+        ref: "Assignment",
+        index: true,
+      },
+    ],
     institutionName: {
       type: String,
-      ref: 'Institution',
+      ref: "Institution",
       required: true,
     },
   },

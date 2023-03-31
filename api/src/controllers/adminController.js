@@ -33,18 +33,14 @@ const loginAdmin = async (req, res) => {
 
     const admin = await Admin.findOne({ email: email });
     if (!admin) {
-      return res
-        .status(401)
-        .json({ message: "Incorrect email or password" });
+      return res.status(401).json({ message: "Incorrect email or password" });
     }
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
-      return res
-        .status(402)
-        .json({ message: "Incorrect email or password" });
+      return res.status(402).json({ message: "Incorrect email or password" });
     }
 
-    const payload = { adminId: admin.adminId };
+    const payload = { email: admin.email};
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
@@ -56,14 +52,16 @@ const loginAdmin = async (req, res) => {
 
 // get a specific admin's details
 const getAdmin = async (req, res) => {
+  const { email } = req.query;
   try {
-    const admin = await Admin.findOne({ adminId: req.admin.adminId });
+    const admin = await Admin.findOne({ email: email });
     res.status(200).json(admin);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
+// get all admins
 const getAllAdmins = async (req, res) => {
   try {
     const admins = await Admin.find();
@@ -84,7 +82,7 @@ const deleteAdmin = async (req, res) => {
   }
 };
 
-// change user role
+// change user role (teacher, student)
 const setUserRole = async (req, res) => {
   const { userId, role } = req.body;
   try {
@@ -153,7 +151,6 @@ const getStudents = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 export default {
   createAdmin,

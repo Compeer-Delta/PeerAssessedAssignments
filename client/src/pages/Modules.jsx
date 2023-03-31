@@ -4,6 +4,7 @@ import { useRef, useState, useLayoutEffect, useEffect } from "react";
 import LoginCard from "../components/LoginCard";
 import { ReactSession } from "react-client-session";
 import HeroSection from "../components/HeroSection";
+import { Link } from "react-router-dom";
 
 function Modules() {
   let session = {
@@ -29,27 +30,37 @@ function Modules() {
 
   useLayoutEffect(() => {
     //console.log("===== useEffect TRIGGERED =====");
-    const fr = "http://localhost:8081/modules?email=" + session.email; //Fetch Route
+    
+    
     //console.log(fr);
     const fetchData = async () => {
+      var fr = "";
+      if (checkIfAdmin() === false)
+    {
+    fr = "http://localhost:8081/modules?email=" + session.email; //Fetch Route
+    }
+    else{
+     fr = "http://localhost:8081/admin/getallmodules?institution=" + session.inst; //Fetch Route
+    }
       const response = await fetch(fr, {
         method: "GET",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: "Bearer " + ReactSession.get("token"),
+          Authorization: "Bearer " + ReactSession.get("token"), //BUG: Doesnt work for admin token unless hard coded in user tokens
       },
     });
 
       const data = await response.json();
       setModules(data);
     };
-
+  
     fetchData();
   }, []);
 
   return (
     <>
+     
       {isAdmin ? (
         <HeroSection
           prevPageName="Admin view"
@@ -74,6 +85,7 @@ function Modules() {
           {isAdmin ? (
             <Link
               to="/CreateModule"
+              id="createModule"
               rel="noreferrer"
               className="bg-slate-500 dark:bg-zinc-300 rounded-lg w-full h-20 overflow-hidden hover:-translate-y-1 transform transition "
             >

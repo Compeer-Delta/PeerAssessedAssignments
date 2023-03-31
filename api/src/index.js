@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/battery", (req, res) => {
-  res.send("battery is live")
+  res.send("battery is live");
 });
 
 app.post("/register", async (req, res) => {
@@ -41,7 +41,7 @@ app.post("/register", async (req, res) => {
     await user.save();
     res.status(201).send({ message: "User created" });
   } catch (err) {
-    console.log(err.message)
+    console.log(err.message);
     res.status(400).send({ message: err.message });
   }
 });
@@ -55,7 +55,9 @@ app.post("/register", async (req, res) => {
   role: "student";*/
 //connect to database
 mongoose.set("strictQuery", false);
-mongoose.connect(DB_SECRET, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
-  console.log(`listening on ${PORT}`);
-  app.listen(PORT);
-});
+mongoose
+  .connect(DB_SECRET, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log(`listening on ${PORT}`);
+    app.listen(PORT);
+  });

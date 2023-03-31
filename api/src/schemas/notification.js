@@ -10,10 +10,12 @@ const notifSchema = new Schema(
       required: true,
       default: generateUUID,
     },
-    userId: [{
-      type: String,
-      ref: "User",
-    }],
+    userId: [
+      {
+        type: String,
+        ref: "User",
+      },
+    ],
     notifTitle: {
       type: String,
       required: true,
