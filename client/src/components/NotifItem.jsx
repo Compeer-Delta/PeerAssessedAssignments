@@ -4,12 +4,23 @@ import { useState } from "react";
 
 //import {Link} from 'react-router-dom';
 
-function NotifItem({ title, content, mId }) {
+function NotifItem({ title, content, mId, uId }) {
   const messageId = mId;
 
+  // Delete Notification from user notification list
   const deleteNotif = () => {
+    console.log("Delete Notification");
     console.log(messageId);
-    //Change to delete entry in DB, reload webpage
+    fetch(`http://localhost:8081/notification/${uId}/${mId}`, {
+      method: "DELETE",
+    }).then((response) => {
+      if (response.ok) {
+        console.log("Notification Deleted");
+        window.location.reload();
+      } else {
+        console.log("Notification not deleted");
+      }
+    });
   };
 
   return (
@@ -27,7 +38,7 @@ function NotifItem({ title, content, mId }) {
         <div id="buttonContainer">
           <button id="delNotifButton" onClick={deleteNotif}>
             {" "}
-            Delete Notification{" "}
+            Mark as Read{" "}
           </button>
         </div>
       </div>
