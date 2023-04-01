@@ -90,7 +90,6 @@ function ApproveFeedback() {
         {assignments.map(assignment => (
            
             assignment.approved=="pending" ? ( //displays row if the assignment due date has passed and teacher has not opened the assignment
-
             <>
             <tr className="  dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace dark:text-white">
@@ -105,33 +104,20 @@ function ApproveFeedback() {
                 <td className="px-6 py-4">
                 {assignment.gradeGiven}
                 </td>
-
-               
                 <td className="px-3 md:px-6 py-4 text-center ">
-
-               
                  <button onClick={() => toggleFeedback(assignment, "yes")} className=" font-Dosis text-blue-100 text-l bg-green-500 border-black md:px-6 px-1 py-1 rounded-3xl hover:bg-green-200 hover:text-green-800 mb-3">             
                  <p>Approve</p>
                  </button>
                  <button onClick={() => toggleFeedback(assignment, "no")} className="font-Dosis text-blue-100 text-l bg-red-500 border-black  md:px-8 px-2 py-1 rounded-3xl hover:bg-red-200 hover:text-red-800">             
                  <p>Reject</p>
                  </button>
-                 
-                 
-              
                 </td>
-               
-                
+
             </tr>
-       
-       
                 <div className="mb-5 sm:w-[1200px] w-[400px] bg-slate-200">
                     <p className="font-Dosis ml-10  text-xl font-semibold dark:text-white text-green-600 "> Given Feedback:</p>
                     <p className="whitespace-pre-wrap break-words font-Dosis ml-10  text-l text-slate-600 font-semibold dark:text-white rounded-md">{assignment.feedback}</p>
-                    </div>
-          
-          
-          
+                </div>
             </>
             ): assignment.approved=="yes" || assignment.approved=="no" ? (
                <></>
