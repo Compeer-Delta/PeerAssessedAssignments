@@ -1,37 +1,28 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as FAIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { sidebardata } from "../data/sidebardata";
 import ViewFeedback from "../pages/ViewFeedback";
-import { ReactSession } from 'react-client-session';
+import { ReactSession } from "react-client-session";
 
-function SideBar({moduleTitle, moduleId, moduleCode}) {
+function SideBar({ moduleTitle, moduleId, moduleCode }) {
   let session = {
     token: ReactSession.get("token"),
     accType: ReactSession.get("accType"),
     email: ReactSession.get("email"),
     inst: ReactSession.get("inst"),
-    uid: ReactSession.get("uid")
+    uid: ReactSession.get("uid"),
   };
 
   const [sidebar, setSidebar] = useState(false);
   const [minimizedTL, setMinimizedTL] = useState(false);
   const [minimizedMT, setMinimizedMT] = useState(false);
 
-  /*
-  [
-    { firstname: "Hathan", lastname: "Khatkar", username: "hsk24" },
-    { firstname: "Jordan", lastname: "DSouza", username: "jd750" },
-    { firstname: "Gregory", lastname: "Clews", username: "gc436" },
-    { firstname: "Temp", lastname: "Teacher", username: "T4" },
-  ]
-  */
-
   const showSidebar = () => setSidebar(!sidebar);
 
   const [moduleTeachers, setModuleTeachers] = useState();
-  
+
   function toggleMinimizeMT() {
     //toggle minimize for module tab
     if (minimizedMT == true) {
@@ -49,12 +40,11 @@ function SideBar({moduleTitle, moduleId, moduleCode}) {
     }
   }
 
-  
-  useLayoutEffect(() => { 
+  // Get all teachers for module (useEffect is used to only run once)
+  useEffect(() => {
     //16485c21-93c5-4016-8094-4a0de6bb394c
     const getTeachers = async () => {
       const fr = "http://localhost:8081/moduleteachers?moduleId=" + moduleId;
-      //console.log(fr);
 
       const response = await fetch(fr, {
         method: "GET",
@@ -70,7 +60,7 @@ function SideBar({moduleTitle, moduleId, moduleCode}) {
     };
 
     getTeachers();
-  }, [moduleId]);
+  }, []);
 
   return (
     <div className="fixed z-30">
@@ -79,8 +69,7 @@ function SideBar({moduleTitle, moduleId, moduleCode}) {
       {minimizedMT === false ? (
         <h1 className="dark:border-indigo-900 rounded-br-lg rounded-tr-lg border-solid border-l-0 border-2 border-zinc-600 font-semibold sidebar fixed lg:left-0 p-5 w-[300px] overflow-y-auto text-center text-gray-900 dark:text-gray-300 bg-slate-300 dark:bg-zinc-800">
           {" "}
-          <div id="moduleTabTitle" >{moduleTitle} Tabs</div>
-          
+          <div id="moduleTabTitle">{moduleTitle} Tabs</div>
           <button
             onClick={toggleMinimizeMT}
             className="text-sm absolute top-0 right-0 flex items-center  h-[20px] text-center px-1 cursor-pointer text-slate-100 dark:text-gray-300 bg-slate-600  transform transition"
@@ -89,10 +78,11 @@ function SideBar({moduleTitle, moduleId, moduleCode}) {
           </button>
           {sidebardata.map((item, index) => {
             return item.path === "viewfeedback" &&
-            session.accType === "teacherAccount" ? (
+              session.accType === "teacherAccount" ? (
               <></> //outputData.accountType //change ! teacheraccount  for debugging viewfeedback
             ) : (
               <Link
+                key={index}
                 to={"/modules/" + moduleCode}
                 id={"tab_" + item.path}
                 state={{ moduleTitle: moduleTitle, nestedPage: item.path }}
@@ -130,21 +120,21 @@ function SideBar({moduleTitle, moduleId, moduleCode}) {
           </button>
           {moduleTeachers && moduleTeachers.length > 0 ? (
             <>
-            {moduleTeachers.map((teachers) => {
-              return (
-                <div className="p-1 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer text-slate-900 dark:text-gray-300 bg-slate-200 dark:bg-zinc-900 hover:-translate-y-2 transform transition">
-                  <div key={teachers.email}>
-                    <p>
-                      <span>
-                        {teachers.firstname} {teachers.surname}
-                      </span>
-                    </p>
+              {moduleTeachers.map((teachers) => {
+                return (
+                  <div className="p-1 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer text-slate-900 dark:text-gray-300 bg-slate-200 dark:bg-zinc-900 hover:-translate-y-2 transform transition">
+                    <div key={teachers.email}>
+                      <p>
+                        <span>
+                          {teachers.firstname} {teachers.surname}
+                        </span>
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
             </>
-          ) : ( 
+          ) : (
             <></>
           )}
         </h1>
