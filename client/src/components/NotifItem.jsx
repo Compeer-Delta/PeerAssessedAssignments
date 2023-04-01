@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ReactSession } from "react-client-session";
 import "../styles/notification.css";
+import { deleteNotification } from "../functions/api/notificationAPI";
 
 //import {Link} from 'react-router-dom';
 
@@ -8,12 +9,10 @@ function NotifItem({ title, content, mId, uId }) {
   const messageId = mId;
 
   // Delete Notification from user notification list
-  const deleteNotif = () => {
+  const deleteNotif = async () => {
     console.log("Delete Notification");
     console.log(messageId);
-    fetch(`http://localhost:8081/notification/${uId}/${mId}`, {
-      method: "DELETE",
-    }).then((response) => {
+    await deleteNotification(uId, mId).then((response) => {
       if (response.ok) {
         console.log("Notification Deleted");
         window.location.reload();

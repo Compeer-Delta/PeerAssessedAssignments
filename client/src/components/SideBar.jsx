@@ -5,6 +5,7 @@ import * as AiIcons from "react-icons/ai";
 import { sidebardata } from "../data/sidebardata";
 import ViewFeedback from "../pages/ViewFeedback";
 import { ReactSession } from "react-client-session";
+import { getTeachers } from "../functions/api/moduleAPI";
 
 function SideBar({ moduleTitle, moduleId, moduleCode }) {
   let session = {
@@ -43,23 +44,13 @@ function SideBar({ moduleTitle, moduleId, moduleCode }) {
   // Get all teachers for module (useEffect is used to only run once)
   useEffect(() => {
     //16485c21-93c5-4016-8094-4a0de6bb394c
-    const getTeachers = async () => {
-      const fr = `http://localhost:8081/moduleteachers?moduleId=${moduleId}`;
-
-      const response = await fetch(fr, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + ReactSession.get("token"),
-        },
-      });
-
+    const getTeachersList = async () => {
+      const response = await getTeachers(moduleId, sessionStorage.getItem("token"));
       const data = await response.json();
       setModuleTeachers(data);
     };
 
-    getTeachers();
+    getTeachersList();
   }, [moduleId]);
 
   return (

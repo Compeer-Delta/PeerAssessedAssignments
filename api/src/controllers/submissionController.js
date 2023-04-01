@@ -185,12 +185,11 @@ const checkFeedback = async (req, res) => {
 
 // get all accepted feedback given to submitted assignments of a student
 const getAcceptedFeedback = async (req, res) => {
-  const { userId, moduleId } = req.params;
+  const { userId } = req.params;
   try {
     const foundSubmissions = await Submission.find(
       {
         userId: userId,
-        moduleId: moduleId,
         feedback: { $elemMatch: { approved: { $eq: true } } },
       },
       { "feedback.$": 1 }

@@ -1,24 +1,55 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import "../styles/uploader.css";
+import {
+  getAssignmentInfo,
+  submitAssignment,
+} from "../functions/api/assignmentAPI";
 
 function StudentFileUploader() {
   const [file, setFile] = useState(null);
   const [assignment, setAssignment] = useState(null);
   const [dragActive, setDragActive] = useState(false);
 
-  const { id: moduleCode, aid: assignmentId } = useParams(); // Get the module code and assignment id from the URL
-  const { state: { modId }, } = useLocation(); // Get the module id from the state
-  const { uid, token } = ReactSession.get(); // Get the user id and token from the session
+  const params = useParams(); // Get the module code and assignment id from the URL
+  const location = useLocation();
+
+  const modCode = params.id;
+  const assignmentId = params.aid;
+  const modId = location.state.modId; // Get the module id from the state
+
+  const uid = ReactSession.get("uid"); // Get the user id and token from the session
+  const token = ReactSession.get("token");
 
   const inputRef = useRef(); // Reference to the file input element
   const aDetailsRef = useRef(); // Reference to the assignment details element
   const fDetailsRef = useRef(); // Reference to the file details element
 
+  // Submit file to backend for processing
+  const submitFile = async () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("userId", uid);
+      formData.append("moduleId", modId);
+      formData.append("assignmentId", assignmentId);
+      formData.append("binData", file);
+
+      const response = await submitAssignment(formData, token);
+      const data = await response.json();
+      console.log(data); //For Debug only
+
+      //Needs to redirect back to the assignment page (i.e. /modules/ABCDxxxx)
+      //Submit Work to change to View Submission?
+    } else {
+      //Needs to throw an error
+      console.log("ERR: no file, see here: ", file);
+    }
+  };
+
   // Handle file change
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleFile = (e) => {
+    const file = e[0];
     setFile(file);
     console.log("FILE CHANGE");
     //console.log(file);
@@ -42,8 +73,7 @@ function StudentFileUploader() {
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const file = e.dataTransfer.files[0]; // Get the first file from the list of files dropped (otherwise backend will not take it)
-      setFile(file); // Sets single file to state
+      handleFile(e.dataTransfer.files);
     }
   };
 
@@ -52,55 +82,76 @@ function StudentFileUploader() {
     inputRef.current.click();
   };
 
-  // Remove file from state
+  //Handles any change w/in the upload area
+  const handleChange = function (e) {
+    e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      handleFile(e.target.files);
+    }
+  };
+
+  //Handles button/label click
+  const onButtonClick = () => {
+    inputRef.current.click();
+  };
+
   const removeFile = () => {
     if (file != null) {
       setFile(null);
     }
   };
 
-  // Submit file to backend for processing
-  const submitFile = async () => {
-    if (file) {
-      const fr_submit = `http://localhost:8081/assignment/submit/`;
-      const formData = new FormData();
-      formData.append("userId", uid);
-      formData.append("moduleId", modId);
-      formData.append("assignmentId", assignmentId);
-      formData.append("binData", file);
-
-      const response = await fetch(fr_submit, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          Authorization: token,
-        },
-        body: formData,
-      });
-
-      const data = await response.json();
-      console.log(data); //For Debug only
-
-      //Needs to redirect back to the assignment page (i.e. /modules/ABCDxxxx)
-      //Submit Work to change to View Submission?
-    } else {
-      //Needs to throw an error
-      console.log("ERR: no file, see here: ", file);
-    }
+  //QOL to show how much time is left to upload to the user
+  const calcTimeLeft = function (date) {
+    // let dateArray = date.split(" ");
+    // let currDate = format(new Date(), "dd-mm-yy");
+    // let dueDate = format(new Date(dateArray[1].trim()), "dd-mm-yy");
+    // console.log(currDate.getTime());
   };
 
-  useEffect(() => {
+  //Commit the file to the DB, and redirect
+  // const submitFile = async () => {
+  //     console.log(file);
+
+  //     if(file) {
+  //         const fr_submit = `http://localhost:8081/assignment/submit/`;
+
+  //         const response = await fetch(fr_submit, {
+  //             method: "POST",
+  //             headers: {
+  //             Accept: "application/json",
+  //             "Content-Type": "application/json",
+  //             Authorization: ReactSession.get("token"),
+  //             },
+  //             body: JSON.stringify({
+  //                 userId: session.uid,
+  //                 moduleId: moduleId,
+  //                 assignmentId: assignmentId,
+  //                 // binData: file
+  //             }),
+  //             file: file,
+  //         });
+
+  //         const data = await response.json();
+  //         console.log(data); //For Debug only
+
+  //         //Needs to redirect back to the assignment page (i.e. /modules/ABCDxxxx)
+  //         //Submit Work to change to View Submission?
+
+  //     } else {
+  //         //Needs to throw an error
+  //         console.log("ERR: no file, see here: ", file);
+  //     }
+  // };
+
+  //Page Loading single-calls
+  useLayoutEffect(() => {
     const getAssignmentDetails = async () => {
-      const fr = `http://localhost:8081/assignment/${modId}/${assignmentId}`;
-
-      const response = await fetch(fr, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          Authorization: "Bearer " + token,
-        },
-      });
-
+      const response = await getAssignmentInfo(
+        modId,
+        assignmentId,
+        ReactSession.get("token")
+      );
       const data = await response.json();
       setAssignment(data);
     };
@@ -114,21 +165,26 @@ function StudentFileUploader() {
       <div id="assignmentDetails" ref={aDetailsRef}>
         {assignment ? (
           <>
-            <h1><b>{assignment.title}</b></h1>
+            <h1>
+              <b>{assignment.title}</b>
+            </h1>
             <br />
-            <b>Set:</b>{assignment.startDate} 
+            <b>Set:</b>
+            {assignment.startDate}
             <br />
-            <b>Due:</b>{assignment.endDate}
+            <b>Due:</b>
+            {assignment.endDate}
             <br />
           </>
-        ) : null} // If assignment is null, don't render anything
+        ) : null}{" "}
+        {/* If assignment is null, don't render anything */}
       </div>
-      // File upload form with drag and drop functionality
+      {/*File upload form with drag and drop functionality*/}
       <form
         id="uploadForm"
         onDragEnter={handleDrag}
         onSubmit={(e) => e.preventDefault()}
-      > 
+      >
         <input
           ref={inputRef}
           type="file"
@@ -160,8 +216,8 @@ function StudentFileUploader() {
 
       <br />
 
-      // File details
-      <div id="fileDetails" ref={fDetails}>
+      {/* File details */}
+      <div id="fileDetails" ref={fDetailsRef}>
         <i>{file ? file.name : ""}</i>
         <br />
       </div>
@@ -178,5 +234,4 @@ function StudentFileUploader() {
     </div>
   );
 }
-
 export default StudentFileUploader;

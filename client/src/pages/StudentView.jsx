@@ -14,6 +14,7 @@ import PeerManager from "./PeerManager";
 import temporaryModulesData from "../data/temporaryModulesData";
 import ApproveFeedback from "./ApproveFeedback";
 import { ReactSession } from "react-client-session";
+import { getModuleInfo } from "../functions/api/moduleAPI";
 
 function StudentView({ title }) {
   // const [toggle, setToggle] = useState(true);
@@ -28,11 +29,11 @@ function StudentView({ title }) {
   };
 
   // this is a better way to do it because it will only run once whereas session will run every time the page is rendered
-  const [ token, setToken ] = useState(ReactSession.get("token"));
-  const [ accType, setAccType ] = useState(ReactSession.get("accType"));
-  const [ email, setEmail ] = useState(ReactSession.get("email"));
-  const [ inst, setInst ] = useState(ReactSession.get("inst"));
-  const [ uid, setUid ] = useState(ReactSession.get("uid"));
+  const [token, setToken] = useState(ReactSession.get("token"));
+  const [accType, setAccType] = useState(ReactSession.get("accType"));
+  const [email, setEmail] = useState(ReactSession.get("email"));
+  const [inst, setInst] = useState(ReactSession.get("inst"));
+  const [uid, setUid] = useState(ReactSession.get("uid"));
 
   const [minimizedTO, setMinimizedTO] = useState(false);
   const [module, setModuleDetails] = useState({});
@@ -58,17 +59,11 @@ function StudentView({ title }) {
 
   useLayoutEffect(() => {
     const getModuleData = async () => {
-      const fr = `http://localhost:8081/module?moduleCode=${params.id}&institutionName=${inst}`; //Fetch Route
-
-      const response = await fetch(fr, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + ReactSession.get("token"),
-        },
-      });
-
+      const response = await getModuleInfo(
+        params.id,
+        inst,
+        ReactSession.get("token")
+      );
       const moduleData = await response.json();
       setModuleDetails(moduleData);
     };

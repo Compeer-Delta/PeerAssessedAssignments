@@ -1,20 +1,38 @@
 // This page is for students to view feedback on their assignments
-import React from "react";
 import Works from "../components/Works";
 import StudentView from "../pages/StudentView";
 import HeroSection from "../components/HeroSection";
-import { useState } from "react";
-function ViewFeedback() {
-  const [recievedFeedback, setRecievedFeedback] = useState([
-    {assignmentTitle:"Lorem Ipsum Essay part 2", markedBy:"Hathan Khatkar", mark:"10/10", writtenFeedback:" Well done \n Improve your essay in these areas: \nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", viewFeedback:false},
-    {assignmentTitle:"Deep learning coding tasks", markedBy:"Hathan Khatkar1", mark:"10/10", writtenFeedback:" Well done", viewFeedback:false},
-    {assignmentTitle:"Java Object oriented programming class assignment", markedBy:"Hathan Khatkar2", mark:"10/10", writtenFeedback:" Great job \n Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", viewFeedback:false},
-    {assignmentTitle:"Lorem Ipsum Essay", markedBy:"Hathan Khatkar3", mark:"10/10", writtenFeedback:" Needs improvement", viewFeedback:false}]);
-  //read all feedback where the feedback is to a student and that feedback has been approved=true
+import React, { useState, useEffect } from "react";
+import { ReactSession } from "react-client-session";
+import { acceptedFeedback } from "../functions/api/submissionAPI.js";
 
+function ViewFeedback() {
+  const [recievedFeedback, setRecievedFeedback] = useState([]);
   const [viewFeedback, setViewFeedback] = useState(false);
   const [foundClicked, setFoundClicked] = useState(false);
 
+  let session = {
+    token: ReactSession.get("token"),
+    accType: ReactSession.get("accType"),
+    email: ReactSession.get("email"),
+    inst: ReactSession.get("inst"),
+    uid: ReactSession.get("uid"),
+  };
+
+  useEffect(() => {
+    const getAcceptedFeedback = async () => {
+      const response = await acceptedFeedback(
+        session.uid,
+        sessionStorage.getItem("token")
+      );
+      const data = await response.json();
+      console.log(data);
+      if (response.status === 200) {
+        setRecievedFeedback(data);
+      }
+    };
+    getAcceptedFeedback();
+  }, []);
   // toggle the viewFeedback property of the feedback that was clicked on the page to show/hide the feedback
   function toggleFeedback(view) {
     let feedbackIndex = 0;
