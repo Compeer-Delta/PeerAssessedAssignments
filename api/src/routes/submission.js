@@ -3,6 +3,7 @@ import express from "express";
 const router = express.Router();
 import auth from "../middleware/auth.js";
 import submissionController from "../controllers/submissionController.js";
+import feedbackController from "../controllers/feedbackController.js";
 import multer from "multer";
 
 //multer config
@@ -16,10 +17,10 @@ router.patch("/submission/", auth, submissionController.updateSubmission); //Upd
 router.delete("/submission/", auth, submissionController.deleteSubmission); //Delete submission
 
 //routes for module feedback
-router.post("/submission/feedback/submit", auth, submissionController.giveFeedback); //submit feedback
-router.post("/submission/feedback/status", auth, submissionController.checkFeedback); //teacher accepts or rejects feedback
-router.get("/submission/feedback/view", auth, submissionController.viewFeedback); //view feedback
-router.get("/submission/feedback/accepted", auth, submissionController.getAcceptedFeedback); //get all accepted feedback given to submitted assignments of a student
-router.delete("/submission/feedback/submit", auth, submissionController.deleteFeedback); //delete feedback
+router.post("/submission/feedback/submit", auth, feedbackController.giveFeedback); //submit feedback
+router.post("/submission/feedback/status", auth, feedbackController.checkFeedback); //teacher accepts or rejects feedback
+router.get("/submission/feedback/view", auth, feedbackController.viewFeedback); //view feedback
+router.get("/user/:userId/submission/feedback/accepted", auth, feedbackController.getAcceptedFeedback); //get all accepted feedback given to submitted assignments of a student
+router.delete("/submission/feedback/submit", auth, feedbackController.deleteFeedback); //delete feedback
 
 export default router;

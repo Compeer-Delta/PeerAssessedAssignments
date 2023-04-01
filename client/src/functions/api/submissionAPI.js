@@ -4,7 +4,7 @@ const API_BASE_URL = "http://localhost:8081/";
 // Get all accepted feedback by user id
 export const acceptedFeedback = async (userId, token) => {
   const response = await fetch(
-    `${API_BASE_URL}submission/feedback/accepted?userId=${userId}`,
+    `${API_BASE_URL}user/${userId}/submission/feedback/accepted`,
     {
       method: "GET",
       headers: {
