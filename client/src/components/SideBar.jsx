@@ -44,7 +44,7 @@ function SideBar({ moduleTitle, moduleId, moduleCode }) {
   useEffect(() => {
     //16485c21-93c5-4016-8094-4a0de6bb394c
     const getTeachers = async () => {
-      const fr = "http://localhost:8081/moduleteachers?moduleId=" + moduleId;
+      const fr = `http://localhost:8081/moduleteachers?moduleId=${moduleId}`;
 
       const response = await fetch(fr, {
         method: "GET",
@@ -60,7 +60,7 @@ function SideBar({ moduleTitle, moduleId, moduleCode }) {
     };
 
     getTeachers();
-  }, []);
+  }, [moduleId]);
 
   return (
     <div className="fixed z-30">
@@ -82,13 +82,13 @@ function SideBar({ moduleTitle, moduleId, moduleCode }) {
               <></> //outputData.accountType //change ! teacheraccount  for debugging viewfeedback
             ) : (
               <Link
-                key={index}
+                key={item.path}
                 to={"/modules/" + moduleCode}
                 id={"tab_" + item.path}
                 state={{ moduleTitle: moduleTitle, nestedPage: item.path }}
                 className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer text-slate-900 dark:text-gray-300 bg-slate-100 dark:bg-zinc-900 hover:-translate-y-2 transform transition "
               >
-                <li key={index} className={item.cName}>
+                <li className={item.cName}>
                   {item.icon}
                   <span>{item.title}</span>
                 </li>
