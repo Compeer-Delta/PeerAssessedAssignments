@@ -82,7 +82,7 @@ function SideBar({ moduleTitle, moduleId, moduleCode }) {
               <></> //outputData.accountType //change ! teacheraccount  for debugging viewfeedback
             ) : (
               <Link
-                key={item.path}
+                key={index}
                 to={"/modules/" + moduleCode}
                 id={"tab_" + item.path}
                 state={{ moduleTitle: moduleTitle, nestedPage: item.path }}
