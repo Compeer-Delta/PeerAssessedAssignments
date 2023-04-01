@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ReactSession } from "react-client-session";
 import NotifItem from "./NotifItem";
 
 function NotificationSystem() {
@@ -8,7 +9,7 @@ function NotificationSystem() {
   // Get all notifications for user
   useEffect(() => {
     const response = async () => {
-      const response = fetch(`http://localhost:8081/notification/${uid}`, {
+      const response = await fetch(`http://localhost:8081/notification/${uid}`, {
         method: "GET",
         headers: {
           Accept: "application/json",
