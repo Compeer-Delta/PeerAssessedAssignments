@@ -99,7 +99,7 @@ function Welcome() {
               className="btn btn-primary rounded-full px-70 py-3 mb-4 h-8 w-80 text-white dark:text-[#4285F4] bg-[#4285F4] dark:bg-white hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium text-sm px-5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2"
             >
               <svg
-                class="mr-2 -ml-1 w-4 h-4"
+                className="mr-2 -ml-1 w-4 h-4"
                 aria-hidden="true"
                 focusable="false"
                 data-prefix="fab"
