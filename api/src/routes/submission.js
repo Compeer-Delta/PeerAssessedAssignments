@@ -15,4 +15,11 @@ router.get("/submission/", auth, submissionController.getSubmission); //Get subm
 router.patch("/submission/", auth, submissionController.updateSubmission); //Update submission
 router.delete("/submission/", auth, submissionController.deleteSubmission); //Delete submission
 
+//routes for module feedback
+router.post("/submission/feedback/submit", auth, submissionController.giveFeedback); //submit feedback
+router.post("/submission/feedback/status", auth, submissionController.checkFeedback); //teacher accepts or rejects feedback
+router.get("/submission/feedback/view", auth, submissionController.viewFeedback); //view feedback
+router.get("/submission/feedback/accepted", auth, submissionController.getAcceptedFeedback); //get all accepted feedback given to submitted assignments of a student
+router.delete("/submission/feedback/submit", auth, submissionController.deleteFeedback); //delete feedback
+
 export default router;

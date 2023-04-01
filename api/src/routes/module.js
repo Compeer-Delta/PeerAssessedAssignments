@@ -24,9 +24,4 @@ router.get("/modules/submit", auth, moduleController.getModules); //submit assig
 router.patch("/module", auth, moduleController.update); //update module submission
 router.delete("/module", auth, moduleController.delete); //delete module submission*/
 
-//routes for module feedback
-router.post("/module/feedback/submit", auth, moduleController.giveFeedback); //submit feedback
-router.get("/module/feedback/view", auth, moduleController.viewFeedback); //view feedback
-router.delete("/module/feedback/submit", auth, moduleController.deleteFeedback); //delete feedback
-
 export default router;
