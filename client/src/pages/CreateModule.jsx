@@ -1,29 +1,48 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Modules from '../pages/Modules'
 import HeroSection from '../components/HeroSection'
 import {Link} from 'react-router-dom';
-import {useRef, useState, useEffect} from 'react';
+import {useRef, useState, useLayoutEffect} from 'react';
 import AccountSearchBox from '../components/AccountSearchBox';
 import FileUploader from '../components/FileUploader';
 import LoginCard from '../components/LoginCard';
+import {ReactSession} from 'react-client-session'
+import {Navigate, Route, Routes } from "react-router-dom";
 
 function CreateModule() {
 //onSubmit={handleSubmit} 
+let session = {
+  token: ReactSession.get("token"),
+  accType: ReactSession.get("accType"),
+  email: ReactSession.get("email"),
+  inst: ReactSession.get("inst"),
+};
 
-function addModule()
+
+
+
+var allAddedStudents, allAddedTeachers;
+const [toModulesPage, setToModulesPage] = useState(false);
+const [Accs, setAccs] = useState([]);
+
+const [availableTeachers, setAvailableTeachers] = useState([]);
+const [availableStudents, setAvailableStudents] = useState([]);
+
+
+async function getAllTeachersInInstitution()
 {
-  //adding validation later
-
-  //write values moduleTitle, addedStudents and addedTeachers
+   
 }
 
-const allTeachers = [
+/*const allTeachers [
    "Teacher A",
    "Teacher B",
   "Teacher C",
   "Teacher D",
    "Teacher E",
-]; //Replace values with db values , all teachers for a given insititution (access institution through session)
+];*/ //Replace values with db values , all teachers for a given insititution (access institution through session)
+
+
 
 const allStudents = [
   "Student A",
@@ -37,12 +56,13 @@ const allStudents = [
 const [currentStudent, setStudent] = useState('');
 const [currentTeacher, setTeacher] = useState('');
     const [moduleTitle, setModuleTitle] = useState('');
-    let outputData = sessionStorage.getItem('loginSessionData');
-    outputData = JSON.parse(outputData);
+    const [moduleCode, setModuleCode] = useState('');
+  //  let outputData = sessionStorage.getItem('loginSessionData');
+ //   outputData = JSON.parse(outputData);
 
-const [addedTeachers, setAddedTeachers] = useState([{name:"Example Teacher 1"}]);
+const [addedTeachers, setAddedTeachers] = useState([]);
 
-const [addedStudents, setAddedStudents] = useState([{name:"Added Student 1"}]);
+const [addedStudents, setAddedStudents] = useState([]);
 
 //const getUploadedTeacherData = (data) => {
  // console.log("File contents "+ data)
@@ -66,6 +86,30 @@ const [addedStudents, setAddedStudents] = useState([{name:"Added Student 1"}]);
 const [uploadedTeacherData, setUploadedTeacherData] = useState([])
 //const getUploadedStudentData = (data) => {console.log("File contents "+ data)};
 const [uploadedStudentData, setUploadedStudentData] = useState([]);
+
+const addModule = async () => {
+
+  //const { password, firstname, surname, email, institution, role } = req.body;
+  console.log(moduleTitle + " " + allAddedTeachers + " " + allAddedStudents + " " + session.inst + " " + moduleCode); //PASSWORD, INSTITUTION IS BLANK FOR SOME REASON<<<<<<<<<<<<<<<<<<
+//  const response = await fetch("http://localhost:8081/module/create", {
+ //   method: "POST",
+ //   headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', Authorization: "Bearer " + ReactSession.get("token") },
+ //   body: JSON.stringify({
+ //     "title": moduleTitle,
+ //     "description": "default description",
+ //     "teachers": allAddedTeachers,
+  //    "students": allAddedStudents,
+  //    "assignments": [],
+ //     "institutionName": session.inst,
+  //    "moduleCode": moduleCode,
+      
+  //  })
+  //});
+
+  //const newModule = await response.json();
+
+  setToModulesPage(true);
+}
  
 function addUploadedTeachers()
 {
@@ -100,54 +144,97 @@ function addUploadedStudents()
 
 function addNewStudent()
 {
-  var s_exists = false;
-  setAddedStudents(addedStudents.map(addedStudents =>{
-
-  if (addedStudents.name === currentStudent){
-    s_exists = true;
+  console.log("current: " + currentStudent)
+  
+  if (!addedStudents.includes(currentStudent) && !uploadedStudentData.includes(currentStudent) && currentStudent != "")
+  {
+  setAddedStudents([...addedStudents, currentStudent]);
   }
-  }))
 
-if (s_exists === false){
-  setAddedStudents([...addedStudents, {name: currentStudent}]);
-}
-else{
-  setAddedStudents([...addedStudents]);
-}
 }
 
 function addNewTeacher()
 {
-  var t_exists = false;
-  setAddedTeachers(addedTeachers.map(addedTeachers =>{
-
-  if (addedTeachers.name === currentTeacher){
-    t_exists = true;
-  }
-  }))
-
-if (t_exists === false){
-  setAddedTeachers([...addedTeachers, {name: currentTeacher}]);
-}
-else{
-  setAddedTeachers([...addedTeachers]);
-}
+  
+    if (!addedTeachers.includes(currentTeacher) && !uploadedTeacherData.includes(currentTeacher) && currentTeacher != "")
+    {
+    setAddedTeachers([...addedTeachers, currentTeacher]);
+    }
 }
 
+useEffect(() =>{
+  
+  var filteredUploadedStudents =uploadedStudentData.filter((t) => 
+  {if (availableStudents.includes(t.replace(/^\s+|\s+$/g, '')) && (! addedStudents.includes(t.replace(/^\s+|\s+$/g, ''))))  {return t;}})
 
+  var filteredUploadedTeachers =uploadedTeacherData.filter((t) => 
+  {if (availableTeachers.includes(t.replace(/^\s+|\s+$/g, '')) && (! addedTeachers.includes(t.replace(/^\s+|\s+$/g, ''))))  {return t;}})
 
-useEffect(() => {
-  console.log("ran");
+  var allAddedStudentDuplicates = (filteredUploadedStudents.concat(addedStudents));
+  var allAddedTeacherDuplicates = (filteredUploadedTeachers.concat(addedTeachers));
+
+  allAddedStudents = allAddedStudentDuplicates.filter((c, index) =>{return allAddedStudentDuplicates.indexOf(c) === index;});
+  allAddedTeachers = allAddedTeacherDuplicates.filter((c, index) =>{return allAddedTeacherDuplicates.indexOf(c) === index;});
+
+  allAddedStudents = allAddedStudents.map(student => (((student.split(" "))[2]).replace("(", "")).replace(")", ""));
+  allAddedTeachers = allAddedTeachers.map(teacher => (((teacher.split(" "))[2]).replace("(", "")).replace(")", ""));
+  
+  console.log("Module Teachers:" + allAddedTeachers);
+  console.log("Module Students:" + allAddedStudents);
+})
+
+useLayoutEffect(() => {
+
+  
+  const fetchData = async () => { 
+  var fr = "";
+
+  fr = "http://localhost:8081/admin/getallusers?institutionName=" + session.inst //Fetch Route
+ 
+    const response = await fetch(fr, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + ReactSession.get("token"), 
+    },
+  });
+
+    const data = await response.json();
+  // console.log("this1 " + JSON.stringify(data.users))
+   // for (let i =0; i < data.users.length ; i++)
+   // {
+    //setAccs([...Accs, (data.users[i]).firstname + " " + (data.users[i]).surname + " (" + (data.users[i]).email + ")" ]);
+   // }
+    
+    const filteredTeachers = data.users.filter(function (f) {return (f.role).toLowerCase() == "teacher"});
+    const tempTeacherAccs = filteredTeachers.map(user => `${user.firstname} ${user.surname} (${user.email})` );
+
+    const filteredStudents = data.users.filter(function (f) {return (f.role).toLowerCase() == "student"});
+    const tempStudentAccs = filteredStudents.map(user => `${user.firstname} ${user.surname} (${user.email})` );
+
+    setAvailableStudents(tempStudentAccs);
+    setAvailableTeachers(tempTeacherAccs);
+    //setAccs(tempAccs);
+
+    //console.log("this " + JSON.stringify(tempAccs))
+ // console.log("ran");
+  };
+  fetchData()
  // if (!(addedTeachers === ""))
   //{
   
    // setAddedTeachers([...addedTeachers, {addedTeachers}]);
  // }
   //addedStudents.push({name:"test"});
-});
+}, []);
 
 return (
+  <>
+  {toModulesPage === false ? (
+    
     <>
+      
       <HeroSection prevPageName = "Admin view" prevUrl= "/adminview"></HeroSection>
     <LoginCard></LoginCard>
      
@@ -162,7 +249,14 @@ return (
 
         <div className="2xl:flex 2xl:items-center mb-6">        
             <div className="2xl:w-1/3"></div>
-            <div className=" 2xl:flex 2xl:items-center 2xl:px-32 px-1 py-5">
+            <div className=" 2xl:flex 2xl:items-center 2xl:px-8 px-1 py-5">
+
+            <input
+                    onChange = {(e2) => setModuleCode(e2.target.value)}
+                    value={moduleCode}
+                    required 
+                    className="bg-slate-100 appearance-none border-2 border-slate-200 rounded  w-[150px] px-3 py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="moduleCode" type="text" placeholder="Module Code">
+                </input>
                 <input
                     onChange = {(e) => setModuleTitle(e.target.value)}
                     value={moduleTitle}
@@ -181,24 +275,24 @@ return (
         className="bg-white overflow-y-auto sticky max-h-28  w-full">
           {addedTeachers?.map((addedTeachers) => (
           <li
-            key={addedTeachers?.name}
+            key={addedTeachers}
             className="p-0 text-sm hover:bg-sky-600 hover:text-white ">
-            {addedTeachers?.name}
+            {addedTeachers}
           
           </li>
         ))}
         {uploadedTeacherData?.map((t) => (
-  
-          (allTeachers.includes(t.replace(/^\s+|\s+$/g, ''))) == true ? (
+          
+          ((availableTeachers.includes(t.replace(/^\s+|\s+$/g, ''))) === true && (! addedTeachers.includes(t.replace(/^\s+|\s+$/g, ''))))  ? (
 
           <li
             id="Teachers"
             key={t}
-            className="p-0 text-2xl hover:bg-sky-600 hover:text-white ">
+            className="p-0 text-sm hover:bg-sky-600 hover:text-white ">
             {t}
           </li>
 
-        ):(console.log(allTeachers+ " didnt include " +t))
+        ):(console.log(Accs+ " didnt include " +t))
                 
         ))}
 
@@ -227,32 +321,33 @@ return (
           {addedStudents?.map((addedStudents) => (
           
           <li
-            key={addedStudents?.name}
+            key={addedStudents}
             className="p-0 text-sm hover:bg-sky-600 hover:text-white">
-            {addedStudents?.name}
+            {addedStudents}
           </li>
         ))}
 
       {uploadedStudentData?.map((t) => (
        
-       ( allStudents.includes(t.replace(/^\s+|\s+$/g, ''))) == true ? (
-
-
+       
+       ( (availableStudents.includes(t.replace(/^\s+|\s+$/g, ''))) === true && (! addedStudents.includes(t.replace(/^\s+|\s+$/g, '')))) ? (
+        
+      
        <li 
          id="Students"
          key={t}
-         className="p-0 text-2xl hover:bg-sky-600 hover:text-white ">
+         className="p-0 text-sm hover:bg-sky-600 hover:text-white ">
          
          {t}
        </li>
        
-       
       
-     ):(console.log(allStudents+ " didnt include " +t))
+      
+     ):(console.log(Accs+ " didnt include " +t))
      
              
      ))}
-    {console.log("addedStudents: " + addedStudents.name)}
+    {console.log("addedStudents: " + addedStudents)}
   </ul>
 </div>
 
@@ -298,7 +393,13 @@ return (
         </div>
     
     </>
-    
+
+):(
+<Routes>
+  <Route path="/" element={<Navigate to="/modules" />} />
+</Routes>)}
+
+    </>
   )
 }
 

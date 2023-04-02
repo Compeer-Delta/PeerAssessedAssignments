@@ -73,6 +73,7 @@ function Login() {
 
       ReactSession.set("inst", details.institutionName);
       ReactSession.set("uid", details.userId);
+      console.log(token)
     }
 
     //clear form data

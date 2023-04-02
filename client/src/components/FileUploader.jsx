@@ -24,11 +24,19 @@ function FileUploader(props, uploadType) {
           console.log(reader.result.split(/\n/)[0].split(","));
 
           const returnArray = [];
+          const duplicateCheckArray =[];
           //returns in format [[username1, password1, firstname1, lastname1, account1], [username2, password2, firstname2, lastname2, account2], [...]]
           for (let i=0; i < (reader.result.split(/\n/)).length; i++)
           {
-            returnArray.push(reader.result.split(/\n/)[i].split(","))
+            if ((! duplicateCheckArray.includes((reader.result.split(/\n/)[i].split(","))[0])))
+            {
+              returnArray.push(reader.result.split(/\n/)[i].split(","))
+              
+            }
+         
+            duplicateCheckArray.push((reader.result.split(/\n/)[i].split(","))[0])
           }
+
 
           props.UploadedData(returnArray);
           
