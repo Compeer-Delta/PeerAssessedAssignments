@@ -3,7 +3,7 @@ const API_BASE_URL = "http://localhost:8081/";
 
 // Validate user/admin login
 export const login = async (type, userEmail, userPassword, token) => {
-  const fr = type === "adminLogin" ? "admin/login" : "login";
+  const fr = type === "admin/login" ? "admin/login" : "login";
   const response = await fetch(`${API_BASE_URL}${fr}`, {
     method: "POST",
     headers: {
