@@ -22,8 +22,6 @@ function LoginCard() {
     ReactSession.remove("inst");
     ReactSession.remove("uid");
 
-    ReactSession.clear();
-
     console.log("LOGOUT SUCCESS");
   }
 
