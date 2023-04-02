@@ -48,8 +48,7 @@ function Login() {
     //Debug: displays form data in console
     setFailedVerifMessage("");
 
-    const type = accType === "adminAccount" ? "admin/login" : "login";
-    const response = await login(type, user, pwd, ReactSession.get("token")); // validate login
+    const response = await login(accType, user, pwd, ReactSession.get("token")); // validate login
     const userData = await response.json();
     const token = JSON.stringify(userData.token);
 
