@@ -81,7 +81,7 @@ function ManageAccounts()
   
       const fetchAccountData = async () => { 
       var fr = "";
-    
+    console.log("HERE" + session.inst);
       fr = "http://localhost:8081/admin/getallusers?institutionName=" + session.inst //Fetch Route
      
         const response = await fetch(fr, {

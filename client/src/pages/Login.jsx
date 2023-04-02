@@ -61,7 +61,7 @@ function Login() {
         "Your login details are incorrect, please make sure you have the correct username, password or account type again"
       );
     } else {
-      setSuccess(true);
+      
       //sessionStorage.setItem("loginSessionData", {token, accType, email});
       ReactSession.set("token", token);
       ReactSession.set("accType", accType);
@@ -70,9 +70,13 @@ function Login() {
       const response = await accountPage(accType, user, ReactSession.get("token")); // get user details
       const details = await response.json();
 
-      ReactSession.set("inst", details.institutionName);
+      ReactSession.set("inst", details.institution)
+      if (details.institution == undefined){ReactSession.set("inst", details.institutionName)}
+    //  ReactSession.set("inst", details.institution);
+
       ReactSession.set("uid", details.userId);
-      console.log(token)
+      console.log("qwerty: " + token +" "+ details.institution +" " + details.institutionName)
+      setSuccess(true);
     }
 
     //clear form data
