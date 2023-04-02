@@ -6,8 +6,8 @@ import LoginCard from '../components/LoginCard';
 import { ReactSession } from 'react-client-session'
 function AdminView() {
 
-    let outputData = sessionStorage.getItem('loginSessionData');
-    outputData = JSON.parse(outputData);
+   // let outputData = sessionStorage.getItem('loginSessionData');
+   // outputData = JSON.parse(outputData);
 
    
       let session = {
@@ -20,6 +20,7 @@ function AdminView() {
 
   return (
     <>
+    
       <HeroSection prevPageName = "Login" prevUrl= "/login"></HeroSection>
       <LoginCard></LoginCard>
      
