@@ -22,8 +22,6 @@ function LoginCard() {
     ReactSession.remove("inst");
     ReactSession.remove("uid");
 
-    ReactSession.clear();
-
     console.log("LOGOUT SUCCESS");
   }
 
@@ -39,7 +37,7 @@ function LoginCard() {
     const getFirstName = async () => {
       const response = await getUserName(
         ReactSession.get("email"),
-        sessionStorage.getItem("token")
+        ReactSession.get("token")
       );
       const userData = await response.json();
       setSessionUsername(userData.firstname);

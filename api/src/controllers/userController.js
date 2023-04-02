@@ -74,8 +74,8 @@ const updateUser = async (req, res) => {
       user.details = details;
     }
     if (institutionName) {
-      institutionName = institutionName.toLowerCase();
-      user.institutionName = institutionName;
+      //institutionName = institutionName;
+      user.institutionName = institutionName.toLowerCase();
     }
     const savedUser = await user.save();
     res.status(201).json(savedUser);
