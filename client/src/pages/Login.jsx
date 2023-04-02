@@ -9,6 +9,7 @@ import Modules from "./Modules";
 import DropDownSearch from "../components/DropDownSearch";
 import AdminView from "./AdminView";
 import sideImage from "/images/LoginSplashImage_COMPEER.png";
+import { login, accountPage } from "../functions/api/userAPI";
 
 function Login() {
   const userRef = useRef();
@@ -47,27 +48,9 @@ function Login() {
     //Debug: displays form data in console
     setFailedVerifMessage("");
 
-    // !-- JD750 - Fetching from MongoDB --!
-    const fr =
-      accType === "adminAccount"
-        ? "http://localhost:8081/admin/login"
-        : "http://localhost:8081/login";
-
-    const response = await fetch(fr, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: ReactSession.get("token"),
-      },
-      body: JSON.stringify({
-        email: user,
-        password: pwd,
-      }),
-    });
-
+    const type = accType === "adminAccount" ? "admin/login" : "login";
+    const response = await login(type, user, pwd, ReactSession.get("token")); // validate login
     const userData = await response.json();
-    console.log(userData);
     const token = JSON.stringify(userData.token);
 
     if (accType == "adminAccount") {
@@ -85,24 +68,9 @@ function Login() {
       ReactSession.set("accType", accType);
       ReactSession.set("email", user);
 
-
-      //New Route to get all details necessary (can be expanded on)
-      const fr2 =
-        accType === "adminAccount"
-          ? "http://localhost:8081/admin/me?email=" + user
-          : "http://localhost:8081/user/me?email=" + user;
-
-      const response = await fetch(fr2, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: ReactSession.get("token"),
-        },
-      });
-
-      //Await JSON response and set session var(s)
+      const response = await accountPage(accType, user, ReactSession.get("token")); // get user details
       const details = await response.json();
+
       ReactSession.set("inst", details.institutionName);
       ReactSession.set("uid", details.userId);
     }
@@ -180,7 +148,10 @@ function Login() {
                 {/*Title and form display*/}
 
                 <form onSubmit={handleSubmit} className="sm:w-full max-w-sm">
-                  <div id= "loginError" className=" w-2/3 sm:ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l">
+                  <div
+                    id="loginError"
+                    className=" w-2/3 sm:ml-32 my-2 px-2 border bg-red-200 text-red-500 text-l"
+                  >
                     {failedVerifMessage}
                   </div>
                   <div className="sm:ml-36 text-l dark:text-white">
@@ -206,11 +177,14 @@ function Login() {
                           defaultChecked
                         />
                         <label
-                          for="studentAccount"
+                          htmlFor="studentAccount"
                           className="rounded-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 peer-checked:bg-blue-100"
                         >
                           <div className="block">
-                            <div id="loginAsStudentStaff" className="w-full text-b font-semibold">
+                            <div
+                              id="loginAsStudentStaff"
+                              className="w-full text-b font-semibold"
+                            >
                               Student/Staff
                             </div>
                           </div>
@@ -226,11 +200,14 @@ function Login() {
                           className="hidden peer"
                         />
                         <label
-                          for="adminAccount"
+                          htmlFor="adminAccount"
                           className=" rounded-full inline-flex justify-between items-center p-5 w-full h-5 text-gray-500 bg-white border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 peer-checked:bg-blue-100"
                         >
                           <div className="block">
-                            <div id="loginAsAdmin" className=" px-5 w-full text-b font-semibold">
+                            <div
+                              id="loginAsAdmin"
+                              className=" px-5 w-full text-b font-semibold"
+                            >
                               Admin
                             </div>
                           </div>

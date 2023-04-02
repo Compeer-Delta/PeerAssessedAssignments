@@ -67,7 +67,7 @@ const submissionSchema = new Schema(
           required: true,
         },
         approved: {
-          type: Number,
+          type: Boolean,
         },
       },
     ],

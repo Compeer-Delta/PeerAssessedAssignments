@@ -5,6 +5,7 @@ import {useRef, useState, useEffect} from 'react';
 import StudentView from '../pages/StudentView';
 import DropDownSearch from '../components/DropDownSearch';
 import Login from './Login';
+import { register } from '../functions/api/userAPI';
 
 import emailjs from '@emailjs/browser';
 import sideImage from '/images/LoginSplashImage_COMPEER.png'
@@ -39,21 +40,8 @@ function SignUp() {
 
       //const { password, firstname, surname, email, institution, role } = req.body;
       console.log(pwd + " " + institution + " " + firstname + " " + lastname + " " + email); //PASSWORD, INSTITUTION IS BLANK FOR SOME REASON<<<<<<<<<<<<<<<<<<
-      const response = await fetch("http://localhost:8081/admin/register", {
-        method: "POST",
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          "password": pwd,
-          "institution": institution,
-          "firstname": firstname,
-          "surname": lastname,
-          "email": email,
-          
-        })
-      });
-
+      const response = await register(pwd, institution, firstname, lastname, email);
       const newUser = await response.json();
-
     }
 
     function checkVerification() //change to async when connecting to db -> async function checkVerification

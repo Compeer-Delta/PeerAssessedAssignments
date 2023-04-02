@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import { ReactSession } from "react-client-session";
 import "../styles/notification.css";
-import { useState } from "react";
+import { deleteNotification } from "../functions/api/notificationAPI";
 
 //import {Link} from 'react-router-dom';
 
-function NotifItem({ title, content, mId }) {
+function NotifItem({ title, content, mId, uId }) {
   const messageId = mId;
 
-  const deleteNotif = () => {
+  // Delete Notification from user notification list
+  const deleteNotif = async () => {
+    console.log("Delete Notification");
     console.log(messageId);
-    //Change to delete entry in DB, reload webpage
+    await deleteNotification(uId, mId).then((response) => {
+      if (response.ok) {
+        console.log("Notification Deleted");
+        window.location.reload();
+      } else {
+        console.log("Notification not deleted");
+      }
+    });
   };
 
   return (
@@ -27,7 +37,7 @@ function NotifItem({ title, content, mId }) {
         <div id="buttonContainer">
           <button id="delNotifButton" onClick={deleteNotif}>
             {" "}
-            Delete Notification{" "}
+            Mark as Read{" "}
           </button>
         </div>
       </div>

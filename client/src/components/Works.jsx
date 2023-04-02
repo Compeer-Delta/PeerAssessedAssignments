@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useState } from 'react'
-
 import WorkItem from './WorkItem'
 import Modules from '../pages/Modules';
 import { ReactSession } from 'react-client-session';
+import { getAssignmentInfo } from '../functions/api/assignmentAPI';
 
 function Works(mod) {
     
@@ -41,14 +41,7 @@ function Works(mod) {
         const getAssignmentDetails = async () => {
             const results = await Promise.all(
                 module.assignments.map(async (id) => {
-                    const response = await fetch(`http://localhost:8081/assignment/${moduleId}/${id}`, {
-                        method: "GET",
-                        headers: {
-                        Accept: "application/json",
-                            "Content-Type": "application/json",
-                        Authorization: "Bearer " + ReactSession.get("token"),
-                        }
-                    });
+                    const response = await getAssignmentInfo(moduleId, id, session.token);
 
                     const data = await response.json();
                     return data;

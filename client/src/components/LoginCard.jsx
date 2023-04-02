@@ -3,6 +3,7 @@ import StudentView from "../pages/StudentView";
 import { Link, Navigate, Routes, Route } from "react-router-dom";
 import Welcome from "../pages/Welcome";
 import { ReactSession } from "react-client-session";
+import { getUserName } from "../functions/api/userAPI";
 
 function LoginCard() {
   //parameters might need changing
@@ -36,19 +37,11 @@ function LoginCard() {
 
   useLayoutEffect(() => {
     const getFirstName = async () => {
-      const email = ReactSession.get("email");
-      const fr = "http://localhost:8081/user/me?email=" + email;
-      const response = await fetch(fr, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + ReactSession.get("token"),
-        },
-      });
-
+      const response = await getUserName(
+        ReactSession.get("email"),
+        sessionStorage.getItem("token")
+      );
       const userData = await response.json();
-      
       setSessionUsername(userData.firstname);
     };
 

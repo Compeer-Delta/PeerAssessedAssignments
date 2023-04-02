@@ -13,6 +13,7 @@ import moduleRoutes from "./routes/module.js";
 import notificationRoutes from "./routes/notifications.js";
 import assignmentRoutes from "./routes/assignment.js";
 import adminRoutes from "./routes/admin.js";
+import submissionRoutes from "./routes/submission.js";
 
 const app = express();
 
@@ -24,35 +25,14 @@ app.use(
   moduleRoutes,
   notificationRoutes,
   assignmentRoutes,
-  adminRoutes
+  adminRoutes,
+  submissionRoutes
 );
 
 app.get("/", (req, res) => {
   res.status(200).send("COMPEER API is live");
 });
 
-app.get("/battery", (req, res) => {
-  res.send("battery is live");
-});
-
-app.post("/register", async (req, res) => {
-  try {
-    const user = new User(req.body);
-    await user.save();
-    res.status(201).send({ message: "User created" });
-  } catch (err) {
-    console.log(err.message);
-    res.status(400).send({ message: err.message });
-  }
-});
-/*
-  username: "test";
-  password: "testing";
-  firstname: "bob";
-  surname: "smith";
-  email: "bob@email.com";
-  institution: "university of test";
-  role: "student";*/
 //connect to database
 mongoose.set("strictQuery", false);
 mongoose
@@ -60,4 +40,7 @@ mongoose
   .then(() => {
     console.log(`listening on ${PORT}`);
     app.listen(PORT);
+  })
+  .catch((error) => {
+    console.log(error);
   });

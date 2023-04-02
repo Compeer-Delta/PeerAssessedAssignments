@@ -10,12 +10,10 @@ const createSubmission = async (req, res) => {
   const file = req.file;
 
   if (!userId || !moduleId || !assignmentId) {
-    return res
-      .status(400)
-      .json({
-        message:
-          "Please provide all required fields, missing userId, moduleId or assignmentId",
-      });
+    return res.status(400).json({
+      message:
+        "Please provide all required fields, missing userId, moduleId or assignmentId",
+    });
   }
 
   if (!file) {
@@ -53,7 +51,7 @@ const getSubmission = async (req, res) => {
       moduleId: moduleId,
     });
     if (foundSubmission === null) {
-      return res.status(404).json({ message: "Cannot find submission" });
+      return res.status(404).json({ message: `Cannot find submission for ${assignmentId} in ${moduleId} by ${userId}` });
     } else {
       res.status(201).json(foundSubmission);
     }
@@ -108,12 +106,12 @@ const deleteSubmission = async (req, res) => {
       submissionId: submissionId,
       userId: userId,
       moduleId: moduleId,
-    });
+    }); // check if submission exists
     if (!submission)
       return res.status(404).json({ message: "Cannot find submission" });
 
     if (submission.userId === req.userId) {
-      return res.status(401).json({ message: "Cannot delete this submission" });
+      return res.status(401).json({ message: `Cannot delete submission ${submissionId}` });
     }
     const deletedSubmission = await Submission.findOneAndDelete({
       submissionId: submissionId,

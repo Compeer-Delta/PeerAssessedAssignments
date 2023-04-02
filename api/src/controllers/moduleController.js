@@ -256,61 +256,6 @@ const removeTeacherFromModule = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-// give feedback to submitted assignment
-const giveFeedback = async (req, res) => {
-  const { moduleId, submissionId, marker, comment, rating, marked } = req.body;
-  try {
-    const feedback = { marker: marker, comment: comment, rating: rating };
-    const updatedSubmission = await submission.updateOne(
-      { moduleId: moduleId, submissionId: submissionId },
-      { $push: { feedback: feedback }, $set: { marked: marked } }
-    );
-    res.status(201).json(updatedSubmission);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-// view feedback given to submitted assignment
-const viewFeedback = async (req, res) => {
-  const { moduleId, submissionId, marker } = req.body;
-  try {
-    const foundSubmission = await submission.findOne(
-      {
-        moduleId: moduleId,
-        submissionId: submissionId,
-        feedback: { $elemMatch: { userId: { $eq: `${marker}` } } },
-      },
-      { "feedback.$": 1 }
-    );
-
-    if (foundSubmission === null) {
-      return res.status(404).json({ message: "Cannot find submission" });
-    } else {
-      res.status(201).json(foundSubmission.feedback);
-    }
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-// delete feedback given to submitted assignment
-const deleteFeedback = async (req, res) => {
-  const { moduleId, submissionId, marker } = req.body;
-  try {
-    const deletedFeedback = await submission.findOneAndUpdate(
-      { submissionId: submissionId, moduleId: moduleId },
-      { $pull: { feedback: { marker: marker } } },
-      { new: true }
-    );
-    if (deletedFeedback === null) {
-      return res.status(404).json({ message: "Cannot find submission" });
-    }
-    res.status(201).json(deletedFeedback);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
 
 // add submission
 const addSubmission = async (req, res) => {
@@ -368,9 +313,6 @@ export default {
   getModuleTeachers,
   addSubmission,
   getSubmissions,
-  giveFeedback,
-  viewFeedback,
-  deleteFeedback,
   addStudentToModule,
   addTeacherToModule,
   removeTeacherFromModule,
