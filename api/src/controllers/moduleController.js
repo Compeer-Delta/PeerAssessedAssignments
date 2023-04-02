@@ -111,7 +111,12 @@ const deleteModule = async (req, res) => {
 
 const getModules = (req, res) => {
   const { email } = req.query;
-  Module.find({ students: { $regex: email, $options: "i" } })
+  Module.find({
+    $or: [
+      { students: { $regex: email, $options: "i" } },
+      { teachers: { $regex: email, $options: "i" } },
+    ],
+  }) // find modules where user is student or teacher
     .then((modules) => {
       res.status(201).json(modules);
     })
