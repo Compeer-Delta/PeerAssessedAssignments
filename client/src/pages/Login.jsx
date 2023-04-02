@@ -70,6 +70,7 @@ function Login() {
       const response = await accountPage(accType, user, ReactSession.get("token")); // get user details
       const details = await response.json();
 
+      ReactSession.set("accType", details.role+"Account");
       ReactSession.set("inst", details.institution)
       if (details.institution == undefined){ReactSession.set("inst", details.institutionName)}
     //  ReactSession.set("inst", details.institution);

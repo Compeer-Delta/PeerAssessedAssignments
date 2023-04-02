@@ -49,11 +49,11 @@ function StudentView({ title }) {
   const modTitle = moduleTitle;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////TO CHANGE BACK: 6065 TO module.moduleCode AND "teacherAccount" === "teacherAccount" to ... === session.accountType
-  // function toggleMinimizeTO() { //toggle minimize for teacher list
-  //   if (minimizedTO === true){setMinimizedTO(false)}
-  //   else {setMinimizedTO(true)
-  //   }
-  // }
+   function toggleMinimizeTO() { //toggle minimize for teacher list
+     if (minimizedTO === true){setMinimizedTO(false)}
+     else {setMinimizedTO(true)
+     }
+   }
 
   const params = useParams();
 

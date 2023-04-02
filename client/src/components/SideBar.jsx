@@ -56,7 +56,6 @@ function SideBar({ moduleTitle, moduleId, moduleCode }) {
   return (
     <div className="fixed z-30">
       {/* module tab */}
-
       {minimizedMT === false ? (
         <h1 className="dark:border-indigo-900 rounded-br-lg rounded-tr-lg border-solid border-l-0 border-2 border-zinc-600 font-semibold sidebar fixed lg:left-0 p-5 w-[300px] overflow-y-auto text-center text-gray-900 dark:text-gray-300 bg-slate-300 dark:bg-zinc-800">
           {" "}
