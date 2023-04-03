@@ -80,7 +80,8 @@ function Works(mod) {
                               open= {true}
                               moduleId = {module.moduleId}
                               moduleTitle = {module.title}
-                              moduleCode = {module.moduleCode}>
+                              moduleCode = {module.moduleCode}
+                              description = {a.description}>
                     </WorkItem>
                    
                 ))}
