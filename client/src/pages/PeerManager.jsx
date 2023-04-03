@@ -1,19 +1,21 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import Works from '../components/Works'
 import StudentView from '../pages/StudentView'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-function PeerManager() {
+import { getAssignmentInfo } from '../functions/api/assignmentAPI';
+import {ReactSession} from 'react-client-session'
+function PeerManager(props) {
 
-    const [assignments, setAssignments] = useState([
-        {title: 'A* Algorithm Assignment', dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',peersPerSubmission:5, numSubmissions:12, open:false, id: 1},
-        {title: "Class work 3 submission", dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',peersPerSubmission:2, numSubmissions:12, open:false, id: 2},
-        {title: "Class work 2 submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',peersPerSubmission:12, numSubmissions:12, open:false, id: 3},
-        {title: "Introduction to AI submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',peersPerSubmission:3, numSubmissions:12, open:false, id: 4},
-        {title: 'RE A* Algorithm Assignment',dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',peersPerSubmission:6, numSubmissions:12, open:false, id: 5},
-        {title: "RE Class work 3 submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',peersPerSubmission:3,numSubmissions:12, open:false, id: 6},
-        {title: "RE Class work 2 submission",dueDate: '9:00pm 1/10/24',setDate: '4.32pm 10/10/22',peersPerSubmission:1, numSubmissions:12, open:false, id: 7},
-        { title: "RE Introduction to AI submission",dueDate: '9:00pm 1/10/24',setDate: '4.32pm 10/10/22',peersPerSubmission:7, numSubmissions:12, open:false,id: 8}]);
+    const [assignments, setAssignments] = useState([]);
+      //  {title: 'A* Algorithm Assignment', dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:5, numSubmissions:12, open:false, id: 1},
+      //  {title: "Class work 3 submission", dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:2, numSubmissions:12, open:false, id: 2},
+       // {title: "Class work 2 submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:12, numSubmissions:12, open:false, id: 3},
+       // {title: "Introduction to AI submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:3, numSubmissions:12, open:false, id: 4},
+      //  {title: 'RE A* Algorithm Assignment',dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:6, numSubmissions:12, open:false, id: 5},
+      //  {title: "RE Class work 3 submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:3,numSubmissions:12, open:false, id: 6},
+      //  {title: "RE Class work 2 submission",dueDate: '9:00pm 1/10/24',setDate: '4.32pm 10/10/22',numOfReviewers:1, numSubmissions:12, open:false, id: 7},
+      //  { title: "RE Introduction to AI submission",dueDate: '9:00pm 1/10/24',setDate: '4.32pm 10/10/22',numOfReviewers:7, numSubmissions:12, open:false,id: 8}]);
 
         var i = 0;
         var stopcount = false;
@@ -28,9 +30,9 @@ function PeerManager() {
                 {
                     if (pps === "")
                     {
-                        assignments[i].peersPerSubmission = 0;
+                        assignments[i].numOfReviewers = 0;
                     }else{
-                        assignments[i].peersPerSubmission = parseInt(pps);
+                        assignments[i].numOfReviewers = parseInt(pps);
                         console.log(assignments)
                     }
                 }
@@ -78,20 +80,26 @@ function PeerManager() {
     function afterDue(assignment)
     {//checks whether the current time is less than due date/ time, if so then submission remains open / otherwise close submission
         let current = new Date();
-        let time = formatTime(assignment);
-        let date = new Date(assignment.dueDate.split(/(\s+)/)[2] + " " + time);
+        //let time = new Date(assignment.dueDate)//formatTime(assignment);
+       // let date = new Date(assignment.dueDate.split(/(\s+)/)[2] + " " + time);
+      // let date = new Date(assignment.endDate);
 
        let dateNow = current.getTime();
-       let dateDue = date.getTime();
-      //  console.log("t" + current);
-     //   console.log("t" + date);
+      // let dateDue = date.getTime();
 
-       if (dateNow < dateDue)
+      
+        console.log("t" + current);
+        console.log("t" + new Date(assignment.endDate*1000));
+
+       if (current > (new Date(assignment.endDate*1000)))
        {
+        console.log("yes")
         return true; //return true id due date has passed
        }
        else{
+        console.log("no")
         return false;
+        
        }
     }
 
@@ -152,6 +160,28 @@ function PeerManager() {
       else{ return false;}
     }
 
+    useLayoutEffect(() => {
+
+      const moduleId = props.moduleId;
+
+      //Make a call to this for each id w/in module.assignments
+      const getAssignmentDetails = async () => {
+          const results = await Promise.all(
+              props.mod.assignments.map(async (id) => {
+                  const response = await getAssignmentInfo(moduleId, id, ReactSession.get('token'));
+
+                  const data = await response.json();
+                  return data;
+              })
+          );
+
+          setAssignments(results);
+          console.log("assigns " + assignments);
+      }
+
+      getAssignmentDetails();
+  }, []);
+
   return (
     <>
     <div  className=" ml-24 md:ml-80 md:mr-80 font-Dosis text-3xl font-bold py-2">Closed Assignments</div>
@@ -172,7 +202,7 @@ function PeerManager() {
 
         {assignments.map(assignment => (
            
-            afterDue(assignment) == true && assignment.open==false ? ( //displays row if the assignment due date has passed and teacher has not opened the assignment
+            afterDue(assignment) == true ? ( //&& assignment.open==false //displays row if the assignment due date has passed and teacher has not opened the assignment
 
             
             <tr className=" dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
@@ -192,7 +222,7 @@ function PeerManager() {
                 <td className="px-6 py-4">
                 <div className="">
                 Enter no. Peers (Limited to number of submissions {assignment.numSubmissions}) :
-             <input  placeholder={assignments[assignment.id-1].peersPerSubmission} className=" border border-blue-400 text-center rounded-md ml-2 " type="number" min="0" max={assignment.numSubmissions} step="1" onChange={(e => {if (e.target.value > (assignment.numSubmissions-1)){updatePPS(assignment.id,assignment.numSubmissions-1)} else if (e.target.value < 0){updatePPS(assignment.id,0)} else {updatePPS(assignment.id,e.target.value)}})}></input>
+             <input  placeholder={assignment.numOfReviewers} className=" border border-blue-400 text-center rounded-md ml-2 " type="number" min="0" max={assignment.numSubmissions} step="1" onChange={(e => {if (e.target.value > (assignment.numSubmissions-1)){updatePPS(assignment.id,assignment.numSubmissions-1)} else if (e.target.value < 0){updatePPS(assignment.id,0)} else {updatePPS(assignment.id,e.target.value)}})}></input>
       {/* CHANGE THIS LATER TO MAKE MAX EQUAL TO THE NUMBER OF STUDENTS IN THE MODULE setAssignments*/} 
             </div>
                 </td>
@@ -209,7 +239,7 @@ function PeerManager() {
                 </td>
                 
             </tr>
-            ): afterDue(assignment) == true && assignment.open==true ? (
+            ): afterDue(assignment) == true ? ( // && assignment.open==true
                 <tr class=" dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 bg-green-100 border-2 border-slate-900">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {assignment.title}
@@ -227,8 +257,8 @@ function PeerManager() {
                 <td className="px-6 py-4">
                 <div className="">
                 Enter no. Peers (Limited to number of submissions {assignment.numSubmissions}) :
-             <input  placeholder={assignments[assignment.id-1].peersPerSubmission} className=" border border-blue-400 text-center rounded-md ml-2 " type="number" min="0" max={assignment.numSubmissions} step="1" onChange={(e => {if (e.target.value > (assignment.numSubmissions-1)){updatePPS(assignment.id,assignment.numSubmissions-1)} else if (e.target.value < 0){updatePPS(assignment.id,0)} else {updatePPS(assignment.id,e.target.value)}})}></input>
-      {/* CHANGE THIS LATER TO MAKE MAX EQUAL TO THE NUMBER OF STUDENTS IN THE MODULE setAssignments({...prev,peersPerSubmission:12}) assignment.peersPerSubmission=12*/} 
+             <input  placeholder={assignment.numOfReviewers} className=" border border-blue-400 text-center rounded-md ml-2 " type="number" min="0" max={assignment.numSubmissions} step="1" onChange={(e => {if (e.target.value > (assignment.numSubmissions-1)){updatePPS(assignment.id,assignment.numSubmissions-1)} else if (e.target.value < 0){updatePPS(assignment.id,0)} else {updatePPS(assignment.id,e.target.value)}})}></input>
+      {/* CHANGE THIS LATER TO MAKE MAX EQUAL TO THE NUMBER OF STUDENTS IN THE MODULE setAssignments({...prev,numOfReviewers:12}) assignment.numOfReviewers=12*/} 
             </div>
                 </td>
                 <td className="px-6 py-4 text-center">

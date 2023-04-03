@@ -165,7 +165,7 @@ function StudentView({ title }) {
       ) : nestedPage === "addassignment" ? (
         <AddAssignment moduleId={module.moduleId}></AddAssignment>
       ) : nestedPage === "peermanager" ? (
-        <PeerManager></PeerManager>
+        <PeerManager mod={module}></PeerManager>
       ) : nestedPage === "approvefeedback" ? (
         <ApproveFeedback></ApproveFeedback>
       ) : (
