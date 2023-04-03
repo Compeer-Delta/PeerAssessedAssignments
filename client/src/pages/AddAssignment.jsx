@@ -16,10 +16,17 @@ function AddAssignment(props) {
   const [assignDesc, setAssignDesc] = useState("");
 
   const [selectedDate, setSelectedDate] = useState("");
+  const [selectedPeerDate, setSelectedPeerDate]  = useState("");
+  
+  const [duePeerMins, setPeerDueMins] = useState("");
+  const [duePeerHour, setPeerDueHour] = useState("");
+  const [peerMeridiem, setPeerMeridiem] = useState("AM");
 
   const [dueMins, setDueMins] = useState("");
   const [dueHour, setDueHour] = useState("");
   const [meridiem, setMeridiem] = useState("AM");
+
+  const [maxMark, setMaxMark]= useState();
 
   const [confirmedAssignment, setConfirmedAssignment] = useState(false);
   const [userId, setUserId] = useState(ReactSession.get("uid"));
@@ -30,14 +37,17 @@ function AddAssignment(props) {
     console.log(selectedDate);
     console.log("uid" + userId);
     console.log("mid" + props.moduleId);
-    console.log("date " + Date.parse(formatTimeAndDate()) / 1000);
-    console.log("startdate " + new Date().getTime() / 1000);
-
+    console.log("date " + Date.parse(formatTimeAndDate(false)));
+    console.log("startdate " + new Date().getTime());
+    console.log("mark" + maxMark);
+    console.log("peer date" + (Date.parse(formatTimeAndDate(true))));
     const brief = undefined;
-    const currentTimestamp = new Date().getTime() / 1000;
-    const dueTimestamp = Date.parse(formatTimeAndDate()) / 1000;
-    const reviewPeriod = 0;
+    const currentTimestamp = new Date().getTime();
+    const dueTimestamp = Date.parse(formatTimeAndDate());
+    const reviewPeriod = Date.parse(formatTimeAndDate(true));
     const numOfPeers = 1;
+    const isOpen = false;
+  
     const random = Math.floor(Math.random() * (4 - 1 + 1) + 1) == 1;
     const defaultImageURL =
       random === 1
@@ -62,24 +72,34 @@ function AddAssignment(props) {
       brief,
       currentTimestamp,
       dueTimestamp,
-      reviewPeriod,
       numOfPeers,
       defaultImageURL,
       teachers,
       students,
+      //add review period
+      //add isOpen
     );
-    const details = await response.json();
+   const details = await response.json();
     console.log(details);
     //Add to database here
     setConfirmedAssignment(true);
   };
 
-  function formatTimeAndDate() {
+  function formatTimeAndDate(isPeer) {
     //formats the the time so it is able to be read by Date
+
+    if (isPeer){
+    var tempHour = duePeerHour;
+    var tempMin = duePeerMins;
+    var tempMeridiem = peerMeridiem;
+    var tempDate = selectedPeerDate + "";
+    }
+    else{
     var tempHour = dueHour;
     var tempMin = dueMins;
     var tempMeridiem = meridiem;
     var tempDate = selectedDate + "";
+    }
 
     if (tempMeridiem === "PM") {
       tempHour = (parseInt(tempHour) + 12).toString();
@@ -155,6 +175,16 @@ function AddAssignment(props) {
       }
     }
   }
+  function switchPeerMeridiem() {
+    if (peerMeridiem === "AM") {
+      setPeerMeridiem("PM");
+    } else {
+      setPeerMeridiem("AM");
+      if (duePeerHour === "12") {
+        setPeerDueHour(11);
+      }
+    }
+  }
 
   function toggleNewAssignment() {
     setAssignTitle("");
@@ -163,7 +193,13 @@ function AddAssignment(props) {
     setDueMins("");
     setDueHour("");
     setMeridiem("AM");
-    setNumPeerAssess("");
+
+    setSelectedPeerDate("");
+    setPeerDueMins("");
+    setPeerDueHour("");
+    setPeerMeridiem("AM");
+    
+    setMaxMark();
     setConfirmedAssignment(false);
   }
 
@@ -228,9 +264,9 @@ function AddAssignment(props) {
 
               <h1 className="ml-8 mt-10 text-l text-slate-600 font-semibold dark:text-white rounded-md">
                 {" "}
-                Due Date and time:{" "}
+                Submission Date and time:{" "}
               </h1>
-
+              {/* DUE DATE */}
               <div className="ml-8 flex flex-row mr-36  sm:w-[395px] w-[330px]">
                 <DatePicker
                   className="rounded-md "
@@ -294,12 +330,87 @@ function AddAssignment(props) {
                 </button>
               </div>
               <br></br>
+              {/* PEER ASSESS DUE DATE */}
+              <h1 className="ml-8 text-l text-slate-600 font-semibold dark:text-white rounded-md">
+                {" "}
+                Lock Peer Assessing by:{" "}
+              </h1>
+              <div className="ml-8 flex flex-row mr-36  sm:w-[395px] w-[330px]">
+                <DatePicker
+                  className="rounded-md "
+                  selected={selectedPeerDate}
+                  onChange={(date) => setSelectedPeerDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  minDate={new Date()}
+                />
+                <input
+                  required
+                  placeholder="0"
+                  className=" text-center rounded-md"
+                  type="number"
+                  min="1"
+                  max="12"
+                  step="1"
+                  value={duePeerHour}
+                  onChange={(e) => {
+                    if (e.target.value > 12) {
+                      setPeerDueHour(12);
+                    } else if (e.target.value < 1) {
+                      setPeerDueHour(1);
+                    } else {
+                      setPeerDueHour(e.target.value);
+                    }
+                    if (peerMeridiem === "AM" && e.target.value === "12") {
+                      setPeerDueHour(11);
+                    }
+                  }}
+                ></input>
+                ::{" "}
+                <input
+                  placeholder="00"
+                  required
+                  className=" text-center rounded-md ml-2"
+                  maxLength="2"
+                  type="number"
+                  min="00"
+                  max="59"
+                  step="1"
+                  value={duePeerMins}
+                  onChange={(e) => {
+                    if (e.target.value > 59) {
+                      setPeerDueMins(59);
+                    } else if (e.target.value < 0) {
+                      setPeerDueMins(0);
+                    } else if (e.target.value < 10) {
+                      setPeerDueMins(("0" + e.target.value).slice(-2));
+                    } else {
+                      setPeerDueMins(e.target.value.slice(-2));
+                    }
+                  }}
+                ></input>
+                <button
+                  className="ml-3 text-center rounded hover:bg-slate-400 text-slate-700 bg-slate-100"
+                  value={peerMeridiem}
+                  onClick={switchPeerMeridiem}
+                >
+                  {" "}
+                  {peerMeridiem}{" "}
+                </button>
+              </div>
 
-              <h1 className="ml-8 mb-2 text-l w-[200px] text-slate-600 font-semibold dark:text-white rounded-md ">
+              <div className="mt-6 ml-8">
+              <h1 className=" text-l text-slate-600 font-semibold dark:text-white rounded-md ">
+                {" "}
+                Max mark (0-1000):{" "}
+              </h1>
+              <input className=" border w-20 border-blue-400 text-center rounded-md " type="number" min="0" max="1000" step="1" onChange={(e => {if (e.target.value > 1000){setMaxMark(1000)} else if (e.target.value < 0){setMaxMark(0)} else {setMaxMark(e.target.value)}})}></input>
+              </div>
+                 {/* UPLOAD BRIEF */} 
+              <h1 className="ml-8 mb-2 mt-10 text-l w-[200px] text-slate-600 font-semibold dark:text-white rounded-md ">
                 {" "}
                 Upload Breif below:{" "}
               </h1>
-              <div className="object-center">
+              <div className="object-center ml-8">
                 <FileUploader></FileUploader>
               </div>
 
