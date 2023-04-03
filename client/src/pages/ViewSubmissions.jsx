@@ -25,43 +25,31 @@ function ViewSubmissions() {
   const { modId } = location.state; //module id
   const { modCode } = location.state; //module id
   const { modTitle } = location.state;
-  //use id / title to get peersPerSubmission to display this number of submissions
-  //select peersPerSubmission from assignmentsschema where assignmentId = id in schema
   const peersPerSubmission = 3;
-  const numOfSubmissions = submissions.length;
 
+  // Get all submissions for the assignment
   useEffect(async () => {
     const response = await getSubmissions(assignmentId, session.token);
     const submissions = await response.json();
+    if (!submissions) {
+      console.log("No submissions found");
+    }
     console.log(submissions);
+    setSubmissions(submissions);
   }, [assignmentId]);
 
-  //limit what submissions are seen based on the user id so each one person sees a unique of submissions
-  //TEMPORARILY JUST DISPLAYS FIRST FEW
+  // Limit the number of submissions displayed to the number of peers per submission
   function limitViewedSubmissions() {
-    let arr = [];
     if (session.accType === "studentAccount") {
-      /*for (var i = 0; i < numOfSubmissions; i++) {
-        if (peersPerSubmission > i) {
-          arr.push({
-            submissionTitle: submissions[i].submissionTitle,
-            submitBy: submissions[i].userId,
-            numFeedback: submissions[i].feedback.length,
-          });
-        }
-      }*/
-      return submissions.slice(0, peersPerSubmission).map((submission) => {
-        return {
-          submissionTitle: submission.submissionTitle,
-          submissionId: submission._id,
-          submitBy: submission.userId,
-          numFeedback: submission.feedback.length,
-        };
-      });
+      return submissions.slice(0, peersPerSubmission).map((submission) => ({
+        submissionTitle: submission.submissionTitle,
+        submissionId: submission._id,
+        submitBy: submission.userId,
+        numFeedback: submission.feedback.length,
+      }));
     } else {
-      arr = [...submissions];
+      return submissions;
     }
-    return arr;
   }
 
   const limitedSubmissions = limitViewedSubmissions();
