@@ -65,7 +65,7 @@ function App() {
             <Route path='/' element={<Welcome />} />
             <Route path='/modules/:id/upload/:aid' element={<StudentFileUpload/>} />
             <Route path='/addassignment' element={<AddAssignment/>} />
-            <Route path='/modules/:id/viewsubmissions/:aid' element={<ViewSubmissions/>} />
+            <Route path='/modules/:id/viewsubmissions/:aid/*' element={<ViewSubmissions/>} />
             <Route path='/modules/:id/viewsubmissions/:aid/peerassess/:sid' element={<PeerAssessWork/>} />
             <Route path='/adminview' element={<AdminView/>} />
             <Route path='/viewfeedback' element={<ViewFeedback/>} />
