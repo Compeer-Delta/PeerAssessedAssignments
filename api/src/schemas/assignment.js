@@ -56,6 +56,11 @@ const assignmentSchema = new Schema(
       required: true,
       default: false,
     },
+    maxMark: {
+      type: Number,
+      required: true,
+      default: 100,
+    },
     imageURL: {
       type: String,
       default: null,
