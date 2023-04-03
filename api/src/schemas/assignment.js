@@ -3,6 +3,12 @@
 import { Schema, model } from "mongoose";
 import { generateUUID } from "../functions/generateUUID.js";
 
+/*
+Start of A --------------| End of A (SUBMIT DEADLINE) \-/ PEER REVIEW PERIOD\--------------------------- Marks back
+X------------------------------------X/------------------------|--------------------M
+X------------------------------------X/---------------M---------|--------------------M
+X------------------------------------X/---------------/--------------------M
+*/
 const assignmentSchema = new Schema(
   {
     _id: Schema.Types.ObjectId,
@@ -36,10 +42,19 @@ const assignmentSchema = new Schema(
       type: Number,
       required: true,
     },
+    reviewPeriod: {
+      type: Number,
+      required: true,
+    }, // Number of days for peer review (after submission deadline) | unix timestamp
     numOfReviewers: {
       type: Number,
       required: true,
       default: 1,
+    }, // Number of reviewers per submission
+    isOpen: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
     imageURL: {
       type: String,

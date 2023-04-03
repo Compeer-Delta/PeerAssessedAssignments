@@ -74,8 +74,8 @@ const getAllAdmins = async (req, res) => {
 // delete existing admin
 const deleteAdmin = async (req, res) => {
   try {
-    const { adminId } = req.params;
-    const deletedAdmin = await Admin.deleteOne({ adminId: adminId });
+    const { email } = req.params;
+    const deletedAdmin = await Admin.deleteOne({ email: email });
     res.status(200).json(deletedAdmin);
   } catch (err) {
     res.status(500).json({ message: err.message });
