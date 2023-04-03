@@ -55,3 +55,20 @@ export const addAssignment = async (
   });
   return response;
 };
+
+// Update assignment details by assignment id
+export const updateAssignment = async (assignmentId, updates, token) => {
+  const response = await fetch(
+    `${API_BASE_URL}assignment/update/${assignmentId}`,
+    {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updates), // updates is an object with the fields to be updated i.e. {title: "new title", description: "new description"}
+    }
+  );
+  return response;
+};

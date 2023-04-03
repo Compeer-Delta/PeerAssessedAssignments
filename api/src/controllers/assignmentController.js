@@ -54,32 +54,15 @@ const addAssignment = async (req, res) => {
 
 // Update assignment details
 const updateAssignment = async (req, res) => {
-  const {
-    moduleId,
-    assignmentId,
-    supervisorId,
-    assignmentTitle,
-    assignmentDescription,
-    assignmentBreif,
-    assignmentReviewers,
-    assignmentStart,
-    assignmentDeadline,
-    imageURL,
-  } = req.body;
+  const { assignmentId } = req.params;
+  const updates = req.body; // 
 
   try {
     const setAssignment = await Module.updateOne(
-      { moduleId: moduleId, "assignments.assignmentId": assignmentId },
+      { assignmentId: assignmentId },
       {
         $set: {
-          "assignments.$.supervisorId": supervisorId,
-          "assignments.$.assignmentTitle": assignmentTitle,
-          "assignments.$.assignmentDescription": assignmentDescription,
-          "assignments.$.assignmentBreif": assignmentBreif,
-          "assignments.$.assignmentReviewers": assignmentReviewers,
-          "assignments.$.assignmentStart": assignmentStart,
-          "assignments.$.assignmentDeadline": assignmentDeadline,
-          "assignments.$.imageURL": imageURL,
+          "assignments.$": updates,
         },
       }
     );
