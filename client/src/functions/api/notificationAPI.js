@@ -28,3 +28,23 @@ export const deleteNotification = async (userId, messageId, token) => {
   );
   return response;
 };
+
+export const createNotification = async (userId, notifTitle, notifContent, urgency ) => {
+  const response = await fetch (
+    `${API_BASE_URL}notification/create`, 
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        userId: userId,
+        notifTitle: notifTitle,
+        notifContent: notifContent,
+        urgency: urgency
+      })
+    }
+  );
+};
