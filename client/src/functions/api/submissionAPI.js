@@ -16,3 +16,15 @@ export const acceptedFeedback = async (userId, token) => {
   return response;
 };
 
+// Submit assignment submission
+export const submitAssignment = async (formData, token) => {
+  const response = await fetch(`${API_BASE_URL}assignment/submit/`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: token,
+    },
+    body: formData,
+  });
+  return response;
+};

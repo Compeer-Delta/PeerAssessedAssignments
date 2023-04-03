@@ -2,10 +2,8 @@ import { useState, useRef, useLayoutEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import "../styles/uploader.css";
-import {
-  getAssignmentInfo,
-  submitAssignment,
-} from "../functions/api/assignmentAPI";
+import { submitAssignment } from "../functions/api/submissionAPI";
+import { getAssignmentInfo } from "../functions/api/assignmentAPI";
 
 function StudentFileUploader() {
   const [file, setFile] = useState(null);

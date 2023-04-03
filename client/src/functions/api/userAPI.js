@@ -38,14 +38,38 @@ export const register = async (
   return response;
 };
 
+// Register new user
+export const createUser = async (
+  userPassword,
+  firstname,
+  surname,
+  email,
+  institution,
+  role
+) => {
+  const response = await fetch(`${API_BASE_URL}admin/register`, {
+    method: "POST",
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    body: JSON.stringify({
+      password: userPassword,
+      firstname: firstname,
+      surname: surname,
+      email: email,
+      institutionName: institution,
+      role: role,
+    }),
+  });
+  return response;
+};
+
 // Get user/admin account page
 export const accountPage = async (type, userEmail, token) => {
-  const fr2 =
+  const url =
     type === "adminAccount"
       ? `${API_BASE_URL}admin/me?email=${userEmail}`
       : `${API_BASE_URL}user/me?email=${userEmail}`;
 
-  const response = await fetch(fr2, {
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       Accept: "application/json",

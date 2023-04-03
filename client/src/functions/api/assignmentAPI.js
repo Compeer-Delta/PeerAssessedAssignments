@@ -17,15 +17,41 @@ export const getAssignmentInfo = async (moduleId, assignmentId, token) => {
   return response;
 };
 
-// Submit assignment submission
-export const submitAssignment = async (formData, token) => {
-  const response = await fetch(`${API_BASE_URL}assignment/submit/`, {
+// Add new assignment
+export const addAssignment = async (
+  token,
+  supervisorId,
+  moduleId,
+  title,
+  description,
+  brief,
+  startDate,
+  endDate,
+  numOfReviewers,
+  imageURL,
+  teachers = [],
+  students = []
+) => {
+  const response = await fetch(`${API_BASE_URL}assignment/add/`, {
     method: "POST",
     headers: {
       Accept: "application/json",
-      Authorization: token,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    body: formData,
+    body: JSON.stringify({
+      supervisorId: supervisorId,
+      moduleId: moduleId,
+      title: title,
+      description: description,
+      brief: brief,
+      startDate: startDate,
+      endDate: endDate,
+      numOfReviewers: numOfReviewers,
+      imageURL: imageURL,
+      students: students,
+      teachers: teachers,
+    }),
   });
   return response;
 };
