@@ -81,8 +81,9 @@ export const accountPage = async (type, userEmail, token) => {
 };
 
 // Get user firstname by email
-export const getUserName = async (userEmail, token) => {
-  const response = await fetch(`${API_BASE_URL}user/me?email=${userEmail}`, {
+export const getUserName = async (userEmail, token, type) => {
+  const fr = type === "adminAccount" ? "admin/me" : "user/me";
+  const response = await fetch(`${API_BASE_URL}${fr}?email=${userEmail}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
