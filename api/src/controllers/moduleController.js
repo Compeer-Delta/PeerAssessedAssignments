@@ -114,7 +114,6 @@ const getModules = (req, res) => {
 // get teachers firstname, lastname & email of specific module
 const getModuleTeachers = async (req, res) => {
   const { moduleId } = req.query;
-  console.log(moduleId);
   try {
     const module = await Module.findOne({ moduleId: moduleId });
     const teachers = await User.find({
