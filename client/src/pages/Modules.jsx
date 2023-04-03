@@ -34,7 +34,7 @@ function Modules() {
 
   useLayoutEffect(() => {
     //console.log("===== useEffect TRIGGERED =====");
-
+    
     //console.log(fr);
     const fetchData = async () => {
       if (checkIfAdmin() === false) {

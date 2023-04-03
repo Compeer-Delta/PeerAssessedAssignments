@@ -10,6 +10,9 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
     //DB: read the file where the passed id (or title) matches with the briefing (select from briefs where title/id = passed parameter in workitem [title/id])
 
     let current = new Date();
+    const convertedSetDate = new Date(setDate*1000);
+    const convertedDueDate = new Date(dueDate*1000);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     // let time = formatTime();
     // let date = new Date(dueDate.split(/(\s+)/)[2] + " " + time);
 
@@ -29,7 +32,8 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
     function LockAfterDue()
     {//checks whether the current time is less than due date/ time, if so then submission remains open / otherwise close submission
        let dateNow = current.getTime();
-       let dateDue = date.getTime();
+       let dateDue = new Date(dueDate*1000);//date.getTime();
+       
       //  console.log("t" + current);
      //   console.log("t" + date);
 
@@ -57,13 +61,13 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
                   quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
                    in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
                     qui officia deserunt mollit anim id est laborum</p>
-                <p className=' text-right text-base'>Set: {setDate}</p>
+                <p className=' text-right text-base'>Set: {convertedSetDate.getHours() + ":" + (convertedSetDate.getMinutes() < 10 ? '0' + convertedSetDate.getMinutes() : convertedSetDate.getMinutes()) + " " + convertedSetDate.getDay() + "/" + months[convertedSetDate.getMonth()]  + "/" +convertedSetDate.getFullYear()  }</p>
             
             <p className='flex flex-initial gap-2 flex-row items-center justify-start text-xs md:text-sm sticky z-0'>
                 {/* {//tech.map(item=> ( */}
 
                     
-                    {/*LockAfterDue() === true*/ true ? (
+                    {LockAfterDue() === true ? (
 
                     <Link to={"/modules/" + moduleCode +"/upload/" + id} state={{modId: moduleId, modTitle: moduleTitle, modCode: moduleCode}} key="SubmitWork" className='inline-block px-2 py-3 text-yellow-800 font-bold bg-yellow-100 dark:bg-zinc-900 dark:text-yellow-400 hover:-translate-y-1 transform transition'>
                         Submit Work 📂
@@ -95,7 +99,7 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
                     </a>
 
            
-                <span className='text-right text-gray-600 dark:text-gray-300 p-2 w-full text-base '>Due: {dueDate}</span>
+                <span className='text-right text-gray-600 dark:text-gray-300 p-2 w-full text-base '>Due: {convertedSetDate.getHours() + ":" + (convertedDueDate.getMinutes() < 10 ? '0' + convertedDueDate.getMinutes() : convertedDueDate.getMinutes()) + " " + convertedDueDate.getDay() + "/" + months[convertedDueDate.getMonth()]  + "/" +convertedDueDate.getFullYear() }</span>
                 
             </p>
             
