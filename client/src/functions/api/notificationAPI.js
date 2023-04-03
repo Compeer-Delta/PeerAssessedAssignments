@@ -47,4 +47,6 @@ export const createNotification = async (userId, notifTitle, notifContent, urgen
       })
     }
   );
+
+  return response;
 };
