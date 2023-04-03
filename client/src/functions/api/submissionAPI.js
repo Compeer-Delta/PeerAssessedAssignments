@@ -28,3 +28,18 @@ export const submitAssignment = async (formData, token) => {
   });
   return response;
 };
+
+// Get all submissions for a specific assignment
+export const getSubmissions = async (assignmentId, token) => {
+  const response = await fetch(
+    `${API_BASE_URL}assignment/${assignmentId}/submissions`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response;
+};

@@ -51,7 +51,11 @@ const getSubmission = async (req, res) => {
       moduleId: moduleId,
     });
     if (foundSubmission === null) {
-      return res.status(404).json({ message: `Cannot find submission for ${assignmentId} in ${moduleId} by ${userId}` });
+      return res
+        .status(404)
+        .json({
+          message: `Cannot find submission for ${assignmentId} in ${moduleId} by ${userId}`,
+        });
     } else {
       res.status(201).json(foundSubmission);
     }
@@ -111,7 +115,9 @@ const deleteSubmission = async (req, res) => {
       return res.status(404).json({ message: "Cannot find submission" });
 
     if (submission.userId === req.userId) {
-      return res.status(401).json({ message: `Cannot delete submission ${submissionId}` });
+      return res
+        .status(401)
+        .json({ message: `Cannot delete submission ${submissionId}` });
     }
     const deletedSubmission = await Submission.findOneAndDelete({
       submissionId: submissionId,
@@ -124,9 +130,28 @@ const deleteSubmission = async (req, res) => {
   }
 };
 
+const getSubmissions = async (req, res) => {
+  const { assignmentId } = req.params;
+  try {
+    const foundSubmissions = await Submission.find({
+      assignmentId: assignmentId,
+    });
+    if (foundSubmissions === null) {
+      return res
+        .status(404)
+        .json({ message: `Cannot find submissions for ${assignmentId}` });
+    } else {
+      res.status(201).json(foundSubmissions);
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export default {
   createSubmission,
   getSubmission,
   updateSubmission,
   deleteSubmission,
+  getSubmissions,
 };
