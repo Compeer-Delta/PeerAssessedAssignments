@@ -64,7 +64,7 @@ function LoginCard() {
           <button
             onClick={logout}
             id="logoutButton"
-            className="ml-14 p-0.5 mt-3 flex items-center  text-center px-12 cursor-pointer text-slate-100 dark:text-gray-300 bg-red-600  hover:bg-red-300 transform transition"
+            className="ml-14 p-0.5 mt-3 flex items-center  text-center px-12 cursor-pointer rounded-2xl text-slate-100 dark:text-gray-300 bg-red-600  hover:bg-red-300 transform transition"
           >
             <p> Logout</p>
           </button>
