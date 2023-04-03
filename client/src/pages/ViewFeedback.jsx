@@ -48,7 +48,6 @@ function ViewFeedback() {
       ) {
         isFeedbackFound = true;
         feedbackIndex = index;
-        console.log("found");
         return;
       }
     });
