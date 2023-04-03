@@ -33,12 +33,13 @@ function AddAssignment(props) {
     console.log("date " + Date.parse(formatTimeAndDate()) / 1000);
     console.log("startdate " + new Date().getTime() / 1000);
 
-    var brief = undefined;
-    var currentTimestamp = new Date().getTime() / 1000;
-    var dueTimestamp = Date.parse(formatTimeAndDate()) / 1000;
-    var numOfPeers = 1;
-    var random = Math.floor(Math.random() * (4 - 1 + 1) + 1) == 1;
-    var defaultImageURL =
+    const brief = undefined;
+    const currentTimestamp = new Date().getTime() / 1000;
+    const dueTimestamp = Date.parse(formatTimeAndDate()) / 1000;
+    const reviewPeriod = 0;
+    const numOfPeers = 1;
+    const random = Math.floor(Math.random() * (4 - 1 + 1) + 1) == 1;
+    const defaultImageURL =
       random === 1
         ? "https://marketplace.canva.com/EAD2962NKnQ/2/0/1600w/canva-rainbow-gradient-pink-and-purple-zoom-virtual-background-_Tcjok-d9b4.jpg"
         : random === 2
@@ -47,9 +48,9 @@ function AddAssignment(props) {
         ? "https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg"
         : "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3BhY2UlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fA%3D%3D&w=1000&q=80";
 
-    var students = [];
-    var teachers = [];
-    var moduleId = props.moduleId;
+    const students = [];
+    const teachers = [];
+    const moduleId = props.moduleId;
 
     // Add a new assignment
     const response = await addAssignment(
@@ -61,10 +62,11 @@ function AddAssignment(props) {
       brief,
       currentTimestamp,
       dueTimestamp,
+      reviewPeriod,
       numOfPeers,
       defaultImageURL,
       teachers,
-      students
+      students,
     );
     const details = await response.json();
     console.log(details);
