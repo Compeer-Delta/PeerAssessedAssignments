@@ -100,10 +100,21 @@ function StudentView({ title }) {
                 <p className="dark:bg-zinc-800 py-6 px-16 underline underline-offset-8 text-center text-xl mb-1 font-semibold dark:text-zinc-300">
                   Teacher Options{" "}
                 </p>
+
+                <Link
+                  to={"/modules/" + module.moduleCode}
+                  state={{ moduleTitle: modTitle, nestedPage: "addnotification" }}
+                  className="dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 mt-16 ml-4 py-2 bg-slate-800  w-64 overflow-hidden hover:-translate-y-0.5 transform transition "
+                >
+                  <h3 className=" text-center text-lg  font-semibold ">
+                    Add Notification{" "}
+                  </h3>
+                </Link>   
+                
                 <Link
                   to={"/modules/" + module.moduleCode}
                   state={{ moduleTitle: modTitle, nestedPage: "addassignment" }}
-                  className="dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 mt-20 ml-4 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition "
+                  className="dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 mt-28 ml-4 py-2 bg-slate-800  w-64 overflow-hidden hover:-translate-y-0.5 transform transition "
                 >
                   <h3 className=" text-center text-lg   font-semibold ">
                     Add Assignment{" "}
@@ -113,7 +124,7 @@ function StudentView({ title }) {
                 <Link
                   to={"/modules/" + module.moduleCode}
                   state={{ moduleTitle: modTitle, nestedPage: "peermanager" }}
-                  className="dark:bg-indigo-900 fixed left-0 text-gray-300  p-3 ml-4 mt-36 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition "
+                  className="dark:bg-indigo-900 fixed left-0 text-gray-300 mt-40 p-3 ml-4 py-2 bg-slate-800  w-64 overflow-hidden hover:-translate-y-0.5 transform transition "
                 >
                   <h3 className=" text-center text-lg font-semibold ">
                     Open Assignments to Peers{" "}
@@ -126,13 +137,19 @@ function StudentView({ title }) {
                     moduleTitle: modTitle,
                     nestedPage: "approvefeedback",
                   }}
-                  className="dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 ml-4 mt-52 py-3 bg-slate-800  w-64 overflow-hidden hover:-translate-y-1 transform transition "
+                  className="dark:bg-indigo-900 fixed left-0 text-gray-300 p-3 mt-52 ml-4 py-2 bg-slate-800  w-64 overflow-hidden hover:-translate-y-0.5 transform transition "
                 >
                   <h3 className=" text-center text-lg font-semibold ">
                     Peer Feedback requests{" "}
                   </h3>
                 </Link>
+
+                
+               
+
               </div>
+
+              
             ) : accType === "teacherAccount" && minimizedTO === true ? ( //CHANGE TO session.account
               <button
                 onClick={toggleMinimizeTO}
@@ -142,6 +159,8 @@ function StudentView({ title }) {
                   View Teacher Options{" "}
                 </p>
               </button>
+
+
             ) : (
               <></>
             )}
@@ -168,7 +187,10 @@ function StudentView({ title }) {
         <PeerManager mod={module}></PeerManager>
       ) : nestedPage === "approvefeedback" ? (
         <ApproveFeedback></ApproveFeedback>
-      ) : (
+      ) : nestedPage === "addnotification" ? (
+        <ApproveFeedback></ApproveFeedback> //Jordan replace here with add notification
+      )
+      : (
         //default
         <div className="dark:bg-zinc-900 sm:ml-80 sm:mr-80 ml-16 mr-16 sm:py-32 py-40 font-Dosis font-bold text-center text-4xl sm:text-8xl text-slate-200 dark:text-indigo-900  border-dashed border-4 rounded dark:border-indigo-900 border-slate-200">
           Select a tab on the side bar to view here!{" "}
