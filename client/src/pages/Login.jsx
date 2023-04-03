@@ -55,33 +55,37 @@ function Login() {
     if (accType == "adminAccount") {
       setIsAdmin(true);
     }
-  
 
     if (!userData.token) {
       setFailedVerifMessage(
         "Your login details are incorrect, please make sure you have the correct username, password or account type again"
       );
     } else {
-      
       //sessionStorage.setItem("loginSessionData", {token, accType, email});
       ReactSession.set("token", token);
       ReactSession.set("accType", accType);
       ReactSession.set("email", user);
-      
 
-      const response = await accountPage(accType, user, ReactSession.get("token")); // get user details
+      const response = await accountPage(
+        accType,
+        user,
+        ReactSession.get("token")
+      ); // get user details
       const details = await response.json();
 
-      console.log(JSON.stringify(details))
-      if (accType != "adminAccount"){ReactSession.set("accType", details.role+"Account");}
-      else {ReactSession.set("accType", "adminAccount")}
+      if (accType != "adminAccount") {
+        ReactSession.set("accType", details.role + "Account");
+      } else {
+        ReactSession.set("accType", "adminAccount");
+      }
 
-      ReactSession.set("inst", details.institution)
-      if (details.institution == undefined){ReactSession.set("inst", details.institutionName)}
-    //  ReactSession.set("inst", details.institution);
+      ReactSession.set("inst", details.institution);
+      if (details.institution == undefined) {
+        ReactSession.set("inst", details.institutionName);
+      }
+      //  ReactSession.set("inst", details.institution);
 
       ReactSession.set("uid", details.userId);
-      console.log("qwerty: " + token +" "+ details.institution +" " + details.institutionName + " " + details.role)
       setSuccess(true);
     }
 
