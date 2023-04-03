@@ -15,6 +15,7 @@ router.post("/assignment/submit/", auth, upload.single('file'), submissionContro
 router.get("/submission/", auth, submissionController.getSubmission); //Get submission
 router.patch("/submission/", auth, submissionController.updateSubmission); //Update submission
 router.delete("/submission/", auth, submissionController.deleteSubmission); //Delete submission
+router.get("/assignment/:assignmentId/submissions", auth, submissionController.getSubmissions); //Get all submissions for a specific assignment
 
 //routes for module feedback
 router.post("/submission/feedback/submit", auth, feedbackController.giveFeedback); //submit feedback
