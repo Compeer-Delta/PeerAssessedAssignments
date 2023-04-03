@@ -40,9 +40,9 @@ function ModuleItem({ title, modId }) {
           </h3>
 
           {!isStudentorTeacher ? (
-            <div className="inline-block ml-64 mt-6 px-5 text-slate-700 bg-slate-100 dark:bg-indigo-800 dark:text-white hover:bg-indigo-300 dark:hover:bg-indigo-300">
+            <Link to={"/createmodule"} className="inline-block ml-64 mt-1 px-5 text-slate-700 bg-slate-100 dark:bg-indigo-800 dark:text-white hover:bg-indigo-300 dark:hover:bg-indigo-300">
               Edit
-            </div>
+            </Link>
           ) : (
             <></>
           )}
