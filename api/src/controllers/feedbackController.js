@@ -63,7 +63,7 @@ const checkFeedback = async (req, res) => {
 
 // get all accepted feedback given to submitted assignments of a student
 const getAcceptedFeedback = async (req, res) => {
-  const { userId } = req.query;
+  const { userId } = req.params;
   try {
     const foundSubmissions = await Submission.find(
       {
@@ -72,9 +72,8 @@ const getAcceptedFeedback = async (req, res) => {
       },
       { "feedback.$": 1 }
     ); // get only the accepted feedback
-
     if (foundSubmissions.length === 0) {
-      return res.status(404).json({ message: `Cannot find submission ${submissionId}` });
+      return res.status(404).json({ message: `There is no feedback for ${userId}` });
     }
 
     res.status(201).json(foundSubmissions);
