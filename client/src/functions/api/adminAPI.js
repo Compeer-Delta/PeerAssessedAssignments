@@ -2,7 +2,7 @@
 const API_BASE_URL = "http://localhost:8081/";
 
 // Get all users of specific Institution (optional filter by role)
-export default getAllInInstitution = async (institution, token, role = "") => {
+export const getAllInInstitution = async (institution, token, role = "") => {
   const url = role
     ? `${API_BASE_URL}admin/getallusers?institutionName=${institution}&role=${role}`
     : `${API_BASE_URL}admin/getallusers?institutionName=${institution}`; // If role is not specified, get all users
