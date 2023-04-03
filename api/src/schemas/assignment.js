@@ -25,7 +25,7 @@ const assignmentSchema = new Schema(
     description: {
       type: String,
     },
-    bref: {
+    brief: {
       type: String,
     },
     startDate: {
