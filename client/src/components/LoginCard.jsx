@@ -37,7 +37,8 @@ function LoginCard() {
     const getFirstName = async () => {
       const response = await getUserName(
         ReactSession.get("email"),
-        ReactSession.get("token")
+        ReactSession.get("token"),
+        ReactSession.get("accType")
       );
       const userData = await response.json();
       setSessionUsername(userData.firstname);
