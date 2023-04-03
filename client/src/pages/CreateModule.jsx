@@ -9,6 +9,7 @@ import LoginCard from "../components/LoginCard";
 import { ReactSession } from "react-client-session";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { getAllInInstitution } from "../functions/api/adminAPI";
+import { createModule } from "../functions/api/moduleAPI";
 
 function CreateModule() {
   //onSubmit={handleSubmit}
@@ -73,22 +74,18 @@ function CreateModule() {
         " " +
         moduleCode
     ); //PASSWORD, INSTITUTION IS BLANK FOR SOME REASON<<<<<<<<<<<<<<<<<<
-    //  const response = await fetch("http://localhost:8081/module/create", {
-    //   method: "POST",
-    //   headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', Authorization: "Bearer " + ReactSession.get("token") },
-    //   body: JSON.stringify({
-    //     "title": moduleTitle,
-    //     "description": "default description",
-    //     "teachers": allAddedTeachers,
-    //    "students": allAddedStudents,
-    //    "assignments": [],
-    //     "institutionName": session.inst,
-    //    "moduleCode": moduleCode,
+    // Create a new module
+    const response = await createModule(
+      moduleTitle,
+      "default description",
+      allAddedTeachers,
+      allAddedStudents,
+      [],
+      session.inst,
+      moduleCode
+    );
 
-    //  })
-    //});
-
-    //const newModule = await response.json();
+    const newModule = await response.json();
 
     setToModulesPage(true);
   };
