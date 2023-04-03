@@ -3,7 +3,7 @@ const API_BASE_URL = "http://localhost:8081/";
 
 // Get all notifications by user id
 export const getAllNotifications = async (userId, token) => {
-  const response = await fetch(`${API_BASE_URL}/notification/${userId}`, {
+  const response = await fetch(`${API_BASE_URL}notifications/${userId}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -11,6 +11,7 @@ export const getAllNotifications = async (userId, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
+  console.log("response", response)
   return response;
 };
 

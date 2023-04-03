@@ -22,14 +22,15 @@ function NotificationSystem() {
   return (
     <div className="py-12 dark:bg-zinc-900">
       <div className="pr-80 pl-80 grid grid-cols-1 gap-3">
-        {notifications.map((notif) => (
-          <NotifItem
-            key={notif._id}
-            title={notif.notifTitle}
-            content={notif.notifContent}
-            mId={notif.messageId}
-          ></NotifItem>
-        ))}
+        {Array.isArray(notifications) &&
+          notifications.map((notif) => (
+            <NotifItem
+              key={notif._id}
+              title={notif.notifTitle}
+              content={notif.notifContent}
+              mId={notif.messageId}
+            ></NotifItem>
+          ))}
       </div>
     </div>
   );
