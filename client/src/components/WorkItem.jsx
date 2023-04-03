@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import { useState } from 'react';
 import defaultbg from '/images/DEFAULT_ASSIGNMENT_BG.jpg';
 
-function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, moduleId, moduleTitle, moduleCode}) {
+function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, moduleId, moduleTitle, moduleCode, description}) {
 
     const [BriefUrl, setBriefUrl] = useState("/compeerSamplePDF.pdf");
     //DB: read the file where the passed id (or title) matches with the briefing (select from briefs where title/id = passed parameter in workitem [title/id])
@@ -56,11 +56,7 @@ function WorkItem({id, imgUrl, title, tech, workUrl, dueDate, setDate, open, mod
               
            <div className='text-gray-600 dark:text-gray-300 p-2 w-full'>
                 <h3 id ={title} className ='text-lg md:text-xl mb-2 md:mb-1 font-semibold'>{title}</h3>
-                <p className ='text-sm md:text-sm mb-1 md:mb-1'>Description: Lorem ipsum dolor sit amet, consectetur
-                 adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                   in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                    qui officia deserunt mollit anim id est laborum</p>
+                <p className ='text-sm md:text-sm mb-1 md:mb-1'>Assignment Description: {description}</p>
                 <p className=' text-right text-base'>Set: {convertedSetDate.getHours() + ":" + (convertedSetDate.getMinutes() < 10 ? '0' + convertedSetDate.getMinutes() : convertedSetDate.getMinutes()) + " " + convertedSetDate.getDay() + "/" + months[convertedSetDate.getMonth()]  + "/" +convertedSetDate.getFullYear()  }</p>
             
             <p className='flex flex-initial gap-2 flex-row items-center justify-start text-xs md:text-sm sticky z-0'>
