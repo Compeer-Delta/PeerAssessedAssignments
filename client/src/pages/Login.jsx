@@ -55,6 +55,7 @@ function Login() {
     if (accType == "adminAccount") {
       setIsAdmin(true);
     }
+  
 
     if (!userData.token) {
       setFailedVerifMessage(
@@ -66,17 +67,21 @@ function Login() {
       ReactSession.set("token", token);
       ReactSession.set("accType", accType);
       ReactSession.set("email", user);
+      
 
       const response = await accountPage(accType, user, ReactSession.get("token")); // get user details
       const details = await response.json();
 
-      ReactSession.set("accType", details.role+"Account");
+      console.log(JSON.stringify(details))
+      if (accType != "adminAccount"){ReactSession.set("accType", details.role+"Account");}
+      else {ReactSession.set("accType", "adminAccount")}
+
       ReactSession.set("inst", details.institution)
       if (details.institution == undefined){ReactSession.set("inst", details.institutionName)}
     //  ReactSession.set("inst", details.institution);
 
       ReactSession.set("uid", details.userId);
-      console.log("qwerty: " + token +" "+ details.institution +" " + details.institutionName)
+      console.log("qwerty: " + token +" "+ details.institution +" " + details.institutionName + " " + details.role)
       setSuccess(true);
     }
 

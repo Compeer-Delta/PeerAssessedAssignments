@@ -66,7 +66,9 @@ function Works(mod) {
         <div className = 'py-2 dark:bg-zinc-900'>
           
             <div className='pr-80 lg:pl-80 pl-16 grid grid-cols-1 gap-3'>
-                {assignments.map(a => (
+                {assignments.slice().reverse().map(a => (
+                    
+                    
                     <WorkItem key={a.assignmentId}
                               id={a.assignmentId}
                               imgUrl={a.imageURL}
@@ -80,6 +82,7 @@ function Works(mod) {
                               moduleTitle = {module.title}
                               moduleCode = {module.moduleCode}>
                     </WorkItem>
+                   
                 ))}
             </div>
         </div>

@@ -74,7 +74,7 @@ function StudentView({ title }) {
   return (
     <div className="dark:bg-zinc-900 h-[1200px]">
       <HeroSection prevPageName="Modules" prevUrl="/modules"></HeroSection>
-
+      
       <div className="font-Dosis bg:white dark:bg-zinc-900">
         <div className="w-full mx-auto h-full">
           <div className="fixed z-30">
@@ -163,7 +163,7 @@ function StudentView({ title }) {
       ) : nestedPage === "submitwork" ? (
         <Works mod={module}></Works>
       ) : nestedPage === "addassignment" ? (
-        <AddAssignment></AddAssignment>
+        <AddAssignment moduleId={module.moduleId}></AddAssignment>
       ) : nestedPage === "peermanager" ? (
         <PeerManager></PeerManager>
       ) : nestedPage === "approvefeedback" ? (
