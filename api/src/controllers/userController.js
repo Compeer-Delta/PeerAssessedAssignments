@@ -111,13 +111,19 @@ const getUser = async (req, res) => {
 
 //get all users by institution
 const getAllUsers = async (req, res) => {
-	const { institutionName } = req.query;
-	try {
-		const users = await User.find({ institutionName: institutionName.toLowerCase() });
-		res.json({ users });
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
+  const { institutionName, role } = req.query;
+  let query = { institutionName: institutionName.toLowerCase() };
+
+  if (role) {
+    query.role = role.toLowerCase();
+  } // optional query parameter - role to filter by student
+
+  try {
+    const users = await User.find(query);
+    res.json({ users });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 export default {

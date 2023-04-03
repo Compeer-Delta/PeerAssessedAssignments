@@ -36,12 +36,13 @@ const userSchema = new Schema(
     },
     institutionName: {
       type: String,
-      ref: 'Institution',
+      ref: "Institution",
       required: true,
     },
     role: {
       type: String,
       required: true,
+      enum: ["teacher", "student"],
       default: "student",
     },
   },
