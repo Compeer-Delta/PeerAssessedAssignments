@@ -157,7 +157,7 @@ function StudentView({ title }) {
         Module: {moduleTitle}{" "}
       </div>
       {nestedPage === "notifications" ? (
-        <Notifications />
+        <Notifications></Notifications>
       ) : nestedPage === "viewfeedback" ? (
         <ViewFeedback></ViewFeedback>
       ) : nestedPage === "submitwork" ? (
