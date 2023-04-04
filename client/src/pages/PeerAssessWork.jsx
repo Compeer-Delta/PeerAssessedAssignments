@@ -83,7 +83,7 @@ function PeerAssessWork() {
       <button onClick={toggleMinimize} className = "font-Dosis text-sm absolute top-0 left-0 flex items-center  h-[20px] text-center px-1 cursor-pointer text-slate-100 dark:text-gray-300 bg-slate-600  transform transition">
              <p> Minimize </p>
     </button>
-    <h1 className= 'ml-10 py-4  text-3xl w-[300px] sm:w-[700px] text-slate-600 font-semibold dark:text-white rounded-md font-Dosis '> Give your feedback to Hathan: </h1> 
+    <h1 className= 'ml-10 py-4  text-3xl w-[300px] sm:w-[700px] text-slate-600 font-semibold dark:text-white rounded-md font-Dosis '> Give your feedback to {submitBy}: </h1> 
     <h1 className= 'font-Dosis ml-10  text-l w-[100px] text-slate-600 font-semibold dark:text-white rounded-md '> Mark: </h1> 
       
       <input className=" ml-10 border w-20 border-blue-400 text-center rounded-md " type="number" min="0" max="1000" step="1" onChange={(e => {setGivenMark(e.target.value)})}></input>
