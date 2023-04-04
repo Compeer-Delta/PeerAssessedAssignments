@@ -4,13 +4,14 @@ import mongoose from "mongoose";
 
 // create notification
 const createNotif = async (req, res) => {
-  const { userId, notifTitle, notifContent, urgency } = req.body;
+  const { userId, notifTitle, notifContent, urgency, assignmentId } = req.body;
   const notification = new Notification({
     _id: new mongoose.Types.ObjectId(),
     userId: userId,
     notifTitle: notifTitle,
     notification: notifContent,
     urgency: urgency, //boolean
+    assignmentId: assignmentId,
   });
   try {
     const savedNotification = await notification.save();
