@@ -4,26 +4,44 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../functions/api/notificationAPI";
 import { ReactSession } from "react-client-session";
 import ModuleSearchBox from "../components/ModuleSearchBox";
-import { getUserModules } from "../functions/api/moduleAPI";
 import { createNotification } from "../functions/api/notificationAPI";
+import { useParams } from "react-router-dom";
+import formatUnixTimestamp from "../functions/tools/formatUnixTimestamp";
+import { getAssignmentInfo } from '../functions/api/assignmentAPI';
 
-function AddNotification(props) {
+function AddNotification(mod) {
 
   const [userId, setUserId] = useState(ReactSession.get("uid"));
   const [userInst, setUserInst] = useState(ReactSession.get("inst"));
   const [userEmail, setUserEmail] = useState(ReactSession.get("email"));
-
   const [notifTitle, setNotifTitle] = useState("");
   const [notifContent, setNotifContent] = useState("");
   const [notifUrgency, setNotifUrgency] = useState(false); //Not urgent by default
-  const [moduleGroups, setModuleGroups] = useState(null);
+  const [referredAssign, setReferredAssignment] = useState(null);
+  const [module, setModule] = useState(mod.mod);
+  const [assignments, setAssignments] = useState([]);
+
+  const params = useParams();
 
   const [confirmedNotification, setConfirmedNotification] = useState(false);
 
   const addNewNotif = async (e) => {
+    // console.log(
+    //   module.students, //shown as userId in the schema, is an array of recipients' userId in reality 
+    //   notifTitle,
+    //   notifContent,
+    //   notifUrgency,
+    //   referredAssign
+    // );
+
     // Add a new notification
     const response = await createNotification(
-      
+      module.students, //shown as userId in the schema, is an array of recipients' userId in reality 
+      notifTitle,
+      notifContent,
+      notifUrgency,
+      referredAssign,
+      ReactSession.get("token")
     );
     const details = await response.json();
     console.log(details);
@@ -39,15 +57,22 @@ function AddNotification(props) {
   }
 
   useLayoutEffect(() => {
-    const getModuleGroups = async () => {
-      const response = await getUserModules(userEmail, ReactSession.get("token"));
-      const details = await response.json();
+    const moduleId = mod.moduleId;
+    
+    const getAssignmentDetails = async () => {
+      const results = await Promise.all(
+          module.assignments.map(async (id) => {
+              const response = await getAssignmentInfo(moduleId, id, ReactSession.get("token"));
 
-      setModuleGroups(details);
-    };
+              const data = await response.json();
+              return data;
+          })
+      );
 
-    getModuleGroups();
-    //console.log(moduleGroups);
+      setAssignments(results);
+    }
+
+    getAssignmentDetails()
   }, [])
 
   return (
@@ -55,7 +80,7 @@ function AddNotification(props) {
       <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
       <script src="../path/to/flowbite/dist/datepicker.js"></script>
 
-      <div className="py-3 dark:bg-zinc-900 h-screen">
+      <div className="py-3 dark:bg-zinc-900 h-screen pl-10">
       <h1 className=" font-Dosis sm:ml-80 ml-32 text-3xl text-slate-600 font-semibold dark:text-white rounded-md pb-4">
           {" "}
           Add Notification:
@@ -107,16 +132,18 @@ function AddNotification(props) {
 
               <h1 className=" ml-8  text-l  text-slate-6 00 font-semibold dark:text-white rounded-md ">
                 {" "}
-                Send to:{" "}
+                Referenced Assignment:{" "}
               </h1>
-              {moduleGroups && moduleGroups.length > 0 ? (
+              {assignments && assignments.length > 0 ? (
               <>
-              <select name="modSelect" className="ml-8">
-                {moduleGroups.map((module) => (
+              <select onChange={(e) => setReferredAssignment(e.target.value)} name="modSelect" className="ml-8 block p-2.5 w-[260px] sm:w-[500px] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="" name="none">None</option>
+                {assignments.map((a) => (
                   <option 
-                  value={module.students}
-                  name={module.moduleCode}>
-                    {module.moduleCode + " | " + module.title}
+                  value={a.assignmentId}
+                  name={a.title}
+                  >
+                    {a.title + " | Due: " + formatUnixTimestamp(a.endDate)}
                   </option>
                 ))} 
               </select>
@@ -142,7 +169,7 @@ function AddNotification(props) {
               </label>
             </div>
           )}
-        </div>
+        
         { /*Submit Button*/ }
         <div className="ml-8 md:flex md:items-center py-5">
             <div className="md:w-2/3 ">
@@ -153,6 +180,7 @@ function AddNotification(props) {
               Add Notification
               </button>
             </div>
+          </div>
         </div>
       </div>
     </>
