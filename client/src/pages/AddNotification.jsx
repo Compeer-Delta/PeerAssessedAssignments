@@ -112,13 +112,13 @@ function AddNotification(props) {
               {moduleGroups && moduleGroups.length > 0 ? (
               <>
               <select name="modSelect" className="ml-8">
-                {moduleGroups.map((module) => {
+                {moduleGroups.map((module) => (
                   <option 
-                  value={module.students} 
+                  value={module.students}
                   name={module.moduleCode}>
-                    {module.title}
+                    {module.moduleCode + " | " + module.title}
                   </option>
-                })} 
+                ))} 
               </select>
               </>
               )  : (
