@@ -33,7 +33,9 @@ export const createNotification = async (
   userId,
   notifTitle,
   notifContent,
-  urgency
+  urgency,
+  assignmentId,
+  token
 ) => {
   const response = await fetch(`${API_BASE_URL}notification/create`, {
     method: "POST",
@@ -47,6 +49,9 @@ export const createNotification = async (
       notifTitle: notifTitle,
       notifContent: notifContent,
       urgency: urgency,
+      assignmentId: assignmentId
     }),
   });
+
+  return response;
 };
