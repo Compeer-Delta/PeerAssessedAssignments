@@ -76,8 +76,9 @@ function AddAssignment(props) {
       defaultImageURL,
       teachers,
       students,
-      //add review period
-      //add isOpen
+      reviewPeriod,
+      isOpen,
+      maxMark
     );
    const details = await response.json();
     console.log(details);
