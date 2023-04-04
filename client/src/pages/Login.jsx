@@ -1,3 +1,9 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ * API Fetches: Gregory Clews, Jordan D'Souza
+ * Bug fixing: Gregory Clews
+ */
 import React, { useLayoutEffect } from "react";
 import { Link, Navigate, Route, Routes } from "react-router-dom";
 import { useForm } from "react-hook-form";

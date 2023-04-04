@@ -1,3 +1,7 @@
+/**
+ * Credit:
+ * Functionality: Jordan D'Souza
+ */
 import React from 'react';
 import StudentFileUploader from '../components/StudentFileUploader';
 import HeroSection from '../components/HeroSection';

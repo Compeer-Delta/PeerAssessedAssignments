@@ -1,3 +1,7 @@
+/**
+ * Credit:
+ * Functionality: Jordan D'Souza
+ */
 import React, { useState, useEffect } from "react";
 import { ReactSession } from "react-client-session";
 import NotifItem from "./NotifItem";

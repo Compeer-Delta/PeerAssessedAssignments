@@ -1,3 +1,7 @@
+/**
+ * Credit:
+ * Functionality: Jordan D'Souza
+ */
 import React, { useEffect, useLayoutEffect } from "react";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";

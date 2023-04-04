@@ -1,3 +1,8 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ * Bug Fixes: Gregory Clews, Jordan DSouza
+ */
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as FAIcons from "react-icons/fa";

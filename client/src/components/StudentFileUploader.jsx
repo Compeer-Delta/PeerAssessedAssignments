@@ -1,3 +1,7 @@
+/**
+ * Credit:
+ * Functionality: Jordan D'Souza
+ */
 import { useState, useRef, useLayoutEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { ReactSession } from "react-client-session";

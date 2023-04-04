@@ -1,3 +1,7 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ */
 import React from "react";
 import { Route, Link, Routes, useNavigate } from "react-router-dom";
 function HeroSection({

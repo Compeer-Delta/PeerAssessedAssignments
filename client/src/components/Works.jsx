@@ -1,3 +1,7 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ */
 import React, { useLayoutEffect, useState } from 'react'
 import WorkItem from './WorkItem'
 import Modules from '../pages/Modules';

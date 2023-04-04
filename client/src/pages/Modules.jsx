@@ -1,3 +1,8 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ * API Fetches: Jordan D'Souza
+ */
 import React from "react";
 import ModuleItem from "../components/ModuleItem";
 import { useRef, useState, useLayoutEffect, useEffect } from "react";

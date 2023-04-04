@@ -1,4 +1,8 @@
-// Specific module page for students
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ * Bug fixing: Gregory Clews, Jordan DSouza, Hathan Khatkar
+ */
 import React, { useLayoutEffect, useState } from "react";
 import HeroSection from "../components/HeroSection";
 import SideBar from "../components/SideBar";

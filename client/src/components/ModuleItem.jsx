@@ -1,3 +1,7 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ */
 import React, { useState } from "react";
 import StudentView from "../pages/StudentView";
 import { Link, Route, Routes } from "react-router-dom";

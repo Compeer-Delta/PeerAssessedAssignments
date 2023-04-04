@@ -1,3 +1,7 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ */
 import React from "react";
 import { useState } from "react";
 import { render } from "react-dom";

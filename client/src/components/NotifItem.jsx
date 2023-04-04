@@ -1,3 +1,7 @@
+/**
+ * Credit:
+ * Functionality: Jordan D'Souza
+ */
 import React, { useState } from "react";
 import { ReactSession } from "react-client-session";
 import "../styles/notification.css";

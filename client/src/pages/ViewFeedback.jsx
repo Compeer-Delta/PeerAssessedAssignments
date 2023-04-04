@@ -1,4 +1,8 @@
-// This page is for students to view feedback on their assignments
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ * API Fetches: Gregory Clews
+ */
 import Works from "../components/Works";
 import StudentView from "../pages/StudentView";
 import HeroSection from "../components/HeroSection";

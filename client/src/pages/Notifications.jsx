@@ -1,3 +1,8 @@
+/**
+ * Credit:
+ * Functionality: Jordan D'Souza
+ * 
+ */
 import React from 'react'
 import NotificationSystem from '../components/NotificationSystem'
 import HeroSection from '../components/HeroSection'

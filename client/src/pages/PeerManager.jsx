@@ -1,3 +1,8 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ * 
+ */
 import React, { useLayoutEffect } from 'react'
 import Works from '../components/Works'
 import StudentView from '../pages/StudentView'

@@ -1,3 +1,7 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ */
 import React, { useEffect, useState } from "react";
 import SubmitWork from "./SubmitWork";
 import { Link } from "react-router-dom";

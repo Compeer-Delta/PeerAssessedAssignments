@@ -1,3 +1,8 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ * Bug Fixes: Gregory Clews
+ */
 import React, { useState, useLayoutEffect } from "react";
 import StudentView from "../pages/StudentView";
 import { Link, Navigate, Routes, Route } from "react-router-dom";

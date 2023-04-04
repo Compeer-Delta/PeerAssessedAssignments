@@ -1,3 +1,7 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ */
 import React from "react";
 //import { MdTableChart } from 'react-icons/md'
 import { Link } from "react-router-dom";

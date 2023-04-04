@@ -1,3 +1,8 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ * API Fetches: Hathan Khatkar
+ */
 import React from "react";
 import HeroSection from "../components/HeroSection";
 import { Link } from "react-router-dom";
