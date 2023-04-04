@@ -33,7 +33,6 @@ export const createModule = async (
 
 // Get all teachers by module id
 export const getTeachers = async (moduleId, token) => {
-  console.log(moduleId);
   const response = await fetch(
     `${API_BASE_URL}moduleteachers?moduleId=${moduleId}`,
     {

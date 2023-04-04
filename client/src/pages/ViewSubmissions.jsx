@@ -20,35 +20,38 @@ function ViewSubmissions() {
 
   const [submissions, setSubmissions] = useState([]);
   const location = useLocation();
-  const { assignmentTitle } = location.state;
-  const { assignmentId } = location.state;
-  const { modId } = location.state; //module id
-  const { modCode } = location.state; //module id
-  const { modTitle } = location.state;
+  const { assignmentTitle, assignmentId, modId, modCode, modTitle } =
+    location.state;
   const peersPerSubmission = 3;
 
   // Get all submissions for the assignment
-  useEffect(async () => {
-    const response = await getSubmissions(assignmentId, session.token);
-    const submissions = await response.json();
-    if (!submissions) {
-      console.log("No submissions found");
-    }
-    console.log(submissions);
-    setSubmissions(submissions);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getSubmissions(assignmentId, session.token);
+      const submissions = await response.json();
+
+      if (!submissions) {
+        console.log("No submissions found");
+      }
+      console.log(submissions);
+      setSubmissions(submissions);
+    };
+    fetchData();
   }, [assignmentId]);
 
   // Limit the number of submissions displayed to the number of peers per submission
   function limitViewedSubmissions() {
-    if (session.accType === "studentAccount") {
+    if (session.accType === "studentAccount" && Array.isArray(submissions)) {
       return submissions.slice(0, peersPerSubmission).map((submission) => ({
         submissionTitle: submission.submissionTitle,
         submissionId: submission._id,
         submitBy: submission.userId,
         numFeedback: submission.feedback.length,
       }));
+    } else if (Array.isArray(submissions)) {
+      return submissions
     } else {
-      return submissions;
+      return [];
     }
   }
 
@@ -56,7 +59,6 @@ function ViewSubmissions() {
 
   return (
     <>
-      {/* {assignmentId} + {modId} + {assignmentTitle} */}
       <HeroSection
         prevPageName="Home Page"
         prevUrl={"/modules/" + modCode}
@@ -65,28 +67,27 @@ function ViewSubmissions() {
       ></HeroSection>
       <LoginCard />
 
-      <h1 className=" xl:pl-72 pl-10 py-10 text-3xl xl:w-[1200px] w-[400px] text-slate-600 font-semibold dark:text-white rounded-md ">
-        {" "}
+      <h1 className="xl:pl-72 pl-10 py-10 text-3xl xl:w-[1200px] w-[400px] text-slate-600 font-semibold dark:text-white rounded-md">
         {assignmentTitle}'s Submissions
       </h1>
 
       <div className="overflow-x-scroll md:overflow-auto">
-        <table className="table-fixed xl:w-2/3 w-[700px]  text-sm text-left text-gray-500 dark:text-gray-400 xl:ml-72 ml-10">
-          <thead className="text-s text-gray-700 font-Dosis  bg-slate-50 dark:bg-gray-700 dark:text-gray-400 border-2 border-slate-900  ">
+        <table className="table-fixed xl:w-2/3 w-[700px] text-sm text-left text-gray-500 dark:text-gray-400 xl:ml-72 ml-10">
+          <thead className="text-s text-gray-700 font-Dosis bg-slate-50 dark:bg-gray-700 dark:text-gray-400 border-2 border-slate-900">
             <tr>
               <th className="px-6 py-3 border border-width-10">
                 Submission Title
               </th>
               <th className="px-6 py-3 border border-width-10">Submitted by</th>
               <th className="px-6 py-3 border border-width-10">
-                Feedback recieved
+                Feedback received
               </th>
               <th className="px-6 py-3 border border-width-10"></th>
             </tr>
           </thead>
           <tbody>
             {limitedSubmissions.map((submission) => (
-              <tr className=" dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
+              <tr className="dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
                 <th
                   scope="row"
                   class="px-6 py-4 font-medium text-gray-900 whitespace dark:text-white"
@@ -112,7 +113,7 @@ function ViewSubmissions() {
                       modTitle: modTitle,
                       modCode: modCode,
                     }}
-                    className=" font-Dosis text-blue-100 text-l bg-blue-500 border-black px-6 py-1 rounded-3xl hover:bg-blue-200 hover:text-blue-800"
+                    className="font-Dosis text-blue-100 text-l bg-blue-500 border-black px-6 py-1 rounded-3xl hover:bg-blue-200 hover:text-blue-800"
                   >
                     Peer Assess
                   </Link>

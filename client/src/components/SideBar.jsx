@@ -115,14 +115,12 @@ function SideBar({ moduleTitle, moduleId, moduleCode }) {
             <>
               {moduleTeachers.map((teachers) => {
                 return (
-                  <div className="p-1 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer text-slate-900 dark:text-gray-300 bg-slate-200 dark:bg-zinc-900 hover:-translate-y-2 transform transition">
-                    <div key={teachers.email}>
+                  <div key={teachers.email} className="p-1 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer text-slate-900 dark:text-gray-300 bg-slate-200 dark:bg-zinc-900 hover:-translate-y-2 transform transition">
                       <p>
                         <span>
                           {teachers.firstname} {teachers.surname}
                         </span>
                       </p>
-                    </div>
                   </div>
                 );
               })}

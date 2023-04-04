@@ -22,8 +22,7 @@ function ViewFeedback() {
   useEffect(() => {
     const getAcceptedFeedback = async () => {
       const response = await acceptedFeedback(
-        session.uid,
-        sessionStorage.getItem("token")
+        session.uid, ReactSession.get("token")
       );
       const data = await response.json();
       console.log(data);
@@ -49,7 +48,6 @@ function ViewFeedback() {
       ) {
         isFeedbackFound = true;
         feedbackIndex = index;
-        console.log("found");
         return;
       }
     });

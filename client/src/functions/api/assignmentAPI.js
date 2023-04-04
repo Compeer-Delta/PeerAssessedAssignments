@@ -30,7 +30,10 @@ export const addAssignment = async (
   numOfReviewers,
   imageURL,
   teachers = [],
-  students = []
+  students = [],
+  reviewPeriod,
+  isOpen,
+  maxMark,
 ) => {
   const response = await fetch(`${API_BASE_URL}assignment/add/`, {
     method: "POST",
@@ -51,6 +54,9 @@ export const addAssignment = async (
       imageURL: imageURL,
       students: students,
       teachers: teachers,
+      reviewPeriod: reviewPeriod,
+      isOpen: isOpen,
+      maxMark: maxMark,
     }),
   });
   return response;

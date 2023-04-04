@@ -16,6 +16,9 @@ const addAssignment = async (req, res) => {
     imageURL,
     teachers,
     students,
+    reviewPeriod,
+    isOpen,
+    maxMark,
   } = req.body;
 
   const setAssignment = new Assignment({
@@ -31,6 +34,9 @@ const addAssignment = async (req, res) => {
     numOfReviewers: numOfReviewers,
     teachers: teachers,
     students: students,
+    reviewPeriod: reviewPeriod,
+    isOpen: isOpen,
+    maxMark: maxMark,
   });
 
   try {
@@ -55,7 +61,7 @@ const addAssignment = async (req, res) => {
 // Update assignment details
 const updateAssignment = async (req, res) => {
   const { assignmentId } = req.params;
-  const updates = req.body; // 
+  const updates = req.body; //
 
   try {
     const setAssignment = await Module.updateOne(

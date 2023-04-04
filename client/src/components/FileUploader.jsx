@@ -18,7 +18,6 @@ function FileUploader(props, uploadType) {
       /// if ((((fileContent.split(/\n/))[0]).split(",")).length() == 4) //checks if its formatted in account data
       if (props.uploadType === "modules") {
         props.UploadedData(reader.result.split(","));
-        console.log("in");
       } else if (props.uploadType === "accounts") {
         if (reader.result.split(/\n/)[0].split(",").length == 5) {
           console.log(reader.result.split(/\n/)[0].split(","));

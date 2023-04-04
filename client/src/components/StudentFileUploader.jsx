@@ -31,7 +31,7 @@ function StudentFileUploader() {
       formData.append("userId", uid);
       formData.append("moduleId", modId);
       formData.append("assignmentId", assignmentId);
-      formData.append("binData", file);
+      formData.append("file", file);
 
       const response = await submitAssignment(formData, token);
       const data = await response.json();
