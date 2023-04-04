@@ -189,7 +189,7 @@ function StudentView({ title }) {
       ) : nestedPage === "approvefeedback" ? (
         <ApproveFeedback></ApproveFeedback>
       ) : nestedPage === "addnotification" ? (
-        <AddNotification></AddNotification> //Jordan replace here with add notification
+        <AddNotification mod={module}></AddNotification> //Jordan replace here with add notification
       )
       : (
         //default
