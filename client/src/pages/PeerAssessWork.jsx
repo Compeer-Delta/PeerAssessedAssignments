@@ -18,6 +18,7 @@ function PeerAssessWork() {
   const {modId} = location.state; //module id
   const {modTitle} = location.state;
   const {modCode} = location.state;
+  const {submitBy} = location.state;
   const [minimized, setMinimized] = useState(false);
 
     const [pdfFile, setPdfFile] = useState(null);
@@ -66,7 +67,7 @@ function PeerAssessWork() {
     <>
     
  <HeroSection prevPageName = "Submissions" prevUrl= {"/modules/"+ modCode + "/viewsubmissions/" + assignmentId} moduleTitle= {modTitle} moduleId = {modId} assignmentTitle={assignmentTitle} assignmentId={assignmentId} moduleCode={modCode}  ></HeroSection>
- <h1 className= ' xl:pl-72 pl-3 py-6 text-3xl  text-slate-600 font-semibold dark:text-white bg-slate-100 border-b-2 border-slate-400 font-Dosis'> Peer Assessing: Hathan Khatkar</h1> 
+ <h1 className= ' xl:pl-72 pl-3 py-6 text-3xl  text-slate-600 font-semibold dark:text-white bg-slate-100 border-b-2 border-slate-400 font-Dosis'> Peer Assessing: {submitBy}</h1> 
  <div className="flex row-2">
  <div className=" pdf-container xl:w-1/2 w-full h-full ">
 <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.15.349/build/pdf.worker.min.js">
@@ -83,15 +84,9 @@ function PeerAssessWork() {
              <p> Minimize </p>
     </button>
     <h1 className= 'ml-10 py-4  text-3xl w-[300px] sm:w-[700px] text-slate-600 font-semibold dark:text-white rounded-md font-Dosis '> Give your feedback to Hathan: </h1> 
-    <h1 className= 'font-Dosis ml-10  text-l w-[100px] text-slate-600 font-semibold dark:text-white rounded-md '> Mark / Grade: </h1> 
-      <input
-             
-            onChange = {(e) => setGivenMark(e.target.value)}
-             value={givenMark}
-             name="Mark / Grade"
-              required 
-            className="ml-10 bg-slate-100 appearance-none border-2 text-sm border-slate-200 rounded w-2/3  py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500" id="username" type="text" placeholder="Enter your given peer assessed grade">
-      </input>
+    <h1 className= 'font-Dosis ml-10  text-l w-[100px] text-slate-600 font-semibold dark:text-white rounded-md '> Mark: </h1> 
+      
+      <input className=" ml-10 border w-20 border-blue-400 text-center rounded-md " type="number" min="0" max="1000" step="1" onChange={(e => {setGivenMark(e.target.value)})}></input>
       <h1 className= 'font-Dosis ml-10 text-l w-[100px] text-slate-600 font-semibold dark:text-white rounded-md '> Feedback: </h1> 
       <textarea 
              
@@ -109,13 +104,12 @@ function PeerAssessWork() {
     ): feedbackSubmitted === true && minimized === false ? (
       <div className=" rounded-l-md fixed xl:w-1/2 w-[400px] right-0 bg-slate-300 border-2 border-slate-400 border-r-0 py-2">
     
-    <h1 className= 'ml-10 py-4  text-3xl sm:w-[700px] w-[300px] text-slate-600 font-semibold dark:text-white rounded-md font-Dosis '> Thank you for your peer assessing Hathan! </h1> 
+    <h1 className= 'ml-10 py-4  text-3xl sm:w-[700px] w-[300px] text-slate-600 font-semibold dark:text-white rounded-md font-Dosis '> Thank you for your peer assessing {submitBy}! </h1> 
     <h1 className= 'font-Dosis ml-10  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md '> Given mark / grade: {givenMark}</h1> 
      <div className= 'font-Dosis ml-10  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md'>Given feedback:</div>
      <p className="whitespace-pre-wrap break-words font-Dosis ml-10  text-l w-[700px] text-slate-600 font-semibold dark:text-white rounded-md">{givenFeedback}</p>
 
-    <button onClick={submitFeedback} className=" ml-2 shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-8 rounded ">Edit </button>
-    <button onClick={submitFeedback} className=" ml-2 shadow bg-red-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-8 rounded ">Delete </button>  
+     
 
     </div>
     ): minimized === true ? (

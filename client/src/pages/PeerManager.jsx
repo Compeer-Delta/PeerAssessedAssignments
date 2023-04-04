@@ -7,15 +7,15 @@ import { getAssignmentInfo } from '../functions/api/assignmentAPI';
 import {ReactSession} from 'react-client-session'
 function PeerManager(props) {
 
-    const [assignments, setAssignments] = useState([]);
-      //  {title: 'A* Algorithm Assignment', dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:5, numSubmissions:12, open:false, id: 1},
-      //  {title: "Class work 3 submission", dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:2, numSubmissions:12, open:false, id: 2},
-       // {title: "Class work 2 submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:12, numSubmissions:12, open:false, id: 3},
-       // {title: "Introduction to AI submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:3, numSubmissions:12, open:false, id: 4},
-      //  {title: 'RE A* Algorithm Assignment',dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:6, numSubmissions:12, open:false, id: 5},
-      //  {title: "RE Class work 3 submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:3,numSubmissions:12, open:false, id: 6},
-      //  {title: "RE Class work 2 submission",dueDate: '9:00pm 1/10/24',setDate: '4.32pm 10/10/22',numOfReviewers:1, numSubmissions:12, open:false, id: 7},
-      //  { title: "RE Introduction to AI submission",dueDate: '9:00pm 1/10/24',setDate: '4.32pm 10/10/22',numOfReviewers:7, numSubmissions:12, open:false,id: 8}]);
+    const [assignments, setAssignments] = useState([
+       {title: 'A* Algorithm Assignment', dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:0, numSubmissions:12, open:false, id: 1},
+       {title: "Class work 3 submission", dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:0, numSubmissions:12, open:false, id: 2},
+       {title: "Class work 2 submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:0, numSubmissions:12, open:false, id: 3},
+       {title: "Introduction to AI submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:0, numSubmissions:12, open:false, id: 4},
+       {title: 'RE A* Algorithm Assignment',dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:0, numSubmissions:12, open:false, id: 5},
+       {title: "RE Class work 3 submission",dueDate: '9:00pm 1/10/22',setDate: '4.32pm 10/10/22',numOfReviewers:0,numSubmissions:12, open:false, id: 6},
+       {title: "RE Class work 2 submission",dueDate: '9:00pm 1/10/24',setDate: '4.32pm 10/10/22',numOfReviewers:0, numSubmissions:12, open:false, id: 7},
+       { title: "RE Introduction to AI submission",dueDate: '9:00pm 1/10/24',setDate: '4.32pm 10/10/22',numOfReviewers:0, numSubmissions:12, open:false,id: 8}]);
 
         var i = 0;
         var stopcount = false;
@@ -175,7 +175,7 @@ function PeerManager(props) {
               })
           );
 
-          setAssignments(results);
+          //setAssignments(results);
           console.log("assigns " + assignments);
       }
 
@@ -184,7 +184,7 @@ function PeerManager(props) {
 
   return (
     <>
-    <div  className=" ml-24 md:ml-80 md:mr-80 font-Dosis text-3xl font-bold py-2">Closed Assignments</div>
+    <div  className=" ml-24 md:ml-80 md:mr-80 font-Dosis text-3xl font-bold py-2 dark:text-white">Closed Assignments</div>
 
     <div className="overflow-x-scroll xl:overflow-hidden w-2/3 sm:w-full  ml-16 sm:ml-0 ">
     <table className="  sm:table-fixed w-[1200px] text-sm text-left text-gray-500 dark:text-gray-400 sm:ml-80">
@@ -202,7 +202,7 @@ function PeerManager(props) {
 
         {assignments.map(assignment => (
            
-            afterDue(assignment) == true ? ( //&& assignment.open==false //displays row if the assignment due date has passed and teacher has not opened the assignment
+            assignment.open==false ? ( //&& afterDue(assignment) == true  && //displays row if the assignment due date has passed and teacher has not opened the assignment
 
             
             <tr className=" dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
@@ -239,7 +239,7 @@ function PeerManager(props) {
                 </td>
                 
             </tr>
-            ): afterDue(assignment) == true ? ( // && assignment.open==true
+            ):  assignment.open==true ? ( // && afterDue(assignment) == true  &&
                 <tr class=" dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 bg-green-100 border-2 border-slate-900">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {assignment.title}

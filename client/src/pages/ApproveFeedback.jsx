@@ -71,10 +71,10 @@ function ApproveFeedback() {
 
   return (
     <>
-    <div  className="xl:ml-80 xl:mr-80 ml-24  font-Dosis text-2xl sm:text-3xl font-bold py-2">Approve student feedback</div>
+    <div  className="xl:ml-80 xl:mr-80 ml-24  font-Dosis text-2xl sm:text-3xl font-bold py-2 dark:text-zinc-200">Approve student feedback</div>
     <div className=" overflow-x-scroll">
-    <table className="table-fixed md:w-[1200px] w-full  ml-16 text-sm text-left text-gray-500 dark:text-gray-400 xl:ml-80">
-    <thead className="text-s text-gray-700 font-Dosis  bg-slate-50 dark:bg-gray-700 dark:text-gray-400 border-2 border-slate-900 ">
+    <table className="table-fixed md:w-[1200px] w-full  ml-16 text-sm text-left text-gray-500 dark:text-zinc-100  xl:ml-80">
+    <thead className="text-s text-gray-700 font-Dosis  bg-slate-50  dark:text-white border-2 border-slate-900 dark:border-white dark:bg-zinc-800">
     <tr>
       <th className="px-6 py-3 border border-width-10">Assignment Title</th>
       <th className="px-6 py-3 border border-width-10">submission by</th>
@@ -91,7 +91,7 @@ function ApproveFeedback() {
            
             assignment.approved=="pending" ? ( //displays row if the assignment due date has passed and teacher has not opened the assignment
             <>
-            <tr className="  dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
+            <tr className="  dark:bg-zinc-800 dark:border-white hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace dark:text-white">
                     {assignment.title}
                 </th>
@@ -115,8 +115,8 @@ function ApproveFeedback() {
 
             </tr>
                 <div className="mb-5 sm:w-[1200px] w-[400px] bg-slate-200">
-                    <p className="font-Dosis ml-10  text-xl font-semibold dark:text-white text-green-600 "> Given Feedback:</p>
-                    <p className="whitespace-pre-wrap break-words font-Dosis ml-10  text-l text-slate-600 font-semibold dark:text-white rounded-md">{assignment.feedback}</p>
+                    <p className="font-Dosis ml-10  text-xl w-[700px] font-semibold  text-green-600 "> Given Feedback:</p>
+                    <p className="whitespace-pre-wrap break-words font-Dosis ml-10  text-l w-[1000px] text-slate-600 dark:text-zinc-800 font-semibold  rounded-md">{assignment.feedback}</p>
                 </div>
             </>
             ): assignment.approved=="yes" || assignment.approved=="no" ? (
