@@ -1,3 +1,8 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ * API Fetches: Hathan Khatkar
+ */
 import React, { useEffect } from "react";
 import Modules from "../pages/Modules";
 import HeroSection from "../components/HeroSection";

@@ -1,12 +1,12 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ * API fetches: Hathan Khatkar
+ */
 import React from "react";
-import Modules from "../pages/Modules";
-import HeroSection from "../components/HeroSection";
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import StudentView from "./StudentView";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import SubmitWork from "./SubmitWork";
 import FileUploader from "../components/FileUploader";
 import { addAssignment } from "../functions/api/assignmentAPI";
 import { ReactSession } from "react-client-session";
@@ -16,8 +16,8 @@ function AddAssignment(props) {
   const [assignDesc, setAssignDesc] = useState("");
 
   const [selectedDate, setSelectedDate] = useState("");
-  const [selectedPeerDate, setSelectedPeerDate]  = useState("");
-  
+  const [selectedPeerDate, setSelectedPeerDate] = useState("");
+
   const [duePeerMins, setPeerDueMins] = useState("");
   const [duePeerHour, setPeerDueHour] = useState("");
   const [peerMeridiem, setPeerMeridiem] = useState("AM");
@@ -26,7 +26,7 @@ function AddAssignment(props) {
   const [dueHour, setDueHour] = useState("");
   const [meridiem, setMeridiem] = useState("AM");
 
-  const [maxMark, setMaxMark]= useState();
+  const [maxMark, setMaxMark] = useState();
 
   const [confirmedAssignment, setConfirmedAssignment] = useState(false);
   const [userId, setUserId] = useState(ReactSession.get("uid"));
@@ -40,63 +40,64 @@ function AddAssignment(props) {
     console.log("date " + Date.parse(formatTimeAndDate(false)));
     console.log("startdate " + new Date().getTime());
     console.log("mark" + maxMark);
-    console.log("peer date" + (Date.parse(formatTimeAndDate(true))));
+    console.log("peer date" + Date.parse(formatTimeAndDate(true)));
     const brief = undefined;
     const currentTimestamp = new Date().getTime();
     const dueTimestamp = Date.parse(formatTimeAndDate());
     const reviewPeriod = Date.parse(formatTimeAndDate(true));
     const numOfPeers = 1;
     const isOpen = false;
-  
-    var random = (Math.floor(Math.random() * (4 - 1 + 1) + 1));
-    console.log("NUM" + random)
-    const defaultImageURL = ["https://marketplace.canva.com/EAD2962NKnQ/2/0/1600w/canva-rainbow-gradient-pink-and-purple-zoom-virtual-background-_Tcjok-d9b4.jpg",
-    "https://images.ctfassets.net/hrltx12pl8hq/5KiKmVEsCQPMNrbOE6w0Ot/341c573752bf35cb969e21fcd279d3f9/hero-img_copy.jpg?fit=fill&w=800&h=300",
-    "https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg",
-    "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3BhY2UlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fA%3D%3D&w=1000&q=80"];
+
+    var random = Math.floor(Math.random() * (4 - 1 + 1) + 1);
+    console.log("NUM" + random);
+    const defaultImageURL = [
+      "https://marketplace.canva.com/EAD2962NKnQ/2/0/1600w/canva-rainbow-gradient-pink-and-purple-zoom-virtual-background-_Tcjok-d9b4.jpg",
+      "https://images.ctfassets.net/hrltx12pl8hq/5KiKmVEsCQPMNrbOE6w0Ot/341c573752bf35cb969e21fcd279d3f9/hero-img_copy.jpg?fit=fill&w=800&h=300",
+      "https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg",
+      "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3BhY2UlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+    ];
 
     const students = [];
     const teachers = [];
     const moduleId = props.moduleId;
 
     // Add a new assignment
-     const response = await addAssignment(
-       ReactSession.get("token"),
-       userId,
-       moduleId,
-       assignTitle,
-       assignDesc,
-       brief,
-       currentTimestamp,
-       dueTimestamp,
-       numOfPeers,
-       defaultImageURL[random-1],
-       teachers,
-       students,
-       reviewPeriod,
-       isOpen,
-       maxMark
-     );
+    const response = await addAssignment(
+      ReactSession.get("token"),
+      userId,
+      moduleId,
+      assignTitle,
+      assignDesc,
+      brief,
+      currentTimestamp,
+      dueTimestamp,
+      numOfPeers,
+      defaultImageURL[random - 1],
+      teachers,
+      students,
+      reviewPeriod,
+      isOpen,
+      maxMark
+    );
     const details = await response.json();
-  //   console.log(details);
-     //Add to database here
-     setConfirmedAssignment(true);
-   };
+    //   console.log(details);
+    //Add to database here
+    setConfirmedAssignment(true);
+  };
 
   function formatTimeAndDate(isPeer) {
     //formats the the time so it is able to be read by Date
 
-    if (isPeer){
-    var tempHour = duePeerHour;
-    var tempMin = duePeerMins;
-    var tempMeridiem = peerMeridiem;
-    var tempDate = selectedPeerDate + "";
-    }
-    else{
-    var tempHour = dueHour;
-    var tempMin = dueMins;
-    var tempMeridiem = meridiem;
-    var tempDate = selectedDate + "";
+    if (isPeer) {
+      var tempHour = duePeerHour;
+      var tempMin = duePeerMins;
+      var tempMeridiem = peerMeridiem;
+      var tempDate = selectedPeerDate + "";
+    } else {
+      var tempHour = dueHour;
+      var tempMin = dueMins;
+      var tempMeridiem = meridiem;
+      var tempDate = selectedDate + "";
     }
 
     if (tempMeridiem === "PM") {
@@ -196,7 +197,7 @@ function AddAssignment(props) {
     setPeerDueMins("");
     setPeerDueHour("");
     setPeerMeridiem("AM");
-    
+
     setMaxMark();
     setConfirmedAssignment(false);
   }
@@ -397,13 +398,28 @@ function AddAssignment(props) {
               </div>
 
               <div className="mt-6 ml-8">
-              <h1 className=" text-l text-slate-600 font-semibold dark:text-white rounded-md ">
-                {" "}
-                Max mark (0-1000):{" "}
-              </h1>
-              <input className=" border w-20 border-blue-400 text-center rounded-md " type="number" min="0" max="1000" step="1" onChange={(e => {if (e.target.value > 1000){setMaxMark(1000)} else if (e.target.value < 0){setMaxMark(0)} else {setMaxMark(e.target.value)}})}></input>
+                <h1 className=" text-l text-slate-600 font-semibold dark:text-white rounded-md ">
+                  {" "}
+                  Max mark (0-1000):{" "}
+                </h1>
+                <input
+                  className=" border w-20 border-blue-400 text-center rounded-md "
+                  type="number"
+                  min="0"
+                  max="1000"
+                  step="1"
+                  onChange={(e) => {
+                    if (e.target.value > 1000) {
+                      setMaxMark(1000);
+                    } else if (e.target.value < 0) {
+                      setMaxMark(0);
+                    } else {
+                      setMaxMark(e.target.value);
+                    }
+                  }}
+                ></input>
               </div>
-                 {/* UPLOAD BRIEF */} 
+              {/* UPLOAD BRIEF */}
               <h1 className="ml-8 mb-2 mt-10 text-l w-[200px] text-slate-600 font-semibold dark:text-white rounded-md ">
                 {" "}
                 Upload Breif below:{" "}

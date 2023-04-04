@@ -1,3 +1,8 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ *
+ */
 import React from 'react'
 import Modules from '../pages/Modules'
 import HeroSection from '../components/HeroSection'

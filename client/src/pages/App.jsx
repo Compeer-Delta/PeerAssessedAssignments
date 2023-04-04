@@ -1,3 +1,8 @@
+/**
+ * Credit:
+ * Functionality: Hathan Khatkar
+ * Route editing: Jordan D'Souza, Gregory Clews, Hathan Khatkar
+ */
 import React, {useEffect, useState} from 'react'
 import HeroSection from '../components/HeroSection'
 import Works from '../components/Works';
