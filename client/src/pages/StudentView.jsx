@@ -15,6 +15,7 @@ import temporaryModulesData from "../data/temporaryModulesData";
 import ApproveFeedback from "./ApproveFeedback";
 import { ReactSession } from "react-client-session";
 import { getModuleInfo } from "../functions/api/moduleAPI";
+import AddNotification from "./AddNotification";
 
 function StudentView({ title }) {
   // const [toggle, setToggle] = useState(true);
@@ -188,7 +189,7 @@ function StudentView({ title }) {
       ) : nestedPage === "approvefeedback" ? (
         <ApproveFeedback></ApproveFeedback>
       ) : nestedPage === "addnotification" ? (
-        <ApproveFeedback></ApproveFeedback> //Jordan replace here with add notification
+        <AddNotification></AddNotification> //Jordan replace here with add notification
       )
       : (
         //default
