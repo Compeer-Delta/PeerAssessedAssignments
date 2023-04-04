@@ -79,10 +79,10 @@ function Modules() {
               to="/CreateModule"
               id="createModule"
               rel="noreferrer"
-              className="bg-slate-500 dark:bg-zinc-300 rounded-lg w-full h-20 overflow-hidden hover:-translate-y-1 transform transition "
+              className="bg-slate-500 dark:bg-zinc-300 rounded-lg w-[340px] h-32 overflow-hidden hover:-translate-y-1 transform transition "
             >
               <div className="text-gray-100 dark:text-gray-800 p-3">
-                <h3 className="text-lg md:text-xl mb-2 md:mb-1 font-semibold text-center py-3 ">
+                <h3 className="text-lg md:text-2xl mb-2  md:mb-1 font-semibold text-center py-8  ">
                   + New Module
                 </h3>
               </div>
