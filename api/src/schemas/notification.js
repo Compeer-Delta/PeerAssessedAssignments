@@ -29,10 +29,15 @@ const notifSchema = new Schema(
       default: false,
     },
     urgency: {
-      //True = urgent, False = not
+      //True = urgent, False = not 
       type: Boolean,
       required: true,
       default: false,
+    },
+    assignmentId: {
+      type: String,
+      required: false,
+      ref: "Assignment"
     },
   },
   {
