@@ -14,24 +14,18 @@ const submissionSchema = new Schema(
       required: true,
       default: generateUUID,
     },
-    userId: [
-      {
-        type: String,
-        ref: "User",
-      },
-    ],
-    assignmentId: [
-      {
-        type: String,
-        ref: "Assignment",
-      },
-    ],
-    moduleId: [
-      {
-        type: String,
-        ref: "Module",
-      },
-    ],
+    userId: {
+      type: String,
+      ref: "User",
+    },
+    assignmentId: {
+      type: String,
+      ref: "Assignment",
+    },
+    moduleId: {
+      type: String,
+      ref: "Module",
+    },
     fileName: {
       type: String,
       required: true,
