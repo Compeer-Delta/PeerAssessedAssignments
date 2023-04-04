@@ -22,8 +22,8 @@ function WorkItem({
   //DB: read the file where the passed id (or title) matches with the briefing (select from briefs where title/id = passed parameter in workitem [title/id])
 
   let current = new Date();
-  const convertedSetDate = new Date(setDate * 1000);
-  const convertedDueDate = new Date(dueDate * 1000);
+  const convertedSetDate = new Date(setDate);
+  const convertedDueDate = new Date(dueDate);
   var months = [
     "Jan",
     "Feb",
@@ -70,7 +70,7 @@ function WorkItem({
   function LockAfterDue() {
     //checks whether the current time is less than due date/ time, if so then submission remains open / otherwise close submission
     let dateNow = current.getTime();
-    let dateDue = new Date(dueDate * 1000); //date.getTime();
+    let dateDue = new Date(dueDate); //date.getTime();
 
     //  console.log("t" + current);
     //   console.log("t" + date);
@@ -148,7 +148,7 @@ function WorkItem({
             </div>
           )}
 
-          {open === true ? (
+          {open === true && LockAfterDue() === false ? (
             <Link
               to={"/modules/" + moduleCode + "/viewsubmissions/" + id}
               state={{

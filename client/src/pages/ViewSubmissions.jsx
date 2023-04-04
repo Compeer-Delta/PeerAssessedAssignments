@@ -8,8 +8,8 @@ import { ReactSession } from "react-client-session";
 import { getSubmissions } from "../functions/api/submissionAPI";
 
 function ViewSubmissions() {
-  let outputData = sessionStorage.getItem("loginSessionData");
-  outputData = JSON.parse(outputData);
+ // let outputData = sessionStorage.getItem("loginSessionData");
+ // outputData = JSON.parse(outputData);
   let session = {
     token: ReactSession.get("token"),
     accType: ReactSession.get("accType"),
@@ -18,7 +18,14 @@ function ViewSubmissions() {
     uid: ReactSession.get("uid"),
   };
 
-  const [submissions, setSubmissions] = useState([]);
+  const [submissions, setSubmissions] = useState([{submissionTitle: "My Submission", submitBy: "Hathan Khatkar", numFeedback: 2,  submissionId:1},
+  {submissionTitle: "Web Development assignment", submitBy: "Jordan D'Souza", numFeedback: 6, submissionId:2},
+  {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 ,submissionId:3},
+  {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 ,submissionId:4},
+  {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 ,submissionId:5},
+  {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 ,submissionId:6},
+  {submissionTitle: "Assignment to be peer marked", submitBy: "Gregory Clews", numFeedback: 4 ,submissionId:7}]);
+
   const location = useLocation();
   const { assignmentTitle, assignmentId, modId, modCode, modTitle } =
     location.state;
@@ -32,30 +39,33 @@ function ViewSubmissions() {
 
       if (!submissions) {
         console.log("No submissions found");
+        
       }
-      console.log(submissions);
-      setSubmissions(submissions);
+      else{
+      //console.log(submissions);
+      //setSubmissions(submissions); // COMMENTED OUT TO REPLACE WITH HARD CODED
+      }
     };
     fetchData();
   }, [assignmentId]);
 
   // Limit the number of submissions displayed to the number of peers per submission
-  function limitViewedSubmissions() {
-    if (session.accType === "studentAccount" && Array.isArray(submissions)) {
-      return submissions.slice(0, peersPerSubmission).map((submission) => ({
-        submissionTitle: submission.submissionTitle,
-        submissionId: submission._id,
-        submitBy: submission.userId,
-        numFeedback: submission.feedback.length,
-      }));
-    } else if (Array.isArray(submissions)) {
-      return submissions
-    } else {
-      return [];
-    }
-  }
+  // function limitViewedSubmissions() {
+  //   if (session.accType === "studentAccount" && Array.isArray(submissions)) {
+  //     return submissions.slice(0, peersPerSubmission).map((submission) => ({
+  //       submissionTitle: submission.submissionTitle,
+  //       submissionId: submission._id,
+  //       submitBy: submission.userId,
+  //       numFeedback: submission.feedback.length,
+  //     }));
+  //   } else if (Array.isArray(submissions)) {
+  //     return submissions
+  //   } else {
+  //     return [];
+  //   }
+  // }
 
-  const limitedSubmissions = limitViewedSubmissions();
+  // const limitedSubmissions = limitViewedSubmissions();
 
   return (
     <>
@@ -86,7 +96,7 @@ function ViewSubmissions() {
             </tr>
           </thead>
           <tbody>
-            {limitedSubmissions.map((submission) => (
+            {submissions.map((submission) => (
               <tr className="dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 bg-slate-100 border-2 border-slate-900">
                 <th
                   scope="row"
@@ -112,6 +122,7 @@ function ViewSubmissions() {
                       modId: modId,
                       modTitle: modTitle,
                       modCode: modCode,
+                      submitBy: submission.submitBy
                     }}
                     className="font-Dosis text-blue-100 text-l bg-blue-500 border-black px-6 py-1 rounded-3xl hover:bg-blue-200 hover:text-blue-800"
                   >

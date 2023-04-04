@@ -48,43 +48,40 @@ function AddAssignment(props) {
     const numOfPeers = 1;
     const isOpen = false;
   
-    const random = Math.floor(Math.random() * (4 - 1 + 1) + 1) == 1;
-    const defaultImageURL =
-      random === 1
-        ? "https://marketplace.canva.com/EAD2962NKnQ/2/0/1600w/canva-rainbow-gradient-pink-and-purple-zoom-virtual-background-_Tcjok-d9b4.jpg"
-        : random === 2
-        ? "https://images.ctfassets.net/hrltx12pl8hq/5KiKmVEsCQPMNrbOE6w0Ot/341c573752bf35cb969e21fcd279d3f9/hero-img_copy.jpg?fit=fill&w=800&h=300"
-        : random === 3
-        ? "https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg"
-        : "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3BhY2UlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fA%3D%3D&w=1000&q=80";
+    var random = (Math.floor(Math.random() * (4 - 1 + 1) + 1));
+    console.log("NUM" + random)
+    const defaultImageURL = ["https://marketplace.canva.com/EAD2962NKnQ/2/0/1600w/canva-rainbow-gradient-pink-and-purple-zoom-virtual-background-_Tcjok-d9b4.jpg",
+    "https://images.ctfassets.net/hrltx12pl8hq/5KiKmVEsCQPMNrbOE6w0Ot/341c573752bf35cb969e21fcd279d3f9/hero-img_copy.jpg?fit=fill&w=800&h=300",
+    "https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg",
+    "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3BhY2UlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fA%3D%3D&w=1000&q=80"];
 
     const students = [];
     const teachers = [];
     const moduleId = props.moduleId;
 
     // Add a new assignment
-    const response = await addAssignment(
-      ReactSession.get("token"),
-      userId,
-      moduleId,
-      assignTitle,
-      assignDesc,
-      brief,
-      currentTimestamp,
-      dueTimestamp,
-      numOfPeers,
-      defaultImageURL,
-      teachers,
-      students,
-      reviewPeriod,
-      isOpen,
-      maxMark
-    );
-   const details = await response.json();
-    console.log(details);
-    //Add to database here
-    setConfirmedAssignment(true);
-  };
+     const response = await addAssignment(
+       ReactSession.get("token"),
+       userId,
+       moduleId,
+       assignTitle,
+       assignDesc,
+       brief,
+       currentTimestamp,
+       dueTimestamp,
+       numOfPeers,
+       defaultImageURL[random-1],
+       teachers,
+       students,
+       reviewPeriod,
+       isOpen,
+       maxMark
+     );
+    const details = await response.json();
+  //   console.log(details);
+     //Add to database here
+     setConfirmedAssignment(true);
+   };
 
   function formatTimeAndDate(isPeer) {
     //formats the the time so it is able to be read by Date
@@ -214,7 +211,7 @@ function AddAssignment(props) {
           {" "}
           Add Assignment:
         </h1>
-        <div className=" font-Dosis  2xl:w-[1200px] w-screen text-xl border-2 border-slate-700 rounded  2xl:ml-80 2xl:mr-80 bg-slate-300 py-10">
+        <div className=" font-Dosis  2xl:w-[1200px] w-screen text-xl border-2 border-slate-700 dark:border-zinc-600 dark:bg-zinc-700 rounded  2xl:ml-80 2xl:mr-80 bg-slate-300 py-10">
           {confirmedAssignment === true ? (
             <>
               <p className="text-center bg-green-200">
@@ -259,7 +256,7 @@ function AddAssignment(props) {
                 required
                 id="message"
                 rows="4"
-                className="ml-8  block p-2.5 w-[260px] sm:w-[500px] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="ml-8 dark:bg-zinc-100 block p-2.5 w-[260px] sm:w-[500px] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Write an assignment description..."
               ></textarea>
 
