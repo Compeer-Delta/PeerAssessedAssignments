@@ -88,7 +88,7 @@ function ViewSubmissions() {
         console.log("No submissions found");
       } else {
         //console.log(submissions);
-        //setSubmissions(submissions); // COMMENTED OUT TO REPLACE WITH HARD CODED
+        //setSubmissions(submissions); 
       }
     };
     fetchData();
