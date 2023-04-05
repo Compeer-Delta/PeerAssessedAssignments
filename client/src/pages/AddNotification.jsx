@@ -5,10 +5,10 @@
 import React, { useEffect, useLayoutEffect } from "react";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import "../functions/api/notificationAPI";
+import { createNotification } from "../functions/api/notificationAPI";
+import { getUserId } from "../functions/api/userAPI";
 import { ReactSession } from "react-client-session";
 import ModuleSearchBox from "../components/ModuleSearchBox";
-import { createNotification } from "../functions/api/notificationAPI";
 import { useParams } from "react-router-dom";
 import formatUnixTimestamp from "../functions/tools/formatUnixTimestamp";
 import { getAssignmentInfo } from '../functions/api/assignmentAPI';
@@ -18,12 +18,14 @@ function AddNotification(mod) {
   const [userId, setUserId] = useState(ReactSession.get("uid"));
   const [userInst, setUserInst] = useState(ReactSession.get("inst"));
   const [userEmail, setUserEmail] = useState(ReactSession.get("email"));
+  
   const [notifTitle, setNotifTitle] = useState("");
   const [notifContent, setNotifContent] = useState("");
   const [notifUrgency, setNotifUrgency] = useState(false); //Not urgent by default
   const [referredAssign, setReferredAssignment] = useState(null);
   const [module, setModule] = useState(mod.mod);
   const [assignments, setAssignments] = useState([]);
+  const [allUserIDs, setAllUserID] = useState([]);
 
   const params = useParams();
 
@@ -31,20 +33,21 @@ function AddNotification(mod) {
 
   const addNewNotif = async (e) => {
     // console.log(
-    //   module.students, //shown as userId in the schema, is an array of recipients' userId in reality 
+    //   allUserIDs, //shown as userId in the schema, is an array of recipients' userId in reality 
     //   notifTitle,
     //   notifContent,
     //   notifUrgency,
-    //   referredAssign
+    //   referredAssign,
     // );
 
     // Add a new notification
     const response = await createNotification(
-      module.students, //shown as userId in the schema, is an array of recipients' userId in reality 
+      allUserIDs, //shown as userId in the schema, is an array of recipients' userId in reality 
       notifTitle,
       notifContent,
       notifUrgency,
       referredAssign,
+      module.moduleId,
       ReactSession.get("token")
     );
     const details = await response.json();
@@ -53,6 +56,7 @@ function AddNotification(mod) {
     setConfirmedNotification(true);
   };
 
+  // Clears input fields and allows the user to add another notification
   const toggleNewNotif = () => {
     setNotifContent("");
     setNotifTitle("");
@@ -63,6 +67,7 @@ function AddNotification(mod) {
   useLayoutEffect(() => {
     const moduleId = mod.moduleId;
     
+    // Gets all the assignment details
     const getAssignmentDetails = async () => {
       const results = await Promise.all(
           module.assignments.map(async (id) => {
@@ -72,11 +77,31 @@ function AddNotification(mod) {
               return data;
           })
       );
-
       setAssignments(results);
     }
 
-    getAssignmentDetails()
+    // Gets all IDs of both students and teachers enrolled in this module
+    const getAllId = async () => {
+      const users = [...module.students, ...module.teachers];
+
+      const results = await Promise.all(
+          users.map(async (email) => {
+              const response = await getUserId(email, ReactSession.get("token"));
+
+              const data = await response.json();
+              return data;
+          })
+      );
+
+      // Flattens the data, and maps it so it leaves an array of UserIDs (and not an array of JSON objects)
+      const data = results.flat();
+      const ids = data.map((user) => user.userId);
+
+      setAllUserID(ids);
+    }
+    
+    getAssignmentDetails();
+    getAllId();
   }, [])
 
   return (
@@ -171,20 +196,20 @@ function AddNotification(mod) {
               ></input>
               Tick if the notification is urgent.
               </label>
+
+              { /*Submit Button*/ }
+              <div className="ml-8 md:flex md:items-center py-5">
+                <div className="md:w-2/3 ">
+                <button
+                  onClick={(e) => addNewNotif()}
+                  className="ml-8 shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded "
+                >
+                Add Notification
+                </button>
+                </div>
+              </div>
             </div>
           )}
-        
-        { /*Submit Button*/ }
-        <div className="ml-8 md:flex md:items-center py-5">
-            <div className="md:w-2/3 ">
-              <button
-                onClick={(e) => addNewNotif()}
-                className="ml-8 shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded "
-              >
-              Add Notification
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </>
