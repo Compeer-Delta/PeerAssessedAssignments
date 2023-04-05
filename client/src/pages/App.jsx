@@ -9,7 +9,6 @@ import Works from '../components/Works';
 import SideBar from '../components/SideBar';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import SubmitWork from './SubmitWork';
-import Notifications from './Notifications';
 import Welcome from './Welcome';
 import StudentView from './StudentView';
 import Login from './Login';
@@ -58,7 +57,6 @@ function App() {
 
         <>    
           <Routes>
-            <Route path='/notifications/:modulename' element={<Notifications />} />
             <Route path='/login/*' element={<Login/>} />
             <Route path='/submitwork' element={<SubmitWork />} />
             <Route path='/modules/:id/*' element={<StudentView />} />

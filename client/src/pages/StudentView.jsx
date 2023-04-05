@@ -13,7 +13,7 @@ import AddAssignment from "./AddAssignment";
 import LoginCard from "../components/LoginCard";
 import Works from "../components/Works";
 import ViewFeedback from "./ViewFeedback";
-import Notifications from "./Notifications";
+import NotificationSystem from "../components/NotificationSystem";
 import PeerManager from "./PeerManager";
 import temporaryModulesData from "../data/temporaryModulesData";
 import ApproveFeedback from "./ApproveFeedback";
@@ -24,14 +24,6 @@ import AddNotification from "./AddNotification";
 function StudentView({ title }) {
   // const [toggle, setToggle] = useState(true);
   // const [isShown, setIsShown] = useState(false);
-
-  let session = {
-    token: ReactSession.get("token"),
-    accType: ReactSession.get("accType"),
-    email: ReactSession.get("email"),
-    inst: ReactSession.get("inst"),
-    uid: ReactSession.get("uid"),
-  };
 
   // this is a better way to do it because it will only run once whereas session will run every time the page is rendered
   const [token, setToken] = useState(ReactSession.get("token"));
@@ -181,7 +173,7 @@ function StudentView({ title }) {
         Module: {moduleTitle}{" "}
       </div>
       {nestedPage === "notifications" ? (
-        <Notifications></Notifications>
+        <NotificationSystem mod={module}></NotificationSystem>
       ) : nestedPage === "viewfeedback" ? (
         <ViewFeedback></ViewFeedback>
       ) : nestedPage === "submitwork" ? (
