@@ -4,14 +4,15 @@ import mongoose from "mongoose";
 
 // create notification
 const createNotif = async (req, res) => {
-  const { userId, notifTitle, notifContent, urgency, assignmentId } = req.body;
+  const { userId, notifTitle, notifContent, urgency, assignmentId, moduleId } = req.body;
   const notification = new Notification({
     _id: new mongoose.Types.ObjectId(),
     userId: userId,
     notifTitle: notifTitle,
-    notification: notifContent,
+    notifContent: notifContent,
     urgency: urgency, //boolean
     assignmentId: assignmentId,
+    moduleId: moduleId,
   });
   try {
     const savedNotification = await notification.save();
@@ -35,12 +36,13 @@ const getNotif = async (req, res) => {
   }
 };
 
-// get all notifications by user id
+// get all notifications by user id and module id
 const getAllNotifications = async (req, res) => {
-  const { userId } = req.params;
+  const { userId, moduleId } = req.params;
   try {
     const notifications = await Notification.find({
       userId: userId,
+      moduleId: moduleId
     });
 
     // if no notifications found, return 404 but if notifications found, return 201

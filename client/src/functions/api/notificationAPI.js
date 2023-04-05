@@ -1,9 +1,9 @@
 // This file contains all the API calls related to notifications
 const API_BASE_URL = "http://localhost:8081/";
 
-// Get all notifications by user id
-export const getAllNotifications = async (userId, token) => {
-  const response = await fetch(`${API_BASE_URL}notifications/${userId}`, {
+// Get all notifications by user id and module
+export const getAllNotifications = async (userId, moduleId, token) => {
+  const response = await fetch(`${API_BASE_URL}notifications/${userId}/${moduleId}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -29,12 +29,14 @@ export const deleteNotification = async (userId, messageId, token) => {
   return response;
 };
 
+// Create a notification using the below parameters
 export const createNotification = async (
-  userId,
+  userId, //Takes an array of userId's (contrary to name)
   notifTitle,
   notifContent,
   urgency,
   assignmentId,
+  moduleId,
   token
 ) => {
   const response = await fetch(`${API_BASE_URL}notification/create`, {
@@ -49,7 +51,8 @@ export const createNotification = async (
       notifTitle: notifTitle,
       notifContent: notifContent,
       urgency: urgency,
-      assignmentId: assignmentId
+      assignmentId: assignmentId,
+      moduleId: moduleId
     }),
   });
 

@@ -39,6 +39,11 @@ const notifSchema = new Schema(
       required: false,
       ref: "Assignment"
     },
+    moduleId: {
+      type: String,
+      required: true,
+      ref: "Module"
+    }
   },
   {
     timestamps: {

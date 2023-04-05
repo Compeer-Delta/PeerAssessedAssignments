@@ -14,7 +14,7 @@ import AddAssignment from "./AddAssignment";
 import LoginCard from "../components/LoginCard";
 import Works from "../components/Works";
 import ViewFeedback from "./ViewFeedback";
-import Notifications from "./Notifications";
+import NotificationSystem from "../components/NotificationSystem";
 import PeerManager from "./PeerManager";
 import ApproveFeedback from "./ApproveFeedback";
 import { ReactSession } from "react-client-session";
@@ -22,7 +22,6 @@ import { getModuleInfo } from "../functions/api/moduleAPI";
 import AddNotification from "./AddNotification";
 
 function StudentView() {
-
 
   const [token, setToken] = useState(ReactSession.get("token"));
   const [accType, setAccType] = useState(ReactSession.get("accType"));
@@ -183,7 +182,7 @@ function StudentView() {
         Module: {moduleTitle}{" "}
       </div>
       {nestedPage === "notifications" ? (
-        <Notifications></Notifications>
+        <NotificationSystem mod={module}></NotificationSystem>
       ) : nestedPage === "viewfeedback" ? (
         <ViewFeedback></ViewFeedback>
       ) : nestedPage === "submitwork" ? (
