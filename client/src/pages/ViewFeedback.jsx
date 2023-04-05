@@ -3,20 +3,46 @@
  * Functionality: Hathan Khatkar
  * API Fetches: Gregory Clews
  */
-import Works from "../components/Works";
-import StudentView from "../pages/StudentView";
-import HeroSection from "../components/HeroSection";
 import React, { useState, useEffect } from "react";
 import { ReactSession } from "react-client-session";
 import { acceptedFeedback } from "../functions/api/submissionAPI.js";
+//imports
 
 function ViewFeedback() {
-  const [recievedFeedback, setRecievedFeedback] = useState([ {assignmentTitle:"Lorem Ipsum Essay part 2", markedBy:"Hathan Khatkar", mark:"10/10", writtenFeedback:" Well done \n Improve your essay in these areas: \nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", viewFeedback:false},
-  {assignmentTitle:"Deep learning coding tasks", markedBy:"Hathan Khatkar1", mark:"10/10", writtenFeedback:" Well done", viewFeedback:false},
-  {assignmentTitle:"Java Object oriented programming class assignment", markedBy:"Hathan Khatkar2", mark:"10/10", writtenFeedback:" Great job \n Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", viewFeedback:false},
-  {assignmentTitle:"Lorem Ipsum Essay", markedBy:"Hathan Khatkar3", mark:"10/10", writtenFeedback:" Needs improvement", viewFeedback:false}]);
-  const [viewFeedback, setViewFeedback] = useState(false);
-  const [foundClicked, setFoundClicked] = useState(false);
+
+  //recievedFeedback contains information to be displayed in ViewFeedback specified styling
+  const [recievedFeedback, setRecievedFeedback] = useState([
+    {
+      assignmentTitle: "Lorem Ipsum Essay part 2",
+      markedBy: "Hathan Khatkar",
+      mark: "10/10",
+      writtenFeedback:
+        " Well done \n Improve your essay in these areas: \nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+      viewFeedback: false,
+    },
+    {
+      assignmentTitle: "Deep learning coding tasks",
+      markedBy: "Hathan Khatkar1",
+      mark: "10/10",
+      writtenFeedback: " Well done",
+      viewFeedback: false,
+    },
+    {
+      assignmentTitle: "Java Object oriented programming class assignment",
+      markedBy: "Hathan Khatkar2",
+      mark: "10/10",
+      writtenFeedback:
+        " Great job \n Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+      viewFeedback: false,
+    },
+    {
+      assignmentTitle: "Lorem Ipsum Essay",
+      markedBy: "Hathan Khatkar3",
+      mark: "10/10",
+      writtenFeedback: " Needs improvement",
+      viewFeedback: false,
+    },
+  ]);
 
   let session = {
     token: ReactSession.get("token"),
@@ -25,11 +51,15 @@ function ViewFeedback() {
     inst: ReactSession.get("inst"),
     uid: ReactSession.get("uid"),
   };
+  //session data
 
+  //use effect renders each time the page is updated for recieving up to date information from the database
   useEffect(() => {
+    //API call to getAcceptedFeedback which will return all feedback that has been approved by a teacher
     const getAcceptedFeedback = async () => {
       const response = await acceptedFeedback(
-        session.uid, ReactSession.get("token")
+        session.uid,
+        ReactSession.get("token")
       );
       const data = await response.json();
       console.log(data);
@@ -39,6 +69,7 @@ function ViewFeedback() {
     };
     getAcceptedFeedback();
   }, []);
+
   // toggle the viewFeedback property of the feedback that was clicked on the page to show/hide the feedback
   function toggleFeedback(view) {
     let feedbackIndex = 0;
@@ -73,10 +104,12 @@ function ViewFeedback() {
 
   return (
     <>
+      {/*Page title */}
       <h1 className=" font-Dosis md:ml-80 ml-28 text-3xl 2xl:w-[1000px] md:w-[600px] w-[200px] text-slate-600 font-semibold dark:text-white rounded-md pb-4">
         {" "}
         Your Feedback:
       </h1>
+      {/* Maps all feedback taking each instance and separately rendering them using its data properties: displays assignment title, marker, mark and feedback*/}
       {recievedFeedback.map((fb) => (
         <div className=" ml-16 xl:ml-80 2xl:w-[1200px] md:w-[600px] sm:w-[538px] w-[280px]  bg-slate-300 dark:bg-zinc-800 mb-2 rounded break-normal">
           <h1 className="ml-10 pt-4  text-xl xl:text-3xl md:w-[600px] w-[240px] text-slate-600 font-semibold dark:text-white rounded-md font-Dosis ">
@@ -91,17 +124,18 @@ function ViewFeedback() {
             {" "}
             Given mark / grade: {fb.mark}
           </h1>
+           {/* For each instance, a button is displayed which will toggle whether the feedback is shown or hidden */}
           <button
             onClick={() => toggleFeedback(fb)}
             className="mt-2 mb-2 font-Dosis ml-10 text-l py-2 px-2 text-slate-600 font-semibold dark:text-white dark:bg-zinc-600 rounded-md bg-slate-50"
-          >
+          >  
             {toggleButtonText(fb) === true ? (
               <p>Hide Feedback</p>
             ) : (
               <p> Show Feedback</p>
             )}
           </button>
-
+           {/* displays feedback under general submission details if toggled to true */}
           {fb.viewFeedback === true ? (
             <div className="bg-slate-200 overflow-x-auto">
               <p className="font-Dosis ml-10  text-xl w-[700px] font-semibold  text-green-600 ">
