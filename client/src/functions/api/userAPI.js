@@ -93,3 +93,16 @@ export const getUserName = async (userEmail, token, type) => {
   });
   return response;
 };
+
+// Get user ID by email
+export const getUserId = async (userEmail, token) => {
+  const response = await fetch(`${API_BASE_URL}user/id?email=${userEmail}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
