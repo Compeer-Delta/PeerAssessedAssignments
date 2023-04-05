@@ -38,7 +38,10 @@ function NotificationSystem(mod) {
               key={notif._id}
               title={notif.notifTitle}
               content={notif.notifContent}
-              mId={notif.messageId}
+              messageId={notif.messageId}
+              urgency={notif.urgency}
+              assignmentId={notif.assignmentId}
+              moduleId={notif.moduleId}
             ></NotifItem>
           ))}
       </div>
