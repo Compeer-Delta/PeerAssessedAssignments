@@ -10,44 +10,52 @@ import "react-datepicker/dist/react-datepicker.css";
 import FileUploader from "../components/FileUploader";
 import { addAssignment } from "../functions/api/assignmentAPI";
 import { ReactSession } from "react-client-session";
+//imports
 
 function AddAssignment(props) {
   const [assignTitle, setAssignTitle] = useState("");
   const [assignDesc, setAssignDesc] = useState("");
+  //basic assignment input fields
 
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedPeerDate, setSelectedPeerDate] = useState("");
+  //date fields
 
   const [duePeerMins, setPeerDueMins] = useState("");
   const [duePeerHour, setPeerDueHour] = useState("");
   const [peerMeridiem, setPeerMeridiem] = useState("AM");
+  //time fields for peer assessing
 
   const [dueMins, setDueMins] = useState("");
   const [dueHour, setDueHour] = useState("");
   const [meridiem, setMeridiem] = useState("AM");
+  //Time fields for due date 
 
   const [maxMark, setMaxMark] = useState();
+  //field for max marks given
 
   const [confirmedAssignment, setConfirmedAssignment] = useState(false);
   const [userId, setUserId] = useState(ReactSession.get("uid"));
 
+  //Add new assignment contains the API call along with all the fields necessary to create a new assignment
   const addNewAssignment = async (e) => {
     e.preventDefault();
 
-    console.log(selectedDate);
-    console.log("uid" + userId);
-    console.log("mid" + props.moduleId);
-    console.log("date " + Date.parse(formatTimeAndDate(false)));
-    console.log("startdate " + new Date().getTime());
-    console.log("mark" + maxMark);
-    console.log("peer date" + Date.parse(formatTimeAndDate(true)));
+    //Logs for debugging purposes
+    //console.log(selectedDate);
+    //console.log("uid" + userId);
+    //console.log("mid" + props.moduleId);
+    //console.log("date " + Date.parse(formatTimeAndDate(false)));
+    //console.log("startdate " + new Date().getTime());
+    //console.log("mark" + maxMark);
+    //console.log("peer date" + Date.parse(formatTimeAndDate(true)));
+
     const brief = undefined;
     const currentTimestamp = new Date().getTime();
     const dueTimestamp = Date.parse(formatTimeAndDate());
     const reviewPeriod = Date.parse(formatTimeAndDate(true));
     const numOfPeers = 1;
     const isOpen = false;
-
     var random = Math.floor(Math.random() * (4 - 1 + 1) + 1);
     console.log("NUM" + random);
     const defaultImageURL = [
@@ -56,12 +64,12 @@ function AddAssignment(props) {
       "https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg",
       "https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3BhY2UlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
     ];
-
     const students = [];
     const teachers = [];
     const moduleId = props.moduleId;
+    //all fields needed to generate a new assignment
 
-    // Add a new assignment
+    //API call Adds a new assignments to schema taking form input as field information
     const response = await addAssignment(
       ReactSession.get("token"),
       userId,
@@ -80,14 +88,13 @@ function AddAssignment(props) {
       maxMark
     );
     const details = await response.json();
-    //   console.log(details);
-    //Add to database here
     setConfirmedAssignment(true);
   };
 
-  function formatTimeAndDate(isPeer) {
-    //formats the the time so it is able to be read by Date
+  //this function formats the the time so it is able to be read by Date
+  function formatTimeAndDate(isPeer) { 
 
+    //depending on which date the assignment is adjusted
     if (isPeer) {
       var tempHour = duePeerHour;
       var tempMin = duePeerMins;
@@ -100,17 +107,18 @@ function AddAssignment(props) {
       var tempDate = selectedDate + "";
     }
 
+    //convert to 24 hour time using meridiem 
     if (tempMeridiem === "PM") {
       tempHour = (parseInt(tempHour) + 12).toString();
     }
     if (parseInt(tempHour) < 10) {
       tempHour = "0" + tempHour;
     }
-    // console.log(tempHour + " " + tempMin + " " + tempMeridiem);
-
+   
+    //splits the date and gets the month to be converted to a number
     var month = tempDate.split(" ")[1];
     var monthVal = "1";
-
+    //switch case for converting month to digital form
     switch (month) {
       case "Jan":
         monthVal = "01";
@@ -164,6 +172,7 @@ function AddAssignment(props) {
     );
   }
 
+  //function to toggle the meridiem when clicked from AM to PM
   function switchMeridiem() {
     if (meridiem === "AM") {
       setMeridiem("PM");
@@ -174,6 +183,7 @@ function AddAssignment(props) {
       }
     }
   }
+  //formats the the time so it is able to be read by Date for peer assess deadline
   function switchPeerMeridiem() {
     if (peerMeridiem === "AM") {
       setPeerMeridiem("PM");
@@ -185,6 +195,7 @@ function AddAssignment(props) {
     }
   }
 
+  //clears all input fields so another assignment can be added
   function toggleNewAssignment() {
     setAssignTitle("");
     setAssignDesc("");
@@ -204,15 +215,19 @@ function AddAssignment(props) {
 
   return (
     <>
+      {/* reference to external script for flowbite datepicker */}
       <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
       <script src="../path/to/flowbite/dist/datepicker.js"></script>
 
+
       <div className="py-3 dark:bg-zinc-900 h-screen">
+        {/* Page title */}
         <h1 className=" font-Dosis sm:ml-80 ml-32 text-3xl text-slate-600 font-semibold dark:text-white rounded-md pb-4">
           {" "}
           Add Assignment:
         </h1>
         <div className=" font-Dosis  2xl:w-[1200px] w-screen text-xl border-2 border-slate-700 dark:border-zinc-600 dark:bg-zinc-700 rounded  2xl:ml-80 2xl:mr-80 bg-slate-300 py-10">
+          {/* the page will render this when an assignment has been added*/}
           {confirmedAssignment === true ? (
             <>
               <p className="text-center bg-green-200">
@@ -222,20 +237,22 @@ function AddAssignment(props) {
                 {" "}
                 You can view it in the Submit work tab
               </p>
+              {/* button to submit another assignment */}
               <button
                 onClick={toggleNewAssignment}
                 className="mt-10 ml-48 shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded "
               >
                 Add New Assignment
               </button>{" "}
-            </>
+            {/* Otherwise it will render the add assignment form below v*/}
+            </>    
           ) : (
             <div className="pl-10">
+              {/* Assignment Title input*/}
               <h1 className=" ml-8 text-l   text-slate-600 font-semibold dark:text-white rounded-md ">
                 {" "}
                 Title:{" "}
               </h1>
-
               <input
                 onChange={(e) => setAssignTitle(e.target.value)}
                 value={assignTitle}
@@ -246,6 +263,7 @@ function AddAssignment(props) {
                 type="text"
                 placeholder="Assignment Title"
               ></input>
+              {/* Assignment description input */}
               <h1 className=" ml-8  text-l  text-slate-600 font-semibold dark:text-white rounded-md ">
                 {" "}
                 Description:{" "}
@@ -261,6 +279,7 @@ function AddAssignment(props) {
                 placeholder="Write an assignment description..."
               ></textarea>
 
+              {/* Assignment due date input */}
               <h1 className="ml-8 mt-10 text-l text-slate-600 font-semibold dark:text-white rounded-md">
                 {" "}
                 Submission Date and time:{" "}
@@ -274,6 +293,7 @@ function AddAssignment(props) {
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date()}
                 />
+                {/* DUE TIME */}
                 <input
                   required
                   placeholder="0"
@@ -319,6 +339,7 @@ function AddAssignment(props) {
                     }
                   }}
                 ></input>
+                {/* MERIDIEM */}
                 <button
                   className="ml-3 text-center rounded hover:bg-slate-400 text-slate-700 bg-slate-100"
                   value={meridiem}
@@ -329,11 +350,12 @@ function AddAssignment(props) {
                 </button>
               </div>
               <br></br>
-              {/* PEER ASSESS DUE DATE */}
+              {/* Assignment peer assessing lock date */}
               <h1 className="ml-8 text-l text-slate-600 font-semibold dark:text-white rounded-md">
                 {" "}
                 Lock Peer Assessing by:{" "}
               </h1>
+              {/* PEER ASSESS LOCK DATE*/}
               <div className="ml-8 flex flex-row mr-36  sm:w-[395px] w-[330px]">
                 <DatePicker
                   className="rounded-md "
@@ -342,6 +364,7 @@ function AddAssignment(props) {
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date()}
                 />
+                {/* PEER ASSESS LOCK TIME*/}
                 <input
                   required
                   placeholder="0"
@@ -387,6 +410,7 @@ function AddAssignment(props) {
                     }
                   }}
                 ></input>
+                {/* MERIDIEM FOR PEER ASSESS LOCK*/}
                 <button
                   className="ml-3 text-center rounded hover:bg-slate-400 text-slate-700 bg-slate-100"
                   value={peerMeridiem}
@@ -396,7 +420,8 @@ function AddAssignment(props) {
                   {peerMeridiem}{" "}
                 </button>
               </div>
-
+              
+              {/* Maximum mark input*/}
               <div className="mt-6 ml-8">
                 <h1 className=" text-l text-slate-600 font-semibold dark:text-white rounded-md ">
                   {" "}
@@ -437,12 +462,6 @@ function AddAssignment(props) {
                   >
                     Add Assignment
                   </button>
-
-                  {/*
-              <button onClick={addNewAccounts} className="shadow bg-green-700 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded ">
-              Confirm changes
-              </button>
-        */}
                 </div>
               </div>
             </div>

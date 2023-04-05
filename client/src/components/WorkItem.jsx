@@ -3,10 +3,10 @@
  * Functionality: Hathan Khatkar
  */
 import React from "react";
-//import { MdTableChart } from 'react-icons/md'
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import defaultbg from "/images/DEFAULT_ASSIGNMENT_BG.jpg";
+//imports
 
 function WorkItem({
   id,
@@ -42,42 +42,11 @@ function WorkItem({
     "Nov",
     "Dec",
   ];
-  // let time = formatTime();
-  // let date = new Date(dueDate.split(/(\s+)/)[2] + " " + time);
 
-  function formatTime() {
-    //formats the the time so it is able to be read by Date
-    var tempHour = dueDate.split(/(\s+)/)[0].split(":")[0];
-    var tempMin = dueDate
-      .split(/(\s+)/)[0]
-      .split(":")[1]
-      .substring(0, dueDate.split(/(\s+)/)[0].split(":")[1].length - 2);
-    var tempMeridiem = dueDate
-      .split(/(\s+)/)[0]
-      .split(":")[1]
-      .substring(
-        dueDate.split(/(\s+)/)[0].split(":")[1].length - 2,
-        dueDate.split(/(\s+)/)[0].split(":")[1].length
-      );
-
-    if (tempMeridiem === "pm") {
-      tempHour = (parseInt(tempHour) + 12).toString();
-    }
-    if (parseInt(tempHour) < 10) {
-      tempHour = "0" + tempHour;
-    }
-    // console.log(tempHour + " " + tempMin + " " + tempMeridiem);
-
-    return tempHour + ":" + tempMin + ":00";
-  }
-
+  //checks whether the current time is less than due date/ time, if so then submission remains open / otherwise close submission
   function LockAfterDue() {
-    //checks whether the current time is less than due date/ time, if so then submission remains open / otherwise close submission
     let dateNow = current.getTime();
-    let dateDue = new Date(dueDate); //date.getTime();
-
-    //  console.log("t" + current);
-    //   console.log("t" + date);
+    let dateDue = new Date(dueDate);
 
     if (dateNow < dateDue) {
       return true;
@@ -93,6 +62,7 @@ function WorkItem({
       rel="noreferrer"
       className="bg-slate-300 dark:bg-zinc-700 rounded-lg overflow-hidden 2xl:w-full xl:w-[600px] md:w-[500px] w-[300px]"
     >
+      {/* displays the top background design for each module by reading imgUrl's url, if this doesnt exist then use the default background*/}
       <img
         src={imgUrl}
         className="w-full h-3 md:h-5 object-cover"
@@ -103,16 +73,19 @@ function WorkItem({
       />
 
       <div className="text-gray-600 dark:text-gray-300 p-2 w-full">
+        {/* page title */}
         <h3
           id={title}
           className="text-lg md:text-xl mb-2 md:mb-1 font-semibold"
         >
           {title}
         </h3>
+        {/* assignment description */}
         <div className="text-sm md:text-sm mb-1 md:mb-1">
           Assignment Description: {description}
         </div>
         <p className=" text-right text-base">
+          {/* Set date */}
           Set:{" "}
           {convertedSetDate.getHours() +
             ":" +
@@ -128,8 +101,7 @@ function WorkItem({
         </p>
 
         <div className="flex flex-initial gap-2 flex-row items-center justify-start text-xs md:text-sm sticky z-0">
-          {/* {//tech.map(item=> ( */}
-
+          {/* Changes the display of the submit button to prevent it redirecting to upload page and the due date has passed */}
           {LockAfterDue() === true ? (
             <Link
               to={"/modules/" + moduleCode + "/upload/" + id}
@@ -151,7 +123,7 @@ function WorkItem({
               Submission Closed 🔒
             </div>
           )}
-
+          {/* view submissions redirect button (to Peer Assess) */}
           {open === true && LockAfterDue() === false ? (
             <Link
               to={"/modules/" + moduleCode + "/viewsubmissions/" + id}
@@ -175,8 +147,7 @@ function WorkItem({
               Peer Assess Locked 🔒
             </div>
           )}
-
-          {/* )) }*/}
+          {/* download brief*/}
           <a
             href={BriefUrl}
             download
@@ -184,6 +155,7 @@ function WorkItem({
           >
             Download Brief 📖
           </a>
+          {/* Due date */}
           <span className="text-right text-gray-600 dark:text-gray-300 p-2 w-full text-base ">
             Due:{" "}
             {convertedSetDate.getHours() +

@@ -1,14 +1,18 @@
 /**
  * Credit:
  * Functionality: Hathan Khatkar
+ * API fetches: Hathan Khatkar
  */
 import React, { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import { ReactSession } from "react-client-session";
 import { getAllInInstitution } from "../functions/api/adminAPI";
+//imports
 
 const AccountSearchBox = ({ setInstitution, MemberType }) => {
+  //Account search box contains props for the Institution SETTER therefore allowing data to be returned back to its caller, and account type
+
   const [inst, setInst] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState("");
@@ -20,8 +24,9 @@ const AccountSearchBox = ({ setInstitution, MemberType }) => {
     email: ReactSession.get("email"),
     inst: ReactSession.get("inst"),
   };
+  //get session data
 
-  //Used to fetch data of all institutions in ukinstitutions.JSON
+  //API Call Used to fetch data of all users in an institution
   useEffect(() => {
     const allInInstitution = async () => {
       const response = await getAllInInstitution(session.inst, session.token);
@@ -29,14 +34,10 @@ const AccountSearchBox = ({ setInstitution, MemberType }) => {
       setInst(data.users);
     };
     allInInstitution();
-    // if (MemberType == "Teacher")
-    // {setInst(allTeachers);}
-    // else{setInst(allStudents);}
   }, []);
 
   return (
     <div className="w-72 h-3 font-small mb-14">
-      {session.inst}
       {/*clicking the drop down should open the search bar and list of options */}
       <div
         onClick={() => setOpen(!open)}
@@ -70,8 +71,7 @@ const AccountSearchBox = ({ setInstitution, MemberType }) => {
           />
         </div>
 
-        {/* maps all data collected from uk institutions into the drop down box*/}
-
+        {/* maps all data collected for each instance into the drop down box*/}
         {inst?.map((inst) =>
           inst.role === MemberType.toString().toLowerCase() ? (
             <li

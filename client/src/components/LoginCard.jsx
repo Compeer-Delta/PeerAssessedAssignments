@@ -1,22 +1,21 @@
 /**
  * Credit:
  * Functionality: Hathan Khatkar
- * Bug Fixes: Gregory Clews
+ * API fetch: Gregory Clews
  */
 import React, { useState, useLayoutEffect } from "react";
-import StudentView from "../pages/StudentView";
 import { Link, Navigate, Routes, Route } from "react-router-dom";
-import Welcome from "../pages/Welcome";
 import { ReactSession } from "react-client-session";
 import { getUserName } from "../functions/api/userAPI";
+//imports
 
 function LoginCard() {
-  //parameters might need changing
-
   const [loggedOut, setLoggedOut] = useState(false);
   const [sessionUsername, setSessionUsername] = useState("");
   const [minimized, setMinimized] = useState(false);
+  //information displayed in login card
 
+  //when the logout button is clicked, all react session data is removed before redirecting to login page
   function logout() {
     setLoggedOut(true);
     setSessionUsername("");
@@ -30,6 +29,7 @@ function LoginCard() {
     console.log("LOGOUT SUCCESS");
   }
 
+  //toggles the minimize feature when clicked
   function toggleMinimize() {
     if (minimized == true) {
       setMinimized(false);
@@ -39,6 +39,7 @@ function LoginCard() {
   }
 
   useLayoutEffect(() => {
+    //API fetch for retreiving the users name by specifiying account specific information (email, token, account type)
     const getFirstName = async () => {
       const response = await getUserName(
         ReactSession.get("email"),
@@ -55,7 +56,6 @@ function LoginCard() {
   return (
     <div className="fixed z-30">
       {/* Login tab */}
-
       {minimized === false ? (
         <h1 className="dark:border-indigo-900 mt-2 rounded-bl-lg rounded-tl-lg border-solid border-2 border-zinc-600 font-semibold sidebar fixed right-0 p-5 w-[300px] overflow-y-auto text-center text-gray-900 dark:text-gray-300 bg-slate-300 dark:bg-zinc-800">
           {" "}

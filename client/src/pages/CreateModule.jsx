@@ -4,9 +4,7 @@
  * API Fetches: Hathan Khatkar
  */
 import React, { useEffect } from "react";
-import Modules from "../pages/Modules";
 import HeroSection from "../components/HeroSection";
-import { Link } from "react-router-dom";
 import { useRef, useState, useLayoutEffect } from "react";
 import AccountSearchBox from "../components/AccountSearchBox";
 import FileUploader from "../components/FileUploader";
@@ -15,59 +13,41 @@ import { ReactSession } from "react-client-session";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { getAllInInstitution } from "../functions/api/adminAPI";
 import { createModule } from "../functions/api/moduleAPI";
+//imports
 
 function CreateModule() {
-  //onSubmit={handleSubmit}
   let session = {
     token: ReactSession.get("token"),
     accType: ReactSession.get("accType"),
     email: ReactSession.get("email"),
     inst: ReactSession.get("inst"),
   };
+  //session data
 
   var allAddedStudents, allAddedTeachers;
   const [toModulesPage, setToModulesPage] = useState(false);
   const [Accs, setAccs] = useState([]);
+  //all combined accounts
 
   const [availableTeachers, setAvailableTeachers] = useState([]);
   const [availableStudents, setAvailableStudents] = useState([]);
+  //all students / teachers in an institution
 
   const [currentStudent, setStudent] = useState("");
   const [currentTeacher, setTeacher] = useState("");
   const [moduleTitle, setModuleTitle] = useState("");
   const [moduleCode, setModuleCode] = useState("");
-  //  let outputData = sessionStorage.getItem('loginSessionData');
-  //   outputData = JSON.parse(outputData);
 
   const [addedTeachers, setAddedTeachers] = useState([]);
-
   const [addedStudents, setAddedStudents] = useState([]);
+  //manually added users using the dropdown box
 
-  //const getUploadedTeacherData = (data) => {
-  // console.log("File contents "+ data)
-  // const currentValues = data.split(',');
-  // console.log("File contents "+ currentValues)
-
-  //currentValues.map(current =>{//problem uploading file from map//////////////////////////////////////////
-
-  //    console.log("current" + current);
-  //    setTeacher(current);
-  //   setAddedStudents([...addedStudents, {name: currentTeacher}]);
-  //   // setTeacher(current);
-  //   //console.log(currentTeacher);
-  //   //addNewTeacher();
-
-  //   //addNewTeacher();
-
-  //  }
-  // )
-  //};
   const [uploadedTeacherData, setUploadedTeacherData] = useState([]);
-  //const getUploadedStudentData = (data) => {console.log("File contents "+ data)};
   const [uploadedStudentData, setUploadedStudentData] = useState([]);
+  //uploaded users using a CSV file
 
   const addModule = async () => {
-    //const { password, firstname, surname, email, institution, role } = req.body;
+    //API call for adding a new module details to the database
     console.log(
       moduleTitle +
         " " +
@@ -78,7 +58,7 @@ function CreateModule() {
         session.inst +
         " " +
         moduleCode
-    ); //PASSWORD, INSTITUTION IS BLANK FOR SOME REASON<<<<<<<<<<<<<<<<<<
+    ); 
     // Create a new module
     const response = await createModule(
       moduleTitle,
@@ -91,40 +71,14 @@ function CreateModule() {
     );
 
     const newModule = await response.json();
-
     setToModulesPage(true);
+    //true so that we return to the modules page after creating
   };
 
-  function addUploadedTeachers() {
-    console.log("all uploaded: " + uploadedTeacherData);
-    uploadedTeacherData.map((line) => {
-      console.log("d " + String(line));
-      //setAddedTeachers([...addedTeachers, {name: line}])
-      setTeacher(String(line));
-      console.log("s" + currentTeacher);
-      {
-        addNewTeacher();
-      }
-    });
-    console.log("done! " + addedTeachers);
-  }
-  function addUploadedStudents() {
-    console.log("all uploaded: " + uploadedStudentData);
-    uploadedStudentData.map((line) => {
-      console.log("d " + String(line));
-      //setAddedTeachers([...addedTeachers, {name: line}])
-      setStudent(String(line));
-      console.log("s" + currentStudent);
-      {
-        addNewStudent();
-      }
-    });
-    console.log("done! " + addedStudents);
-  }
-
+  //function for adding a new student
   function addNewStudent() {
     console.log("current: " + currentStudent);
-
+    //checks if the student is not already added in the list of added and uploaded students before appending
     if (
       !addedStudents.includes(currentStudent) &&
       !uploadedStudentData.includes(currentStudent) &&
@@ -134,7 +88,9 @@ function CreateModule() {
     }
   }
 
+  //function for adding a new teacher
   function addNewTeacher() {
+    //checks if the teacher is not already added in the list of added and uploaded teachers before appending
     if (
       !addedTeachers.includes(currentTeacher) &&
       !uploadedTeacherData.includes(currentTeacher) &&
@@ -144,7 +100,10 @@ function CreateModule() {
     }
   }
 
+  //use effect will be called each render to filter out duplicate data the user tries to enter, so that no duplicates are sent to the API
+  //also ensures they are in the list of available students/ teachers
   useEffect(() => {
+    //students filter
     var filteredUploadedStudents = uploadedStudentData.filter((t) => {
       if (
         availableStudents.includes(t.replace(/^\s+|\s+$/g, "")) &&
@@ -154,6 +113,7 @@ function CreateModule() {
       }
     });
 
+    //teacher filter
     var filteredUploadedTeachers = uploadedTeacherData.filter((t) => {
       if (
         availableTeachers.includes(t.replace(/^\s+|\s+$/g, "")) &&
@@ -163,6 +123,7 @@ function CreateModule() {
       }
     });
 
+    //concatenates all uploaded and added data to form one array of data needed to be sent to the DB
     var allAddedStudentDuplicates =
       filteredUploadedStudents.concat(addedStudents);
     var allAddedTeacherDuplicates =
@@ -186,7 +147,9 @@ function CreateModule() {
     console.log("Module Students:" + allAddedStudents);
   });
 
+  
   useLayoutEffect(() => {
+    //API call to fetch all teachers and student information in an institution
     const fetchData = async () => {
       const response = await getAllInInstitution(
         session.inst,
@@ -194,12 +157,8 @@ function CreateModule() {
       );
 
       const data = await response.json();
-      // console.log("this1 " + JSON.stringify(data.users))
-      // for (let i =0; i < data.users.length ; i++)
-      // {
-      //setAccs([...Accs, (data.users[i]).firstname + " " + (data.users[i]).surname + " (" + (data.users[i]).email + ")" ]);
-      // }
 
+      //separates teachers and student data by filtering by role
       const filteredTeachers = data.users.filter(function (f) {
         return f.role.toLowerCase() == "teacher";
       });
@@ -216,24 +175,17 @@ function CreateModule() {
 
       setAvailableStudents(tempStudentAccs);
       setAvailableTeachers(tempTeacherAccs);
-      //setAccs(tempAccs);
-
-      //console.log("this " + JSON.stringify(tempAccs))
-      // console.log("ran");
+      
     };
     fetchData();
-    // if (!(addedTeachers === ""))
-    //{
-
-    // setAddedTeachers([...addedTeachers, {addedTeachers}]);
-    // }
-    //addedStudents.push({name:"test"});
   }, []);
 
   return (
     <>
+      {/* Render main create module page if toModulePage is false*/} 
       {toModulesPage === false ? (
         <>
+          {/* Hero section contains link back to admin view*/}
           <HeroSection
             prevPageName="Admin view"
             prevUrl="/adminview"
@@ -241,17 +193,16 @@ function CreateModule() {
           <LoginCard></LoginCard>
 
           <div className="py-2 dark:bg-zinc-900 h-screen">
-            {uploadedTeacherData}
-
+            {/* Page title */}
             <h1 className=" 2xl:pl-72 pl-10 py-10 2xl:text-5xl text-2xl  2xl:w-[1200px] text-slate-600 font-semibold dark:text-white rounded-2xl ">
               {" "}
               Add Module
             </h1>
 
             <div className=" 2xl:ml-80 2xl:mr-80 ml-10 mr-10 2xl:px-80  bg-slate-200 px-2">
-              <div className="2xl:flex 2xl:items-center mb-6">
-                <div className="2xl:w-1/3"></div>
-                <div className=" 2xl:flex 2xl:items-center 2xl:px-8 px-1 py-5">
+              {/* Field for module code */}
+              <div className="2xl:flex 2xl:items-center mb-6">  
+                <div className=" ml-10 2xl:flex 2xl:items-center 2xl:px-8 px-1 py-5">
                   <input
                     onChange={(e2) => setModuleCode(e2.target.value)}
                     value={moduleCode}
@@ -261,6 +212,7 @@ function CreateModule() {
                     type="text"
                     placeholder="Module Code"
                   ></input>
+                  {/* Field for module title */}
                   <input
                     onChange={(e) => setModuleTitle(e.target.value)}
                     value={moduleTitle}
@@ -273,6 +225,7 @@ function CreateModule() {
                 </div>
               </div>
 
+              {/* All teachers displayed here */}
               <h1 className=" text-22xl w-[150px]  2xl:w-[1200px] text-slate-600 font-semibold dark:text-white rounded-2xl ">
                 {" "}
                 Teachers:{" "}
@@ -280,6 +233,7 @@ function CreateModule() {
 
               <div className="bg-slate-100 w-full p-2 flex items-center justify-between rounded ">
                 <ul className="bg-white overflow-y-auto sticky max-h-28  w-full">
+                  {/* Maps all added teachers to be displayed in the view box */}
                   {addedTeachers?.map((addedTeachers) => (
                     <li
                       key={addedTeachers}
@@ -288,6 +242,7 @@ function CreateModule() {
                       {addedTeachers}
                     </li>
                   ))}
+                  {/* Maps all uploaded teachers to be displayed in view box*/}
                   {uploadedTeacherData?.map((t) =>
                     availableTeachers.includes(t.replace(/^\s+|\s+$/g, "")) ===
                       true &&
@@ -305,6 +260,7 @@ function CreateModule() {
                   )}
                 </ul>
               </div>
+              {/* Drop down search box for finding and adding a teachers*/}
               <div className="flex flex-row py-3">
                 <AccountSearchBox
                   setInstitution={setTeacher}
@@ -318,6 +274,7 @@ function CreateModule() {
                 </button>
               </div>
 
+              {/* Upload file button for uploaded a csv file containing list of teachers to add*/}
               <h1 className="  text-l w-[350px] pr-16 2xl:pr-0 2xl:w-[700px] text-slate-600 font-semibold dark:text-white rounded-2xl ">
                 {" "}
                 Or upload .csv file of usernames to automatically add teachers:{" "}
@@ -329,14 +286,14 @@ function CreateModule() {
                   }
                   uploadType="modules"
                 ></FileUploader>{" "}
-                {/*onSubmit={getUploadedTeacherData} */}
               </div>
 
+              {/* All students displayed here */}
               <h1 className="  text-22xl w-[150px] 2xl:w-[1200px] text-slate-600 font-semibold dark:text-white rounded-2xl ">
                 {" "}
                 Students:{" "}
               </h1>
-
+               {/* Maps all added students to be displayed in the view box */}     
               <div className="bg-slate-100 2xl:w-[500px] w-full p-2 flex items-center justify-between rounded ">
                 <ul className="bg-white overflow-y-auto sticky max-h-28 w-full">
                   {addedStudents?.map((addedStudents) => (
@@ -347,7 +304,7 @@ function CreateModule() {
                       {addedStudents}
                     </li>
                   ))}
-
+                  {/* Maps all uploaded students to be displayed in view box*/}
                   {uploadedStudentData?.map((t) =>
                     availableStudents.includes(t.replace(/^\s+|\s+$/g, "")) ===
                       true &&
@@ -366,7 +323,7 @@ function CreateModule() {
                   {console.log("addedStudents: " + addedStudents)}
                 </ul>
               </div>
-
+               {/* Drop down search box for finding and adding a students*/}         
               <div className="flex flex-row py-3">
                 <AccountSearchBox
                   setInstitution={setStudent}
@@ -379,7 +336,7 @@ function CreateModule() {
                   Add
                 </button>
               </div>
-
+              {/* Upload file button for uploaded a csv file containing list of students to add*/}    
               <h1 className=" text-l w-[350px] pr-16 2xl:pr-0 2xl:w-[700px] text-slate-600 font-semibold dark:text-white rounded-2xl">
                 {" "}
                 Or upload .csv file of usernames to automatically add students:{" "}
@@ -392,13 +349,8 @@ function CreateModule() {
                   }
                   uploadType="modules"
                 ></FileUploader>{" "}
-                {/*onSubmit={getUploadedTeacherData} */}
-                {uploadedStudentData}
-                {/*}
-       <button onClick={addUploadedStudents} className="shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold w-100 h-8 px-3 ml-1 rounded ">
-                Add All
-        </button>
-       */}
+               
+                
               </div>
 
               {/*submit button */}

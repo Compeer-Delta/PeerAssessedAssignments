@@ -6,14 +6,8 @@
  */
 import React, { useLayoutEffect } from "react";
 import { Link, Navigate, Route, Routes } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { useRef, useState, useEffect } from "react";
 import { ReactSession } from "react-client-session";
-import StudentView from "../pages/StudentView";
-import SignUp from "../pages/SignUp";
-import Modules from "./Modules";
-import DropDownSearch from "../components/DropDownSearch";
-import AdminView from "./AdminView";
 import sideImage from "/images/LoginSplashImage_COMPEER.png";
 import { login, accountPage } from "../functions/api/userAPI";
 import BottomSection from "../components/BottomSection";
@@ -22,18 +16,16 @@ function Login() {
   const userRef = useRef();
   const errRef = useRef();
 
-
-  //const [institution, setInstitution] = useState('');
   const [accType, setAccType] = useState("studentAccount");
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   //data from the login form
 
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false); //temporary: always sets account login as success, however needs to be altered to check DB first
-  const [isAdmin, setIsAdmin] = useState(false);
-
+  const [success, setSuccess] = useState(false);
   const [failedVerifMessage, setFailedVerifMessage] = useState("");
+  //variables to control login validation
 
   useEffect(() => {
     userRef.current.focus();
@@ -41,48 +33,54 @@ function Login() {
   useEffect(() => {
     setErrMsg("");
   }, [accType, user, pwd]);
+  //use effect for setting userRef referencing username input field
 
   useLayoutEffect(() => {
     ReactSession.setStoreType("sessionStorage");
   }, []);
 
+  //when the form is submitted handleSubmit will run, preventDefault ensures the event is cancellable
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    //Debug: displays form data in console
+    //API call checks in DB whether the entered account information returns a valid account
     setFailedVerifMessage("");
-
     const response = await login(accType, user, pwd, ReactSession.get("token")); // validate login
     const userData = await response.json();
     const token = JSON.stringify(userData.token);
 
+    //if the account is an admin, sets this variable to true
     if (accType == "adminAccount") {
       setIsAdmin(true);
     }
 
+    //if a user token isn't returned for this session then the login details are incorrect
     if (!userData.token) {
       setFailedVerifMessage(
         "Your login details are incorrect, please make sure you have the correct username, password or account type again"
       );
     } else {
-      //sessionStorage.setItem("loginSessionData", {token, accType, email});
+      //sets react session details
       ReactSession.set("token", token);
       ReactSession.set("accType", accType);
       ReactSession.set("email", user);
-
+      
+      //API call retrieves all account information for the user using the account type and token to identify it
       const response = await accountPage(
         accType,
         user,
         ReactSession.get("token")
       ); // get user details
+
       const details = await response.json();
 
+      //sets account type session accordingly
       if (accType != "adminAccount") {
         ReactSession.set("accType", details.role + "Account");
       } else {
         ReactSession.set("accType", "adminAccount");
       }
 
+      //admin and student/teacher databases contain different names for institution therefore adapt to each schema
       ReactSession.set("inst", details.institution);
       if (details.institution == undefined) {
         ReactSession.set("inst", details.institutionName);
@@ -104,7 +102,7 @@ function Login() {
         <Routes>
           <Route path="/" element={<Navigate to="/modules" />} />
         </Routes>
-      ) : //  <StudentView/>
+      ) : 
 
       success && isAdmin ? (
         <Routes>
@@ -115,15 +113,14 @@ function Login() {
           <BottomSection></BottomSection>
 
           <div className=" flex items-center flex-row text-sm font-medium 2xl:h-full dark:bg-zinc-900 bg-white">
-            {/*Code for displaying left box, containing link to sign up page */}
+            {/*Code for displaying left side image*/}
             <div>
               <img
                 src={sideImage}
                 className="mb-11 object-cover z-10 font-Dosis sidebar text-slate-200 dark:text-slate-100 lg:left-0 w-[0px] sm:w-[0px] 2xl:w-[1003px] xl:w-[0px] text-left bg-slate-900 dark:bg-indigo-900"
               />
-              {/* bars icon */}
+           
             </div>
-
             <div className="h-screen 2xl:pr-80 font-Dosis dark:bg-zinc-900 bg-white w-full ">
               <div className="z-20 pl-10 ml-10 2xl:w-3/4 pb-10 dark:bg-zinc-900 bg-white 2xl:h-1/2 sm:h-full mb-64">
                 <h1 className="py-20 text-4xl sm:text-7xl  w-full text-slate-600 font-semibold dark:text-white rounded-md">
@@ -146,7 +143,7 @@ function Login() {
                     className="inline-flex sm:ml-32 pb-8 rounded-md "
                     role="group"
                   >
-                    {/*Account type buttons (Student or staff)*/}
+                    {/*Account type buttons (Student/Staff or Admin)*/}
                     <ul
                       onChange={(e) => setAccType(e.target.value)}
                       className="grid w-full grid-cols-2  "
