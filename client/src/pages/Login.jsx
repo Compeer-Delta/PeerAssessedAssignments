@@ -16,14 +16,12 @@ import DropDownSearch from "../components/DropDownSearch";
 import AdminView from "./AdminView";
 import sideImage from "/images/LoginSplashImage_COMPEER.png";
 import { login, accountPage } from "../functions/api/userAPI";
+import BottomSection from "../components/BottomSection";
 
 function Login() {
   const userRef = useRef();
   const errRef = useRef();
 
-  // const TEST_TEACHER_ACCOUNT = {username: "test_teacher", password:"test123"}
-  // const TEST_STUDENT_ACCOUNT = {username: "test_student", password:"test123"}
-  // const TEST_ADMIN_ACCOUNT = {username: "test_admin", password:"test123"}
 
   //const [institution, setInstitution] = useState('');
   const [accType, setAccType] = useState("studentAccount");
@@ -89,7 +87,6 @@ function Login() {
       if (details.institution == undefined) {
         ReactSession.set("inst", details.institutionName);
       }
-      //  ReactSession.set("inst", details.institution);
 
       ReactSession.set("uid", details.userId);
       setSuccess(true);
@@ -115,39 +112,7 @@ function Login() {
         </Routes>
       ) : (
         <>
-          <nav className="z-20 fixed bottom-0 bg-slate-800 dark:bg-zinc-700 w-full">
-            <div className=" px-4 py-3 mx-auto md:px-6">
-              <div className="flex items-center">
-                <ul className="flex flex-row mt-0 space-x-20 md:space-x-32 2xl:space-x-80 text-sm font-medium py-5 w-full">
-                  <li>
-                    <Link
-                      to="/"
-                      className=" 2xl:ml-32 sm:mx-3  text-white hover:underline"
-                      aria-current="page"
-                    >
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/"
-                      className="2xl:ml-64 xl:mx-16 sm:mx-3 text-white hover:underline truncate"
-                    >
-                      Terms of Service
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/"
-                      className="2xl:ml-64 xl:mx-16 sm:mx-3 text-white hover:underline truncate"
-                    >
-                      Privacy Policy
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
+          <BottomSection></BottomSection>
 
           <div className=" flex items-center flex-row text-sm font-medium 2xl:h-full dark:bg-zinc-900 bg-white">
             {/*Code for displaying left box, containing link to sign up page */}

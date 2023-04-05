@@ -3,92 +3,24 @@
  * Functionality: Hathan Khatkar
  */
 import React, { useEffect, useState } from "react";
-import SubmitWork from "./SubmitWork";
 import { Link } from "react-router-dom";
-//import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import App from "./App";
-import COMPEER1 from "/images/COMPEER1.jpg";
-import COMPEER2 from "/images/COMPEER2.jpg";
-import COMPEER3 from "/images/COMPEER3.jpg";
-import COMPEER4 from "/images/COMPEER4.jpg";
 import sideImage from "/images/LoginSplashImage_COMPEER.png";
+import BottomSection from "../components/BottomSection";
+//imports
+
 function Welcome() {
-  const [theme, setTheme] = useState(null);
-  useEffect(() => {
-    if (window.matchMedia("(prefer-color-scheme: dark)").matches) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  }, []);
-  // [] at the end makes it run only once
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }),
-    [theme];
-  //theme dependancy added here. that means everytime we change the theme, this function will be invoked
-
-  const handleThemeSwitch = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-  //function for theme switch ^
-
   return (
     <>
-      {/* bottom menu section */}
-
-      {/* Theme switch */}
-
-      {/* left side section (containing link to sign up) */}
-
-      <nav className="z-20 fixed bottom-0 bg-slate-800 dark:bg-zinc-700 w-full ">
-        <div className=" px-4 py-3 mx-auto md:px-6">
-          <div className="flex items-center">
-            <ul className="flex flex-row mt-0 space-x-20 md:space-x-32 2xl:space-x-80 text-sm font-medium py-5 w-full">
-              <li>
-                <Link
-                  to="/"
-                  className=" 2xl:ml-32 sm:mx-3  text-white hover:underline"
-                  aria-current="page"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/"
-                  className="2xl:ml-64 xl:mx-16 sm:mx-3 text-white hover:underline truncate"
-                >
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/"
-                  className="2xl:ml-64 xl:mx-16 sm:mx-3 text-white hover:underline truncate"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <BottomSection></BottomSection>
 
       <div className="flex items-center flex-row text-sm font-medium 2xl:h-full dark:bg-zinc-900 bg-white ">
+        {/* displays side image to the left of the screen */}
         <div>
           <img
             src={sideImage}
             className=" mb-11 object-fill z-10 font-Dosis sidebar text-slate-200 dark:text-slate-100 lg:left-0 w-[0px] sm:w-[0px] 2xl:w-[1003px] xl:w-[0px] 2xl:h-full text-left bg-slate-900 dark:bg-indigo-900"
           />
-          {/* bars icon */}
         </div>
-
-        {/* buttons sign in*/}
 
         <div className="h-screen 2xl:pr-80 font-Dosis dark:bg-zinc-900 bg-white w-full ">
           <div className="z-20 sm:pl-10 ml-10 2xl:w-3/4 h-full dark:bg-zinc-900 bg-white 2xl:h-1/2 sm:h-full mb-64 pb-10 ">
@@ -97,7 +29,7 @@ function Welcome() {
               Welcome to COMPEER!
             </h1>
 
-            {/* login by google account (not yet implemented) */}
+            {/* button for login by google account (not yet implemented) */}
             <Link
               to="/login"
               className="btn btn-primary rounded-full px-70 py-3 mb-4 h-8 w-80 text-white dark:text-[#4285F4] bg-[#4285F4] dark:bg-white hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium text-sm px-5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2"
@@ -120,7 +52,8 @@ function Welcome() {
               Sign in with Google (Coming soon)
             </Link>
             <br></br>
-            {/* login by apple account (not yet implemented) */}
+
+            {/*button for login by apple account (not yet implemented) */}
             <Link
               to="/login"
               className="btn btn-primary rounded-full px-70 py-3 mb-4 h-8 w-80 text-white bg-[#050708] dark:bg-white dark:text-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium text-sm px-5 text-center inline-flex items-center dark:focus:ring-[#A8ADAC]/50  mr-2"
@@ -143,7 +76,7 @@ function Welcome() {
               Sign in with Apple (Coming soon)
             </Link>
 
-            {/* login by university account */}
+            {/* login button with university account redirects to login page */}
             <div className="border-t w-72 mx-4 mb-4 border-t-slate-400 "></div>
             <div className="flex flex-row w-80">
               <Link
@@ -154,6 +87,7 @@ function Welcome() {
                 Sign in with University account
               </Link>
               <br></br>
+              {/* Register button for admins, redirects to signup page */}
               <Link
                 to="/register"
                 id="toRegister"

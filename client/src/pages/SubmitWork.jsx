@@ -4,6 +4,7 @@ import StudentView from '../pages/StudentView'
 function SubmitWork() {
   return (
     <>
+     {/* renders the Works component  */}
     <Works></Works> 
     </>
     

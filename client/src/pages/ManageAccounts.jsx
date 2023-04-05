@@ -5,17 +5,13 @@
  */
 import React from "react";
 import HeroSection from "../components/HeroSection";
-import { Link } from "react-router-dom";
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
-import AccountSearchBox from "../components/AccountSearchBox";
 import FileUploader from "../components/FileUploader";
-import AdminView from "./AdminView";
 import LoginCard from "../components/LoginCard";
 import { ReactSession } from "react-client-session";
 import { createUser } from "../functions/api/userAPI";
 import { getAllInInstitution } from "../functions/api/adminAPI";
 
-//still working on this, functionality not entirely implemented yet !
 function ManageAccounts() {
   let session = {
     token: ReactSession.get("token"),
@@ -23,108 +19,73 @@ function ManageAccounts() {
     email: ReactSession.get("email"),
     inst: ReactSession.get("inst"),
   };
+  //get session data
 
-  const allAccounts = [
-    "Teacher A",
-    "Teacher B",
-    "Teacher C",
-    "Teacher D",
-    "Teacher E",
-  ]; //Replace values with db values , all teachers for a given insititution (access institution through session)
 
   const [currentAccount, setAccount] = useState("");
-  const [moduleTitle, setModuleTitle] = useState("");
-
   const [alreadyAddedAccounts, setAlreadyAddedAccounts] = useState([]);
-  // let outputData = sessionStorage.getItem('loginSessionData');
-  // outputData = JSON.parse(outputData);
-
   const [addedAccounts, setAddedAccounts] = useState([]); //{username:"Ex_Account_1", password:"pass", firstname:"Ex_First", secondname:"Ex_Second", accounttype:"Student"}
-
   const [uploadedAccountData, setUploadedAccountData] = useState([]);
   const [allAddedAccounts, setAllAddedAccounts] = useState([]);
+  //current account is the current account selected from the dropdown
+  //alreadyAddedAccounts are accounts retrieved from database
+  //upoadedAccountsData is uploaded csv accounts
 
+  //use effect is used to manage duplicates and filter accounts in the proper format to be added to the database
   useEffect(() => {
-    // console.log("Ac:" + uploadedAccountData);
-    //var a = uploadedAccountData
-
+ 
+    //concatenates the accounts from DB and recently uploaded accounts then filters out any duplicates so two of the same account arent added
     var allAddedAccountDuplicates =
       alreadyAddedAccounts.concat(uploadedAccountData);
     var allAddedAccountsTemp = allAddedAccountDuplicates.filter((c, index) => {
       return allAddedAccountDuplicates.indexOf(c) === index;
     });
+    
     allAddedAccountsTemp = allAddedAccounts.filter((account) => {
       if (!alreadyAddedAccounts.includes(account)) {
         return account;
       }
     });
 
-    // setAllAddedAccounts(allAddedAccountsTemp);
-    // allAddedStudents = allAddedStudents.map(student => (((student.split(" "))[2]).replace("(", "")).replace(")", ""));
-    // allAddedTeachers = allAddedTeachers.map(teacher => (((teacher.split(" "))[2]).replace("(", "")).replace(")", ""));
-
     console.log("Accounts:" + allAddedAccounts);
   }, []);
 
-  function addUploadedAccounts() {
-    console.log("all uploaded: " + uploadedTeacherData);
-    uploadedTeacherData.map((line) => {
-      console.log("d " + String(line));
-      setTeacher(String(line));
-      console.log("s" + currentTeacher);
-      {
-        addNewTeacher();
-      }
-    });
-    console.log("done! " + addedTeachers);
-  }
 
   useLayoutEffect(() => {
     const fetchAccountData = async () => {
       // return all accounts for a given institution
       const response = await getAllInInstitution(session.inst, session.token);
       const data = await response.json();
-      // console.log("this1 " + JSON.stringify(data.users))
-      // for (let i =0; i < data.users.length ; i++)
-      // {
-      //setAccs([...Accs, (data.users[i]).firstname + " " + (data.users[i]).surname + " (" + (data.users[i]).email + ")" ]);
-      // }
-
       const tempAccs = data.users.map(
         (user) => `${user.email} ${user.firstname} ${user.surname} ${user.role}`
       );
 
-      console.log("accData" + JSON.stringify(tempAccs));
-
-      // setAvailableStudents(tempStudentAccs);
-      // setAvailableTeachers(tempTeacherAccs);
-
+      //console.log("accData" + JSON.stringify(tempAccs));
       setAlreadyAddedAccounts(tempAccs);
-
-      console.log("this " + JSON.stringify(tempAccs));
-      // console.log("ran");
+      //console.log("this " + JSON.stringify(tempAccs));
+    
     };
     fetchAccountData();
   }, []);
 
   const addNewAccounts = async () => {
-    //adding validation later
-
+   
     //loop through uploadedAccountData and store all accounts that are new and update ones that have been changed
-    //will later add a loop to delete all accounts that have been sent to a delete array
     //write values moduleTitle, addedStudents and addedTeachers
-
     console.log(uploadedAccountData);
-
+    
     for (let i = 0; i < uploadedAccountData.length; i++) {
-      console.log(uploadedAccountData[i][0].replace(" ", ""));
-      console.log(uploadedAccountData[i][1].replace(" ", ""));
-      console.log(uploadedAccountData[i][2].replace(" ", ""));
-      console.log(uploadedAccountData[i][3].replace(" ", ""));
-      console.log(uploadedAccountData[i][4].replace(" ", "").replace("/r", ""));
-      console.log(session.inst);
+
+      //For debugging purposes we can display in console each field of uploaded account data
+      //console.log(uploadedAccountData[i][0].replace(" ", ""));
+      //console.log(uploadedAccountData[i][1].replace(" ", ""));
+      //console.log(uploadedAccountData[i][2].replace(" ", ""));
+      //console.log(uploadedAccountData[i][3].replace(" ", ""));
+      //console.log(uploadedAccountData[i][4].replace(" ", "").replace("/r", ""));
+      //console.log(session.inst);
 
       // register new user
+      //Api call to createUser to send user information to backend
       const response = await createUser(
         uploadedAccountData[i][1].replace(" ", ""),
         uploadedAccountData[i][2].replace(" ", ""),
@@ -134,30 +95,18 @@ function ManageAccounts() {
         uploadedAccountData[i][4].replace(" ", "").replace("/r", "")
       );
       const newAccount = await response.json();
+
     }
   };
 
-  function addNewTeacher() {
-    var t_exists = false;
-    setAddedAccounts(
-      addedAccounts.map((addedAccounts) => {
-        if (addedAccounts.name === currentAccount) {
-          t_exists = true;
-        }
-      })
-    );
 
-    if (t_exists === false) {
-      setAddedAccounts([...addedAcounts, { name: currentAccount }]);
-    } else {
-      setAddedAccounts([...addedAccounts]);
-    }
-  }
   return (
     <>
+      {/* Herosection previous page goes back to admin view */}
       <HeroSection prevPageName="Admin view" prevUrl="/adminview"></HeroSection>
       <LoginCard></LoginCard>
 
+      {/* Page title*/}
       <div className="py-2 dark:bg-zinc-900 h-screen">
         <h1 className="  2xl:pl-72 pl-10 py-10 2xl:text-5xl text-2xl  2xl:w-[1200px] text-slate-600 font-semibold dark:text-white rounded-2xl  ">
           {" "}
@@ -170,8 +119,10 @@ function ManageAccounts() {
             Accounts:{" "}
           </h1>
 
+
           <div className="bg-slate-100 w-full p-2 flex items-center justify-between rounded ">
             <ul className="bg-white overflow-y-auto sticky max-h-28  w-full">
+              {/* Displays all accounts retrieved from database as a row of fields email, name and account type*/}
               {alreadyAddedAccounts?.map((addedAccounts) => (
                 <li
                   key={addedAccounts.split(" ")[0]}
@@ -187,6 +138,7 @@ function ManageAccounts() {
                     addedAccounts.split(" ")[3]}
                 </li> //LOAD INTO addedAccounts the DB data
               ))}
+              {/* Display accounts that have just been uploaded using a csv file in the same format */}
               {uploadedAccountData?.map((t) => (
                 <li
                   key={t}
@@ -201,11 +153,12 @@ function ManageAccounts() {
                     t[3] +
                     "| Account: " +
                     t[4]}
-                </li> // Accounts are listing properly yet check back in FileUploader and make sure uploadedAccountData is formatted right
+                </li>
               ))}
             </ul>
           </div>
-
+          
+          {/* Csv file uploader button and prompt stores returned data into use state for uploaded account data*/}
           <h1 className="  text-l w-[270px] md:w-[700px] text-slate-600 font-semibold dark:text-white rounded-md ">
             {" "}
             Upload .csv file of format: firstname, secondname, username,password
@@ -219,7 +172,7 @@ function ManageAccounts() {
               }
               uploadType="accounts"
             ></FileUploader>{" "}
-            {/*DOESNT WORK FOR ACCOUNTS YET.*/}
+           
           </div>
 
           {/*submit button */}
