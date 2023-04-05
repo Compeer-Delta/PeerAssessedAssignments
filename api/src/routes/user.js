@@ -11,6 +11,7 @@ router.post("/register", userController.createUser); //register user
 
 //routes for specific user
 router.get("/user/me", auth, userController.getUser); //get user account
+router.get("/user/id", auth, userController.getUserId); //get user account
 router.patch("/user/update", auth, userController.updateUser); //update user account
 router.delete("/user/delete", auth, userController.deleteUser); //delete user account
 
