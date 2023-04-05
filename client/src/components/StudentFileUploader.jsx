@@ -28,6 +28,9 @@ function StudentFileUploader() {
   const aDetailsRef = useRef(); // Reference to the assignment details element
   const fDetailsRef = useRef(); // Reference to the file details element
 
+  const [convStartDate, setConvStartDate] = useState("");
+  const [convEndDate, setConvEndDate] = useState("");
+
   // Submit file to backend for processing
   const submitFile = async () => {
     if (file) {
@@ -156,6 +159,9 @@ function StudentFileUploader() {
       );
       const data = await response.json();
       setAssignment(data);
+
+      setConvStartDate(new Date(data.startDate))
+      setConvEndDate(new Date(data.endDate))
     };
 
     getAssignmentDetails();
@@ -172,10 +178,10 @@ function StudentFileUploader() {
             </h1>
             <br />
             <b>Set:</b>
-            {assignment.startDate}
+            {"" + convStartDate}
             <br />
             <b>Due:</b>
-            {assignment.endDate}
+            {"" + convEndDate}
             <br />
           </>
         ) : null}{" "}
