@@ -6,7 +6,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SubmitWork from "./SubmitWork";
-import Notifications from "./Notifications";
 import Welcome from "./Welcome";
 import StudentView from "./StudentView";
 import Login from "./Login";
@@ -60,10 +59,7 @@ function App() {
       {/*Contains all the routes to different pages by default we stick to / which directs us to the welcome page*/}
       <>
         <Routes>
-          <Route
-            path="/notifications/:modulename"
-            element={<Notifications />}
-          />
+          
           <Route path="/login/*" element={<Login />} />
           <Route path="/submitwork" element={<SubmitWork />} />
           <Route path="/modules/:id/*" element={<StudentView />} />
