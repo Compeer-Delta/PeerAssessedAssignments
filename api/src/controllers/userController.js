@@ -126,6 +126,20 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+//get userID
+const getUserId = async (req, res) => {
+  const { email } = req.query;
+  try {
+    const user = await User.find({ email: email }).select({userId: 1, _id: 0});
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export default {
   loginUser,
   createUser,
@@ -133,4 +147,5 @@ export default {
   deleteUser,
   getUser,
   getAllUsers,
+  getUserId
 };
