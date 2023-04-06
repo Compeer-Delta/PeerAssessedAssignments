@@ -67,7 +67,8 @@ function CreateModule() {
       allAddedStudents,
       [],
       session.inst,
-      moduleCode
+      moduleCode,
+      session.token
     );
 
     const newModule = await response.json();
